@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Character
+  - SkillMark
+  - Invocacion
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Wall
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Escenario
+    uniqueID: 3185502561
+    locked: 0
+  - name: SetupCells
+    uniqueID: 2534990411
+    locked: 0
+  - name: Entidades
+    uniqueID: 486263773
+    locked: 0
+  - name: Marcadores
+    uniqueID: 2555188157
+    locked: 0
