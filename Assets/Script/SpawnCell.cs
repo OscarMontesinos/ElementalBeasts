@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnCell : MonoBehaviour
 {
     CombatManager cManager;
-    GameObject unitPlaced;
+    Unit unitPlaced;
     SpriteRenderer spriteRenderer;
     public int team;
 
@@ -25,13 +25,21 @@ public class SpawnCell : MonoBehaviour
     }
     public void Interact(Player player)
     {
+
         if (unitPlaced != null)
         {
-            DestroyUnit(player);
+            ReplaceOrSelectBeast(player);
         }
         else if (unitPlaced == null)
         {
-            if (player.beastsToPlace.Count > 0)
+            if (player.beastsToPlace.Count <= 0)
+            {
+                if (player.beastSelected != null)
+                {
+                    ReplaceBeast(player);
+                }
+            }
+            else
             {
                 SpawnUnit(player.beastsToPlace[player.GetIndex()], player);
             }
@@ -43,30 +51,72 @@ public class SpawnCell : MonoBehaviour
         if (player.team == team)
         {
             GameObject unit = Instantiate(unitToSpawn, transform.position, transform.rotation);
-            unitPlaced = unit;
+            unitPlaced = unit.GetComponent<Unit>();
             unit.GetComponent<Unit>().owner = player;
-            player.beastPlaced.Add(unitToSpawn);
+            unit.GetComponent<Unit>().spawnCell = this;
+            unit.GetComponent<Unit>().team = player.team;
             player.beastsToPlace.Remove(unitToSpawn);
             player.beasts.Add(unitPlaced.GetComponent<Unit>());
-        }
-    }
 
-    public void DestroyUnit(Player player)
-    {
-
-
-        if (player.team == team)
-        {
-            
-            player.beasts.Remove(unitPlaced.GetComponent<Unit>());
-            foreach(GameObject beast in player.beastPlaced)
+            if (player.beastsToPlace.Count <= 0)
             {
-
+                player.buttonReady.SetActive(true);
             }
-            player.beastPlaced.Remove(unitPlaced);
-            Destroy(unitPlaced);
+            else if(player.indexBeastToPlace> player.beastsToPlace.Count - 1)
+            {
+                player.indexBeastToPlace--;
+            }
         }
     }
+
+    public void ReplaceOrSelectBeast(Player player)
+    {
+        if(player.beastSelected == null)
+        {
+            SelectBeast(player);
+        }
+        else
+        {
+            ReplaceBeast(player);
+        }
+    }
+
+    public void SelectBeast(Player player)
+    {
+        player.beastSelected = unitPlaced;
+    }
+
+    public void ReplaceBeast(Player player)
+    {
+        if (unitPlaced != null)
+        {
+            Unit auxiliarBeast = player.beastSelected;
+            SpawnCell auxiliarSpawnCell = player.beastSelected.spawnCell;
+            //Intercambio transform
+            unitPlaced.transform.position = player.beastSelected.transform.position;
+            player.beastSelected.transform.position = unitPlaced.spawnCell.transform.position;
+            //Intercambio spawnCells
+            unitPlaced.spawnCell = player.beastSelected.spawnCell;
+            player.beastSelected.spawnCell = this;
+            //Intercambio de unidad colocada entre spawnCells
+            auxiliarSpawnCell.unitPlaced = unitPlaced;
+            unitPlaced = auxiliarBeast;
+
+        }
+        else
+        {
+
+            player.beastSelected.spawnCell.unitPlaced = null;
+            unitPlaced = player.beastSelected;
+            unitPlaced.transform.position = transform.position;
+            unitPlaced.spawnCell = this;
+        }
+            player.beastSelected = null;
+        
+
+
+    }
+
 
     public void EndSetupStage()
     {

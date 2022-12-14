@@ -12,7 +12,9 @@ public class CombatManager : MonoBehaviour
     public List<int> turnos;
     public List<Player> referencia;
     public List<ObjetoInvocado> invocaciones;
-    public int turnoActual = 0;
+    public GameObject spawnCells;
+    public GameObject pathShower;
+    public int turnoActual = -1;
     public bool nuevaRonda = true;
     public int ronda = 1;
     public bool casteando;
@@ -26,6 +28,10 @@ public class CombatManager : MonoBehaviour
 
     public TextMeshProUGUI rondaText;
 
+    private void Awake()
+    {
+        spawnCells = FindObjectOfType<SpawnCells>().gameObject;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -35,11 +41,7 @@ public class CombatManager : MonoBehaviour
         var listGameObjectInvoc = GameObject.FindGameObjectsWithTag("Invocacion");
         playerList = new List<Player>(FindObjectsOfType<Player>());
 
-        foreach (GameObject unitC in listGameObjectChar)
-        {
-            // Añadimos a nuestra  lista de tipo Unit cada personaje
-            unitList.Add(unitC.GetComponent<Unit>());
-        }
+        
         foreach (GameObject invoc in listGameObjectInvoc)
         {
             invocaciones.Add(invoc.GetComponent<ObjetoInvocado>());
@@ -66,10 +68,7 @@ public class CombatManager : MonoBehaviour
         {
             foreach (Player player in playerList)
             {
-                if (!player.GetReady())
-                {
-                    player.EndSetUpStage();
-                }
+                player.EndSetUpStage();
             }
             StartMatch();
         }
@@ -102,9 +101,16 @@ public class CombatManager : MonoBehaviour
     }
     void StartMatch()
     {
+        Destroy(spawnCells);
         settingUp = false;
-        IniciativaCalc();
-        SiguienteTurno();
+        unitList = new List<Unit>(FindObjectsOfType<Unit>());
+
+        foreach (Unit unit in unitList)
+        {
+            unit.UpdateCell(false);
+        }
+
+            IniciativaCalc();
     }
     void IniciativaCalc()
     {
@@ -147,13 +153,59 @@ public class CombatManager : MonoBehaviour
             }
         }
 
+        SiguienteTurno();
 
     }
 
     public void SiguienteTurno()
     {
-        
+        turnoActual++;
+        Debug.Log(turnoActual);
+        if (turnoActual >= unitList.Count)
+        {
+            turnoActual = 0;
+            NuevaRonda();
+        }
         referencia[turnoActual].GiveTurnStage();
+    }
+
+    public void NuevaRonda()
+    {
+        foreach (Unit unit in unitList)
+        {
+            unit.NuevaRonda();
+        }
+        ronda++;
+        rondaText.text = "Ronda: " + ronda;
+    }
+
+    public void ShowNodesInRange()
+    {
+        DestroyShowNodes();
+
+        List<Pathnode> nodesInRange = new List<Pathnode>(referencia[turnoActual].beastSelected.GetNodesInRange());
+        foreach (Pathnode pathnode in nodesInRange)
+        {
+            if (pathnode.isWalkable)
+            {
+                Vector3 position = new Vector2(pathnode.x / FindObjectOfType<MapPathfinder>().cellsize, pathnode.y / FindObjectOfType<MapPathfinder>().cellsize);
+                position = position * FindObjectOfType<MapPathfinder>().cellsize + Vector3.one * .5f;
+                Instantiate(pathShower, position, transform.rotation);
+            }
+        }
+
+
+
+    }
+
+    public void DestroyShowNodes()
+    {
+        List<PathShower> pathShowers = new List<PathShower>(FindObjectsOfType<PathShower>());
+
+        foreach(PathShower pathShower in pathShowers)
+        {
+            Destroy(pathShower.gameObject);
+        }
     }
     
     public void Position(GameObject obj)

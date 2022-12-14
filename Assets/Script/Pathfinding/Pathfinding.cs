@@ -110,7 +110,7 @@ public class Pathfinding
         return null;
     }
 
-    List<Pathnode> GetNeighbourList(Pathnode currentNode)
+    public List<Pathnode> GetNeighbourList(Pathnode currentNode)
     {
         List<Pathnode> neighbourList = new List<Pathnode>();
 

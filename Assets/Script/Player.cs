@@ -10,13 +10,20 @@ public class Player : MonoBehaviour
     public bool settingUnitsUp;
     public List<Unit> beasts;
     public List<GameObject> beastsToPlace;
-    public List<GameObject> beastPlaced;
+    public Unit beastSelected;
+    public GameObject selector;
     public int indexBeastToPlace;
-    public CombatManager manager;
+    CombatManager manager;
     [Header("UI")]
     public GameObject panelSetUp;
+    public GameObject buttonReady;
     public GameObject panelTurn;
     public Cursor cursor;
+
+    private void Awake()
+    {
+        manager = FindObjectOfType<CombatManager>();
+    }
     public bool GetReady()
     {
         return ready;
@@ -29,17 +36,60 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        foreach(GameObject beast in beastsToPlace)
-        {
-            beastsToPlaceReference.Add(true);
-        }
     }
 
     private void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Space) && !settingUnitsUp && beastSelected !=null)
+        {
+            beastSelected.AcabarTurno();
+        }
+        else if(Input.GetKeyDown(KeyCode.Space) && settingUnitsUp)
+        {
+            Ready();
+        }
         if (settingUnitsUp)
         {
-            if (Input.GetMouseButtonDown(0) && cursor.GetCell()!=null)
+            List<Unit> discardedUnits = new List<Unit>(manager.unitList);
+            List<Unit> allUnits = new List<Unit>();
+            foreach (Unit unit_ in beasts)
+            {
+                if (unit_ != null && !discardedUnits.Contains(unit_))
+                {
+                    foreach (Unit unit in allUnits)
+                    {
+                        if (unit_.team != unit.team)
+                        {
+                            var dir = unit_.transform.position - transform.position;
+                            if (!Physics2D.Raycast(transform.position, dir, dir.magnitude, unit.wallLayer))
+                            {
+                                unit.escondido = false;
+                                discardedUnits.Add(unit);
+                            }
+                            else
+                            {
+                                unit.escondido = true;
+                            }
+                        }
+                        else
+                        {
+                            discardedUnits.Add(unit);
+                        }
+                    }
+                }
+            }
+            if (beastSelected != null)
+            {
+                selector.SetActive(true);
+                selector.transform.position = beastSelected.transform.position;
+            }
+            else
+            {
+
+                selector.SetActive(false);
+            }
+            if (Input.GetMouseButtonDown(0) && cursor.GetCell() != null)
             {
                 cursor.GetCell().Interact(this);
             }
@@ -53,6 +103,13 @@ public class Player : MonoBehaviour
                 DecreaseIndex();
             }
         }
+        else
+        {
+            selector.SetActive(false);
+            panelSetUp.SetActive(false);
+        }
+
+        
     }
     public void IncreaseIdex()
     {
@@ -86,10 +143,36 @@ public class Player : MonoBehaviour
     {
         settingUnitsUp = false;
         panelSetUp.SetActive(false);
+        cursor.gameObject.SetActive(false);
     }
     
     public void GiveTurnStage()
     {
         giveTurno = true;
+        panelTurn.SetActive(true);
+        foreach (Unit unit in beasts)
+        {
+            if (!unit.pasar)
+            {
+                unit.SetElegibleMarcador(true);
+            }
+        }
+    }
+
+    public void TurnGived(Unit unit)
+    {
+        foreach (Unit beast in beasts)
+        {
+            beast.SetElegibleMarcador(false);
+        }
+        beastSelected = unit;
+        giveTurno = false;
+        panelTurn.SetActive(false);
+    }
+
+    public void Ready()
+    {
+        ready = !ready;
+        manager.PlayerReady();
     }
 }

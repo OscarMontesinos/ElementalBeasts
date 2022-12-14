@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Unit : MonoBehaviour
 {
+    [Header("SetUp")]
+    public SpawnCell spawnCell;
+    [Header("System")]
     public Color32 color;
     float rondas;
     GameObject pj;
@@ -19,19 +23,23 @@ public class Unit : MonoBehaviour
     GameObject marcadorHabilidad;
     GameObject rotadorHabilidad;
     GameObject conoHabilidad;
-    GameObject extensionHabilidad;
     GameObject extensionMesher;
     GameObject rangoMarcador;
     GameObject inmortalMarcador;
     GameObject stunnMarcador;
     GameObject imparableMarcador;
+    GameObject elegibleMarcador;
     Camera cam;
     CombatManager manager;
     bool inmortal;
-    bool escondido;
+    public bool escondido;
+    public LayerMask wallLayer;
+    public LayerMask unitLayer;
     public bool imparable;
     public int desorientarValue;
     public int slow;
+    
+
 
     [Header("Habilidades")]
     public List<Hability> habilities;
@@ -88,6 +96,11 @@ public class Unit : MonoBehaviour
         return manager;
     }
 
+    public List<Vector3> GetPathVectorList()
+    {
+        return pathVectorList;
+    }
+
     public virtual void Awake()
     {
         mapPathfinder = FindObjectOfType<MapPathfinder>();
@@ -100,7 +113,6 @@ public class Unit : MonoBehaviour
         marcadorHabilidad = transform.GetChild(3).gameObject;
         rotadorHabilidad = transform.GetChild(2).gameObject;
         conoHabilidad = transform.GetChild(0).transform.GetChild(0).gameObject;
-        extensionHabilidad = transform.GetChild(2).transform.GetChild(0).transform.GetChild(0).gameObject;
         extensionMesher = transform.GetChild(2).transform.GetChild(0).gameObject;
         rangoMarcador = transform.GetChild(1).gameObject;
         inmortalMarcador = transform.GetChild(6).gameObject;
@@ -112,17 +124,23 @@ public class Unit : MonoBehaviour
         escudoText = pj.transform.GetChild(3).transform.GetChild(0).transform.GetChild(4).GetComponent<Text>();
         turnoText = pj.transform.GetChild(2).transform.GetChild(0).GetComponent<Text>();
         hpBar = pj.transform.GetChild(3).transform.GetChild(0).GetComponent<Slider>();
-        atkText = pj.transform.GetChild(3).transform.GetChild(3).GetComponent<Text>();
-        protText = pj.transform.GetChild(3).transform.GetChild(4).GetComponent<Text>();
-        slowText = pj.transform.GetChild(3).transform.GetChild(5).GetComponent<Text>();
+        atkText = pj.transform.GetChild(3).transform.GetChild(1).GetComponent<Text>();
+        protText = pj.transform.GetChild(3).transform.GetChild(2).GetComponent<Text>();
+        slowText = pj.transform.GetChild(3).transform.GetChild(3).GetComponent<Text>();
         stunnMarcador = transform.GetChild(7).gameObject;
         imparableMarcador = transform.GetChild(8).gameObject;
+        elegibleMarcador = transform.GetChild(9).gameObject;
 
 
     }
+
+    public void SetElegibleMarcador(bool value)
+    {
+        elegibleMarcador.SetActive(value);
+    }
+
     private void Start()
     {
-        pj.transform.GetChild(1).GetComponent<SpriteRenderer>().color = color;
         iniciativaTurno = iniciativa + Random.Range(0, 20);
         
         teamColor.color = manager.teamColorList[team];
@@ -136,8 +154,8 @@ public class Unit : MonoBehaviour
     }
     public virtual void Update()
     {
-        HandleMovement();
-
+        
+            HandleMovement();
         if (pot<0.1f&& pot>0 || pot> -0.1f && pot < 0)
         {
             pot = 0;
@@ -283,14 +301,47 @@ public class Unit : MonoBehaviour
         return transform.position;
     }
 
+    public List<Pathnode> GetNodesInRange()
+    {
+        int x;
+        int y;
+        mapPathfinder.GetPathfinding().GetGrid().GetXY(transform.position, out x, out y);
+        Pathnode startingPathnode = mapPathfinder.GetPathfinding().GetNode(x,y);
+        List<Pathnode> inRangeNodes = new List<Pathnode>();
+        int stepCount = 0;
+
+        inRangeNodes.Add(startingPathnode);
+
+        List<Pathnode> nodeForPrevoiusStep = new List<Pathnode>();
+        nodeForPrevoiusStep.Add(startingPathnode);
+
+        while (stepCount < movementPoints)
+        {
+            List<Pathnode> surrondingNodes = new List<Pathnode>();
+
+            foreach (Pathnode pathnode in nodeForPrevoiusStep)
+            {
+                    if (pathnode.isWalkable || stepCount == 0)
+                    {
+                        surrondingNodes.AddRange(Pathfinding.Instance.GetNeighbourList(pathnode));
+                    }
+                
+            }
+            inRangeNodes.AddRange(surrondingNodes);
+            nodeForPrevoiusStep = surrondingNodes.Distinct().ToList();
+            stepCount++;
+        }
+
+        return inRangeNodes.Distinct().ToList();
+    }
     public void SetTargetPosition(Vector3 targetPosition)
     {
-
-        ActualizeCell(true);
         currentPathIndex = 0;
         List<Vector3> tentativePath = Pathfinding.Instance.FindPath(GetPosition(), targetPosition);
-        if (tentativePath.Count -1 <= movementPoints && !root)
+        if (tentativePath.Count-1 <= movementPoints && !root && turno && tentativePath.Count - 1 > 0)
         {
+            UpdateCell(true);
+            manager.DestroyShowNodes();
             pathVectorList = tentativePath;
 
             if (pathVectorList != null && pathVectorList.Count > 1)
@@ -303,14 +354,13 @@ public class Unit : MonoBehaviour
 
     void HandleMovement()
     {
-        if (pathVectorList != null&&pathVectorList.Count!=0)
+        if (pathVectorList != null && pathVectorList.Count!=0)
         {
             Vector3 targetPosition = pathVectorList[currentPathIndex];
             if (Vector3.Distance(transform.position, targetPosition) > 0.01f)
             {
                 Vector3 moveDir = (targetPosition - transform.position).normalized;
 
-                float distanceBefore = Vector3.Distance(transform.position, targetPosition);
                 transform.position = transform.position + moveDir * speed * Time.deltaTime;
             }
             else
@@ -327,11 +377,12 @@ public class Unit : MonoBehaviour
 
     void StopMoving()
     {
+        UpdateCell(false);
+        manager.ShowNodesInRange();
         pathVectorList = null;
-        ActualizeCell(false);
 
     }
-    public void ActualizeCell(bool value)
+    public void UpdateCell(bool value)
     {
         mapPathfinder.GetPathfinding().GetGrid().GetXY(transform.position, out int x, out int y);
         mapPathfinder.GetPathfinding().GetNode(x, y).SetIsWalkable(value);
@@ -339,7 +390,7 @@ public class Unit : MonoBehaviour
 
     #endregion
 
-    #region NewTurn
+    #region TurnManagment
     public virtual void ActualizarCDUI(int hab1, int hab2, int hab3, int hab4)
     {
         if (turno)
@@ -352,12 +403,12 @@ public class Unit : MonoBehaviour
     }
     public virtual void PrepararTurno()
     {
+        owner.TurnGived(this);
         if (manager.centrarCamara)
         {
             cam.transform.position = transform.position;
             cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, -10);
         }
-        turno = true;
         turnoUi.SetActive(true);
         if (justStun)
         {
@@ -370,38 +421,40 @@ public class Unit : MonoBehaviour
             stun = false;
             manager.SiguienteTurno();
         }
-        turnoRestante -= desorientarValue;
-        desorientarValue = 0;
+        if (desorientarValue > 0)
+        {
+            turnoRestante -= desorientarValue;
+            desorientarValue = 0;
+        }
         if (turnoRestante < 0)
         {
             turnoRestante = 0;
         }
-        movementPoints = maxMovementPoints;
+        movementPoints = maxMovementPoints -slow;
+        mapPathfinder.unitToMove = this;
+
+        manager.ShowNodesInRange();
+        turno = true;
     }
     public virtual void AcabarTurno()
     {
-        
+        owner.beastSelected = null;
+        manager.DestroyShowNodes();
         turno = false;
         turnoUi.SetActive(false);
         pasar = true;
         root = false;
-        PasarRonda();
+        manager.SiguienteTurno();
     }
     public void NuevaRonda()
     {
         turnoRestante = 5;
+        pasar = false;
         
     }
     public virtual void Desorientar(int value)
     {
         desorientarValue += value;
-    }
-    #endregion
-
-    #region EndTurn
-    public void PasarRonda()
-    {
-
     }
     #endregion
 
@@ -492,19 +545,49 @@ public class Unit : MonoBehaviour
     #endregion
 
     #region Habilities
-    public void GetHability(int hability)
+
+    public bool TargetAvaliable(Vector3 position, int range)
     {
-        switch (habilities[hability].habilityEffects.Count)
+        position -= transform.position;
+        if (!Physics2D.Raycast(transform.position, position,range, wallLayer))
         {
-            case 1:
-                CastHability(habilities[hability].habilityType, habilities[hability].habilityEffects[0], habilities[hability].habilityRange, habilities[hability].habilityTargetType, habilities[hability].habilityMovement);
-                break;
-            case 2:
-                CastHability(habilities[hability].habilityType, habilities[hability].habilityEffects[0], habilities[hability].habilityEffects[1], habilities[hability].habilityRange, habilities[hability].habilityTargetType, habilities[hability].habilityMovement);
-                break;
-            case 3:
-                CastHability(habilities[hability].habilityType, habilities[hability].habilityEffects[0], habilities[hability].habilityEffects[1], habilities[hability].habilityEffects[2], habilities[hability].habilityRange, habilities[hability].habilityTargetType, habilities[hability].habilityMovement);
-                break;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public Unit GetTarget(Vector3 position, int range)
+    {
+        position -= transform.position;
+        if (!Physics2D.Raycast(transform.position, position, range, unitLayer))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void UseHability(int hability)
+    {
+        if (movementPoints >= 2 || slow>=3 && movementPoints>=1|| slow>5)
+        {
+            switch (habilities[hability].habilityEffects.Count)
+            {
+                case 1:
+                    CastHability(habilities[hability].habilityType, habilities[hability].habilityEffects[0], habilities[hability].habilityRange, habilities[hability].habilityTargetType, habilities[hability].habilityMovement);
+                    break;
+                case 2:
+                    CastHability(habilities[hability].habilityType, habilities[hability].habilityEffects[0], habilities[hability].habilityEffects[1], habilities[hability].habilityRange, habilities[hability].habilityTargetType, habilities[hability].habilityMovement);
+                    break;
+                case 3:
+                    CastHability(habilities[hability].habilityType, habilities[hability].habilityEffects[0], habilities[hability].habilityEffects[1], habilities[hability].habilityEffects[2], habilities[hability].habilityRange, habilities[hability].habilityTargetType, habilities[hability].habilityMovement);
+                    break;
+            }
         }
     }
     public virtual void CastHability(Hability.HabilityType type, Hability.HabilityEffect effect, Hability.HabilityRange rangeType, Hability.HabilityTargetType targetType, Hability.HabilityMovement movement)
@@ -757,14 +840,16 @@ public class Unit : MonoBehaviour
         }
     }
 
-    
-   
+    private void OnMouseDown()
+    {
+        if (owner.giveTurno && !pasar)
+        {
+            PrepararTurno();
+        }
+    }
+
     public virtual void OnMouseOver()
     {
-        if (owner.giveTurno)
-        {
-            pSelected = true;
-        }
         if (!manager.casteando && !freelook || !manager.casteando && freelook || manager.casteando && freelook)
         {
             selected = true;

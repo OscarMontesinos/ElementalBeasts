@@ -12,7 +12,6 @@ public class Cursor : MonoBehaviour
     {
         player = transform.parent.gameObject.GetComponent<Player>();
         team = player.team;
-        Debug.Log(team);
     }
     public int GetTeam()
     {
@@ -32,7 +31,7 @@ public class Cursor : MonoBehaviour
         transform.position = UtilsClass.GetMouseWorldPosition();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<SpawnCell>() && collision.gameObject.GetComponent<SpawnCell>().GetTeam() == team)
         {

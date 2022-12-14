@@ -31,7 +31,7 @@ public class MapPathfinder : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !cManager.settingUp)
+        if (Input.GetMouseButtonDown(0) && !cManager.settingUp && unitToMove != null )
         {
             Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
             /*pathfinding.GetGrid().GetXY(mousePosition, out int x, out int y);
@@ -45,7 +45,7 @@ public class MapPathfinder : MonoBehaviour
                     i++;
                 }
             }*/
-            unitToMove.SetTargetPosition(mousePosition);    
+                unitToMove.SetTargetPosition(mousePosition);
         }
     }
     void CalculateNotWalkables()
@@ -60,7 +60,7 @@ public class MapPathfinder : MonoBehaviour
     {
         foreach(Unit unit in unitList)
         {
-            unit.ActualizeCell(false);
+            unit.UpdateCell(false);
         }
     }
 
