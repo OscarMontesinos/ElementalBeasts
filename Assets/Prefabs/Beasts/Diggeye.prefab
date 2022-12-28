@@ -1,0 +1,176 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3167188085170117917
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8887353973305685, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Name
+      value: Diggeye
+      objectReference: {fileID: 0}
+    - target: {fileID: 385266273421948514, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 385266273421948514, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314915021448607137, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 502
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.500395
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3994961
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+--- !u!1 &3164781253018283080 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8887353973305685, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+  m_PrefabInstance: {fileID: 3167188085170117917}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &912122944978749269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3164781253018283080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f13fc5e5cbe9a4a96454cbb96a2b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnCell: {fileID: 0}
+  color:
+    serializedVersion: 2
+    rgba: 13378659
+  selected: 0
+  hSelected: 0
+  pSelected: 0
+  freelook: 0
+  team: 0
+  turno: 0
+  pasar: 0
+  planeoInvocacion: 0
+  manager: {fileID: 0}
+  escondido: 0
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  voidLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  unitLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  imparable: 0
+  desorientarValue: 0
+  slow: 0
+  moving: 0
+  habilityCasted: 0
+  chosenHab1: 1
+  chosenHab2: 2
+  chosenHab3: 0
+  chosenHab4: 0
+  castingHability: 0
+  sinergiaElemental: 8
+  fuerza: 46
+  control: 12
+  mHp: 43
+  resistenciaFisica: 48
+  resistenciaMagica: 16
+  iniciativa: 3
+  maxMovementPoints: 6
+  movementPoints: 0
+  hp: 0
+  escudo: 0
+  iniciativaTurno: 0
+  turnoRestante: 5
+  stun: 0
+  justStun: 0
+  root: 0
+  prot: 0
+  pot: 0
+  owner: {fileID: 0}
+  teamColor: {fileID: 0}
+  speed: 10
+  hab1:
+    name: Cuchillada
+    habilityType: 0
+    habilityEffects: 01000000
+    habilityRange: 1
+    habilityTargetType: 1
+    habilityMovement: 0
+  hab1Turn: 2
+  hab1Rmax: 3
+  hab1Range: 1
+  hab1Dmg: 30
+  hab2:
+    name: Clavo resonante
+    habilityType: 0
+    habilityEffects: 0100000003000000
+    habilityRange: 2
+    habilityTargetType: 0
+    habilityMovement: 0
+  hab2Turn: 2
+  hab2Rmax: 3
+  hab2Range: 3
+  hab2Dmg: 20
+  hab3Turno: 0
+  hab3CdTotal: 0
+  hab3Cd: 0
+  hab3Rango: 0
+  hab3Ancho: 0
+  hab3Rondas: 0
+  hab3Escalado: 0
+  hab4Turno: 0
+  hab4CdTotal: 0
+  hab4Cd: 0
+  hab4Rango: 0
+  hab4Escalado: 0

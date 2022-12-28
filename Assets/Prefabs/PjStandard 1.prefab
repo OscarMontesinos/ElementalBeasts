@@ -91,9 +91,7 @@ GameObject:
   - component: {fileID: 8857036762000175363}
   - component: {fileID: 3103279980379640668}
   - component: {fileID: 695451110616396888}
-  - component: {fileID: 3595256532140692684}
-  - component: {fileID: 1136921213}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PjStandard 1
   m_TagString: Character
   m_Icon: {fileID: 0}
@@ -172,123 +170,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &3595256532140692684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8887353973305685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b63a88456c1ecbc4f8f1d76050d24ef8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unidad: {fileID: 0}
-  items:
-  - nombre: AguaMarinaConcentrada
-    equipado: 0
-    cantidad: 1
-    sinergia: 9
-    fuerza: 0
-    control: 3
-    hp: 0
-    rFisica: 0
-    rMagica: 0
-    iniciativa: 0
-  - nombre: "Diente de tibur\xF3n"
-    equipado: 0
-    cantidad: 1
-    sinergia: 0
-    fuerza: 12
-    control: 0
-    hp: 0
-    rFisica: 0
-    rMagica: 0
-    iniciativa: 0
-  - nombre: Escama dura
-    equipado: 0
-    cantidad: 1
-    sinergia: 0
-    fuerza: 0
-    control: 0
-    hp: 0
-    rFisica: 15
-    rMagica: 0
-    iniciativa: 0
-  - nombre: "C\xE1scara antigua"
-    equipado: 0
-    cantidad: 1
-    sinergia: 0
-    fuerza: 0
-    control: 0
-    hp: 0
-    rFisica: 0
-    rMagica: 15
-    iniciativa: 0
-  - nombre: Flor del mar
-    equipado: 0
-    cantidad: 1
-    sinergia: 0
-    fuerza: 0
-    control: 9
-    hp: 6
-    rFisica: 0
-    rMagica: 0
-    iniciativa: 0
---- !u!114 &1136921213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8887353973305685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 080e80b992755ac4c8840d7a5cd2e4c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnCell: {fileID: 0}
-  color:
-    serializedVersion: 2
-    rgba: 4294967295
-  selected: 0
-  hSelected: 0
-  pSelected: 0
-  freelook: 0
-  team: 0
-  turno: 0
-  pasar: 0
-  planeoInvocacion: 0
-  escondido: 0
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  imparable: 0
-  desorientarValue: 0
-  slow: 0
-  habilities: []
-  chosenHabilities: 
-  sinergiaElemental: 20
-  fuerza: 20
-  control: 20
-  mHp: 20
-  resistenciaFisica: 20
-  resistenciaMagica: 20
-  iniciativa: 0
-  maxMovementPoints: 6
-  hp: 0
-  escudo: 0
-  iniciativaTurno: 0
-  turnoRestante: 5
-  stun: 0
-  justStun: 0
-  root: 0
-  prot: 0
-  pot: 0
-  owner: {fileID: 0}
-  teamColor: {fileID: 0}
-  speed: 10
 --- !u!1 &588789201525312391
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +196,7 @@ RectTransform:
   m_GameObject: {fileID: 588789201525312391}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.61}
-  m_LocalScale: {x: 9.329299, y: 15.981487, z: 0}
+  m_LocalScale: {x: 6.4123993, y: 22.933432, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5564499794870713865}
@@ -328,7 +209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 517.0005}
+  m_AnchoredPosition: {x: 0, y: 427}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1595164414009945886
@@ -851,7 +732,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3254c4188d942444cbd9501f3198c7e2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.58431375}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.21960784}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1045,7 +926,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ef12938bb0a32e54e91ccfd5dba81103, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.21960784}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1553,7 +1434,7 @@ RectTransform:
   m_GameObject: {fileID: 5769908630116537238}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.04732339, y: 0.025930624, z: 0.04732339}
+  m_LocalScale: {x: 0.08231604, y: 0.026113234, z: 0.18929356}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2314915021448607137}
@@ -1884,7 +1765,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ef12938bb0a32e54e91ccfd5dba81103, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.21960784}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1970,7 +1851,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ef12938bb0a32e54e91ccfd5dba81103, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.21960784}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

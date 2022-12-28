@@ -8,9 +8,9 @@ public class CombatManager : MonoBehaviour
     public bool settingUp;
     public List<Color32> teamColorList;
     public List<Unit> unitList;
+    public List<Player> turnOrderList;
     public List<Player> playerList;
     public List<int> turnos;
-    public List<Player> referencia;
     public List<ObjetoInvocado> invocaciones;
     public GameObject spawnCells;
     public GameObject pathShower;
@@ -24,7 +24,6 @@ public class CombatManager : MonoBehaviour
     public int singleTeam;
     public int muertos;
     public bool centrarCamara;
-    public int iniciativeDice;
 
     public TextMeshProUGUI rondaText;
 
@@ -115,42 +114,40 @@ public class CombatManager : MonoBehaviour
     void IniciativaCalc()
     {
         turnos.Clear();
-        referencia.Clear();
-
         foreach (Unit unitC in unitList)
         {
-            unitC.iniciativaTurno += Random.Range(0, iniciativeDice);
-            turnos.Add(unitC.iniciativaTurno);
-            referencia.Add(unitC.owner);
-        }
-        int trucu2 = 0;
-        int ward = 0;
-        Player playerWard; 
-        foreach (Unit unitC in unitList)
-        {
-            foreach (Unit unitCh in unitList)
+            if (unitC.team == playerList[0].team)
             {
-                trucu2 = 0;
-                while (trucu2 < turnos.Count - 1)
-                {
-                    if (turnos[trucu2] < turnos[trucu2 + 1])
-                    {
-                        ward = turnos[trucu2];
-                        turnos[trucu2] = turnos[trucu2 + 1];
-                        turnos[trucu2 + 1] = ward;
-
-                        playerWard = referencia[trucu2];
-                        referencia[trucu2] = referencia[trucu2 + 1];
-                        referencia[trucu2 + 1] = playerWard;
-
-                        trucu2++;
-                    }
-                    else
-                    {
-                        trucu2++;
-                    }
-                }
+                playerList[0].iniciative += unitC.iniciativaTurno;
             }
+            else
+            {
+                playerList[1].iniciative += unitC.iniciativaTurno;
+            }
+        }
+
+        bool playerArrow;
+
+        if (playerList[0].iniciative > playerList[1].iniciative)
+        {
+            playerArrow = false;
+        }
+        else
+        {
+            playerArrow = true;
+        }
+
+        foreach (Unit unitC in unitList)
+        {
+            if (!playerArrow)
+            {
+                turnOrderList.Add(playerList[0]);
+            }
+            else
+            {
+                turnOrderList.Add(playerList[1]);
+            }
+            playerArrow = !playerArrow;
         }
 
         SiguienteTurno();
@@ -166,7 +163,7 @@ public class CombatManager : MonoBehaviour
             turnoActual = 0;
             NuevaRonda();
         }
-        referencia[turnoActual].GiveTurnStage();
+        turnOrderList[turnoActual].GiveTurnStage(); 
     }
 
     public void NuevaRonda()
@@ -183,7 +180,7 @@ public class CombatManager : MonoBehaviour
     {
         DestroyShowNodes();
 
-        List<Pathnode> nodesInRange = new List<Pathnode>(referencia[turnoActual].beastSelected.GetNodesInRange());
+        List<Pathnode> nodesInRange = new List<Pathnode>(turnOrderList[turnoActual].beastSelected.GetNodesInRange());
         foreach (Pathnode pathnode in nodesInRange)
         {
             if (pathnode.isWalkable)

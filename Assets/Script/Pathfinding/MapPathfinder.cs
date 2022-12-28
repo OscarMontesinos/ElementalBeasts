@@ -31,7 +31,7 @@ public class MapPathfinder : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !cManager.settingUp && unitToMove != null )
+        if (Input.GetMouseButtonDown(0) && !cManager.settingUp && unitToMove != null && !cManager.casteando)
         {
             Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
             /*pathfinding.GetGrid().GetXY(mousePosition, out int x, out int y);

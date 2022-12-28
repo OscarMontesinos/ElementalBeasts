@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     public GameObject buttonReady;
     public GameObject panelTurn;
     public Cursor cursor;
+    public int iniciative;
 
     private void Awake()
     {
@@ -41,7 +42,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) && !settingUnitsUp && beastSelected !=null)
+        if (Input.GetKeyDown(KeyCode.Space) && !settingUnitsUp && beastSelected !=null && !beastSelected.moving)
         {
             beastSelected.AcabarTurno();
         }

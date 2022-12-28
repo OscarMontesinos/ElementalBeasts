@@ -8,7 +8,6 @@ using UnityEngine;
 public class Hability
 {
     public string name;
-    public int slot;
     public enum HabilityType
     {
         Basic, Hability, Innate

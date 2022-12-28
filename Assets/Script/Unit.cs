@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour
     public Color32 color;
     float rondas;
     GameObject pj;
+    BoxCollider2D collider2D;
     public bool selected;
     public bool hSelected;
     public bool pSelected;
@@ -30,21 +31,26 @@ public class Unit : MonoBehaviour
     GameObject imparableMarcador;
     GameObject elegibleMarcador;
     Camera cam;
-    CombatManager manager;
+    public CombatManager manager;
     bool inmortal;
     public bool escondido;
     public LayerMask wallLayer;
+    public LayerMask voidLayer;
     public LayerMask unitLayer;
     public bool imparable;
     public int desorientarValue;
     public int slow;
+    public bool moving;
+    public bool habilityCasted;
     
 
 
     [Header("Habilidades")]
-    public List<Hability> habilities;
-    public List<int> chosenHabilities;
-    
+    public int chosenHab1;
+    public int chosenHab2;
+    public int chosenHab3;
+    public int chosenHab4;
+    public int castingHability;
 
 
     [Header("Stats")]
@@ -56,7 +62,7 @@ public class Unit : MonoBehaviour
     public float resistenciaMagica = 0;
     public int iniciativa = 0;
     public int maxMovementPoints = 0;
-     int movementPoints = 0;
+    public int movementPoints = 0;
     public float hp = 0;
     public float escudo = 0;
     public int iniciativaTurno = 0;
@@ -103,6 +109,7 @@ public class Unit : MonoBehaviour
 
     public virtual void Awake()
     {
+        collider2D =GetComponent<BoxCollider2D>();
         mapPathfinder = FindObjectOfType<MapPathfinder>();
         cam = Object.FindObjectOfType<Camera>();
         manager = Object.FindObjectOfType<CombatManager>();
@@ -110,7 +117,7 @@ public class Unit : MonoBehaviour
         hab2CDText = Object.FindObjectOfType<Hab2T>().GetComponent<Text>();
         hab3CDText= Object.FindObjectOfType<Hab3T>().GetComponent<Text>();
         hab4CDText = Object.FindObjectOfType<Hab4T>().GetComponent<Text>();*/
-        marcadorHabilidad = transform.GetChild(3).gameObject;
+        marcadorHabilidad = transform.GetChild(3).gameObject;   
         rotadorHabilidad = transform.GetChild(2).gameObject;
         conoHabilidad = transform.GetChild(0).transform.GetChild(0).gameObject;
         extensionMesher = transform.GetChild(2).transform.GetChild(0).gameObject;
@@ -149,7 +156,7 @@ public class Unit : MonoBehaviour
         
         hpBar.maxValue = mHp;
         hpBar.value = hpBar.maxValue;
-        hpText.text = "HP: " + hp.ToString("F0");
+        hpText.text = hp.ToString("F0");
         //iniText.text = iniciativa.ToString("F0"); 
     }
     public virtual void Update()
@@ -356,6 +363,7 @@ public class Unit : MonoBehaviour
     {
         if (pathVectorList != null && pathVectorList.Count!=0)
         {
+            moving = true;
             Vector3 targetPosition = pathVectorList[currentPathIndex];
             if (Vector3.Distance(transform.position, targetPosition) > 0.01f)
             {
@@ -377,6 +385,8 @@ public class Unit : MonoBehaviour
 
     void StopMoving()
     {
+
+        moving = false;
         UpdateCell(false);
         manager.ShowNodesInRange();
         pathVectorList = null;
@@ -430,6 +440,7 @@ public class Unit : MonoBehaviour
         {
             turnoRestante = 0;
         }
+        collider2D.enabled = false;
         movementPoints = maxMovementPoints -slow;
         mapPathfinder.unitToMove = this;
 
@@ -438,6 +449,7 @@ public class Unit : MonoBehaviour
     }
     public virtual void AcabarTurno()
     {
+        habilityCasted = false;
         owner.beastSelected = null;
         manager.DestroyShowNodes();
         turno = false;
@@ -445,6 +457,7 @@ public class Unit : MonoBehaviour
         pasar = true;
         root = false;
         manager.SiguienteTurno();
+        collider2D.enabled = true;
     }
     public void NuevaRonda()
     {
@@ -546,50 +559,45 @@ public class Unit : MonoBehaviour
 
     #region Habilities
 
-    public bool TargetAvaliable(Vector3 position, int range)
+
+    public virtual void ShowHability(int hability)
+    {
+
+       
+    }
+
+
+
+    public bool TargetAvaliable(Vector3 position)
     {
         position -= transform.position;
-        if (!Physics2D.Raycast(transform.position, position,range, wallLayer))
+        if (Physics2D.Raycast(transform.position, position,position.magnitude, wallLayer))
         {
-            return true;
+            Debug.Log(Physics2D.Raycast(transform.position, position, position.magnitude, wallLayer).collider.gameObject.name);  
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 
-    public Unit GetTarget(Vector3 position, int range)
+    public Unit GetTarget(Vector3 position)
     {
         position -= transform.position;
-        if (!Physics2D.Raycast(transform.position, position, range, unitLayer))
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, position, unitLayer) ;
+        if (Physics2D.Raycast(transform.position, position, unitLayer))
         {
-            return true;
+           
+            return hit.collider.GetComponent<Unit>();
         }
         else
         {
-            return false;
+            return null;
         }
     }
 
-    public void UseHability(int hability)
-    {
-        if (movementPoints >= 2 || slow>=3 && movementPoints>=1|| slow>5)
-        {
-            switch (habilities[hability].habilityEffects.Count)
-            {
-                case 1:
-                    CastHability(habilities[hability].habilityType, habilities[hability].habilityEffects[0], habilities[hability].habilityRange, habilities[hability].habilityTargetType, habilities[hability].habilityMovement);
-                    break;
-                case 2:
-                    CastHability(habilities[hability].habilityType, habilities[hability].habilityEffects[0], habilities[hability].habilityEffects[1], habilities[hability].habilityRange, habilities[hability].habilityTargetType, habilities[hability].habilityMovement);
-                    break;
-                case 3:
-                    CastHability(habilities[hability].habilityType, habilities[hability].habilityEffects[0], habilities[hability].habilityEffects[1], habilities[hability].habilityEffects[2], habilities[hability].habilityRange, habilities[hability].habilityTargetType, habilities[hability].habilityMovement);
-                    break;
-            }
-        }
-    }
+   
     public virtual void CastHability(Hability.HabilityType type, Hability.HabilityEffect effect, Hability.HabilityRange rangeType, Hability.HabilityTargetType targetType, Hability.HabilityMovement movement)
     {
 
@@ -601,6 +609,18 @@ public class Unit : MonoBehaviour
     }
     public virtual void CastHability(Hability.HabilityType type, Hability.HabilityEffect effect1, Hability.HabilityEffect effect2, Hability.HabilityEffect effect3, Hability.HabilityRange rangeType, Hability.HabilityTargetType targetType, Hability.HabilityMovement movement)
     {
+        if (!habilityCasted)
+        {
+            if (slow <= 2)
+            {
+                movementPoints -= 2;
+            }
+            else if (slow <= 4)
+            {
+                movementPoints -= 1;
+            }
+            habilityCasted = true;
+        }
         switch (type)
         {
             case Hability.HabilityType.Basic:
@@ -817,7 +837,7 @@ public class Unit : MonoBehaviour
         {
             while (hpBar.value > hp +1 && hpBar.value != 0)
             {
-                hpText.text = "HP: " + hpBar.value.ToString("F0");
+                hpText.text = hpBar.value.ToString("F0");
                 hpBar.value -= 1 * mHp / 125;
                 yield return new WaitForSeconds(0.01f);
             }
@@ -826,13 +846,13 @@ public class Unit : MonoBehaviour
         {
             while (hpBar.value < hp +1 && hpBar.value != 0)
             {
-                hpText.text = "HP: " + hpBar.value.ToString("F0");
+                hpText.text =  hpBar.value.ToString("F0");
 
                 hpBar.value += 1 * mHp / 125;
                 yield return new WaitForSeconds(0.01f);
             }
         }
-        hpText.text = "HP: " + hp.ToString("F0");
+        hpText.text = hp.ToString("F0");
 
         if (hp <= 0)
         {
@@ -982,6 +1002,7 @@ public class Unit : MonoBehaviour
             rangoMarcador.SetActive(false);
             marcadorHabilidad.SetActive(false);
             extensionMesher.SetActive(false);
+            manager.ShowNodesInRange();
         }
     }
 
