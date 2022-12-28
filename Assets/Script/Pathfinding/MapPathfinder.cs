@@ -10,7 +10,7 @@ public class MapPathfinder : MonoBehaviour
     public int gridHeight;
     public float cellsize;
     Pathfinding pathfinding;
-    public List<NotWalkable> notWalkableList;
+    public List<NotWalkableWall> notWalkableList;
     public List<Unit> unitList;
     public Unit unitToMove;
     // Start is called before the first frame update
@@ -19,7 +19,7 @@ public class MapPathfinder : MonoBehaviour
         cManager = FindObjectOfType<CombatManager>();
         unitToMove = FindObjectOfType<Unit>();
         pathfinding = new Pathfinding(gridWidth,gridHeight,cellsize);
-        notWalkableList = new List<NotWalkable>( FindObjectsOfType<NotWalkable>());
+        notWalkableList = new List<NotWalkableWall>( FindObjectsOfType<NotWalkableWall>());
         unitList = new List<Unit>( FindObjectsOfType<Unit>());
         CalculateNotWalkables();
         BlockAllOccupiedCells();
@@ -50,7 +50,7 @@ public class MapPathfinder : MonoBehaviour
     }
     void CalculateNotWalkables()
     {
-        foreach (NotWalkable notWalkable in notWalkableList)
+        foreach (NotWalkableWall notWalkable in notWalkableList)
         {
             GetPathfinding().GetGrid().GetXY(notWalkable.transform.position, out int x, out int y);
             GetPathfinding().GetNode(x, y).SetIsWalkable(false);

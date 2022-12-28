@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NotWalkable : MonoBehaviour
+public class NotWalkableWall : MonoBehaviour
 {
     CombatManager cManager;
-
     private void Awake()
     {
         cManager = FindObjectOfType<CombatManager>();

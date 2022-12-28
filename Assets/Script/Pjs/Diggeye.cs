@@ -1,3 +1,4 @@
+using CodeMonkey.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,25 +21,26 @@ public class Diggeye : Unit
     public int hab2Range;
     public float hab2Dmg;
     [Header("Hab3")]
-    public int hab3Turno;
-    public int hab3CdTotal;
-    public int hab3Cd;
-    public int hab3Rango;
-    public int hab3Ancho;
-    public int hab3Rondas;
-    public float hab3Escalado;
+    public Hability hab3;
+    public int hab3Turn;
+    public int hab3Rmax;
+    int repetitions3;
+    public int hab3Range;
+    public int hab3Max;
+    public GameObject hab3Searcher;
+    public List<MinerSearcher> searcherList = new List<MinerSearcher>();
     [Header("Hab4")]
-    public int hab4Turno;
+    public Hability hab4;
+    public int hab4Turn;
     public int hab4CdTotal;
     public int hab4Cd;
-    public int hab4Rango;
-    public float hab4Escalado;
+    public int hab4Range;
     public override void Awake()
     {
         base.Awake();
         repetitions1 = hab1Rmax;
         repetitions2 = hab2Rmax;
-        hab3CdTotal++;
+        repetitions3 = hab3Rmax;
         hab4CdTotal++;
     }
 
@@ -46,8 +48,8 @@ public class Diggeye : Unit
     public override void Update()
     {
         base.Update();
-       // ActualizarCDUI(repetitions1, repetitions2, hab3Cd, hab4Cd);
-        if (Input.GetMouseButtonDown(0) && manager.casteando && turno )
+        // ActualizarCDUI(repetitions1, repetitions2, hab3Cd, hab4Cd);
+        if (Input.GetMouseButtonDown(0) && manager.casteando && turno)
         {
             bool impacto = false;
             switch (castingHability)
@@ -57,9 +59,9 @@ public class Diggeye : Unit
                     {
                         if (unit != null)
                         {
-                            if (unit.hSelected && TargetAvaliable(unit.transform.position)&& unit == GetTarget(unit.transform.position))
+                            if (unit.hSelected && CheckAll(unit, unit.transform.position, hab1Range))
                             {
-                                CastHability(hab1.habilityType,hab1.habilityEffects[0],hab1.habilityRange,hab1.habilityTargetType,hab1.habilityMovement);
+                                CastHability(hab1.habilityType, hab1.habilityEffects[0], hab1.habilityRange, hab1.habilityTargetType, hab1.habilityMovement);
                                 unit.RecibirDanoFisico(CalcularDanoFisico(hab1Dmg));
                                 impacto = true;
                             }
@@ -78,7 +80,7 @@ public class Diggeye : Unit
                     {
                         if (unit != null)
                         {
-                            if (unit.hSelected && TargetAvaliable(unit.transform.position) && unit == GetTarget(unit.transform.position))
+                            if (unit.hSelected && CheckAll(unit, unit.transform.position, hab2Range))
                             {
                                 CastHability(hab2.habilityType, hab2.habilityEffects[0], hab2.habilityEffects[1], hab2.habilityRange, hab2.habilityTargetType, hab2.habilityMovement);
                                 unit.RecibirDanoFisico(CalcularDanoFisico(hab2Dmg));
@@ -89,8 +91,79 @@ public class Diggeye : Unit
                     if (impacto)
                     {
                         repetitions2--;
-                        turnoRestante -= hab1Turn;
+                        turnoRestante -= hab2Turn;
                     }
+                    MarcarHabilidad(4, 0, 0);
+                    break;
+                case 3:
+                    CastHability(hab3.habilityType, hab3.habilityEffects[0], hab3.habilityRange, hab3.habilityTargetType, hab3.habilityMovement);
+                    GameObject minerSearcher = Instantiate(hab3Searcher, transform.position, transform.rotation);
+                    minerSearcher.GetComponent<MinerSearcher>().SetUp(team, UtilsClass.GetMouseWorldPosition(), hab3Range, this);
+                    searcherList.Add(minerSearcher.GetComponent<MinerSearcher>());
+                    if (searcherList.Count > hab3Max)
+                    {
+                        Destroy(searcherList[0].gameObject);
+                        searcherList.RemoveAt(0);
+                    }
+
+                    repetitions3--;
+                    turnoRestante -= hab3Turn;
+                    MarcarHabilidad(4, 0, 0);
+                    break;
+                case 4:
+                    if (searcherList.Count > 0)
+                    {
+                        foreach (MinerSearcher unit in searcherList)
+                        {
+                            if (unit != null)
+                            {
+                                if (unit.avaliable)
+                                {
+                                    if (CheckVoid(unit.transform.position))
+                                    {
+                                        CastHability(hab4.habilityType, hab4.habilityEffects[0], hab4.habilityRange, hab4.habilityTargetType, hab4.habilityMovement);
+
+                                        Dash(this, new Vector3(unit.transform.position.x, unit.transform.position.y, transform.position.z));
+                                        impacto = true;
+                                    }
+                                }
+                            }
+                        }
+                        if (impacto)
+                        {
+                            hab4Cd = hab4CdTotal;
+                            turnoRestante -= hab4Turn;
+                        }
+                        else
+                        {
+                            int x;
+                            int y;
+                            Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(),out x, out y);
+                            if (CheckVoid(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab4Range) && Pathfinding.Instance.GetNode(x,y).isWalkable)
+                            {
+                                CastHability(hab4.habilityType, hab4.habilityEffects[0], hab4.habilityRange, hab4.habilityTargetType, hab4.habilityMovement);
+                                Dash(this, UtilsClass.GetMouseWorldPosition());
+
+                                hab4Cd = hab4CdTotal;
+                                turnoRestante -= hab4Turn;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        int x;
+                        int y;
+                        Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(), out x, out y);
+                        if (CheckVoid(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab4Range) && Pathfinding.Instance.GetNode(x, y).isWalkable)
+                        {
+                            CastHability(hab4.habilityType, hab4.habilityEffects[0], hab4.habilityRange, hab4.habilityTargetType, hab4.habilityMovement);
+                            Dash(this, UtilsClass.GetMouseWorldPosition());
+
+                            hab4Cd = hab4CdTotal;
+                            turnoRestante -= hab4Turn;
+                        }
+                    }
+                    manager.Position(gameObject);
                     MarcarHabilidad(4, 0, 0);
                     break;
             }
@@ -149,6 +222,22 @@ public class Diggeye : Unit
                     MarcarHabilidad(0, hab2Range, 0);
                 }
                 break;
+            case 3:
+                if(repetitions3 > 0 && turnoRestante >= hab3Turn)
+                {
+                    manager.aliado = false;
+                    manager.enemigo = false;
+                    MarcarHabilidad(0, hab3Range, 0);
+                }
+                break;
+            case 4:
+                if(hab4Cd<= 0 && turnoRestante >= hab4Turn)
+                {
+                    manager.aliado = false;
+                    manager.enemigo = false;
+                    MarcarHabilidad(0, hab4Range, 0);
+                }
+                break;
         }
     }
 
@@ -158,10 +247,7 @@ public class Diggeye : Unit
 
         repetitions1 = hab1Rmax;
         repetitions2 = hab2Rmax;
-        if (hab3Cd != 0)
-        {
-            hab3Cd--;
-        }
+        repetitions3 = hab3Rmax;
         if (hab4Cd != 0)
         {
             hab4Cd--;

@@ -42,6 +42,7 @@ public class Unit : MonoBehaviour
     public int slow;
     public bool moving;
     public bool habilityCasted;
+    public int revealed;
     
 
 
@@ -446,9 +447,11 @@ public class Unit : MonoBehaviour
 
         manager.ShowNodesInRange();
         turno = true;
+        Debug.Log(collider2D.enabled);
     }
     public virtual void AcabarTurno()
     {
+        collider2D.enabled = true;
         habilityCasted = false;
         owner.beastSelected = null;
         manager.DestroyShowNodes();
@@ -457,7 +460,7 @@ public class Unit : MonoBehaviour
         pasar = true;
         root = false;
         manager.SiguienteTurno();
-        collider2D.enabled = true;
+        MarcarHabilidad(4, 0, 0);
     }
     public void NuevaRonda()
     {
@@ -566,14 +569,66 @@ public class Unit : MonoBehaviour
        
     }
 
+    public bool CheckAll(Unit unit, Vector3 position, int range)
+    {
+        if( CheckWalls(position) && unit == GetTarget(position) && CheckRange(unit.transform.position, range))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
+    public bool CheckRange(Vector3 pos, int range)
+    {
+        int x, y, tx, ty;
+        Pathfinding.Instance.GetGrid().GetXY(pos, out tx, out ty);
+        Pathfinding.Instance.GetGrid().GetXY(transform.position, out x, out y);
 
-    public bool TargetAvaliable(Vector3 position)
+        x -= tx;
+        y -= ty;
+
+        if (x < 0)
+        {
+            x *= -1;
+        }
+        if (y < 0)
+        {
+            y *= -1;
+        }
+        if (x >= y && x <= range)
+        {
+            return true;
+        }
+        else if (y > x && y <= range)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool CheckWalls(Vector3 position)
     {
         position -= transform.position;
         if (Physics2D.Raycast(transform.position, position,position.magnitude, wallLayer))
         {
-            Debug.Log(Physics2D.Raycast(transform.position, position, position.magnitude, wallLayer).collider.gameObject.name);  
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public bool CheckVoid(Vector3 position)
+    {
+        position -= transform.position;
+        if (Physics2D.Raycast(transform.position, position,position.magnitude, voidLayer))
+        {
             return false;
         }
         else
@@ -588,7 +643,6 @@ public class Unit : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, position, unitLayer) ;
         if (Physics2D.Raycast(transform.position, position, unitLayer))
         {
-           
             return hit.collider.GetComponent<Unit>();
         }
         else
@@ -745,7 +799,10 @@ public class Unit : MonoBehaviour
                 break;
         }
     }
+
     
+
+
     #region type
     public virtual void UseBasic()
     {
@@ -821,9 +878,16 @@ public class Unit : MonoBehaviour
 
     }
     #endregion
-
     public virtual void UseDash()
     {
+
+    }
+
+    public virtual void Dash(Unit unit, Vector3 newPos)
+    {
+        UpdateCell(true);
+        unit.transform.position = new Vector3(newPos.x, newPos.y, transform.position.z);
+        UpdateCell(false);
 
     }
     #endregion

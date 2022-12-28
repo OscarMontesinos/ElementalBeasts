@@ -103,7 +103,7 @@ public class ObjetoInvocado : MonoBehaviour
         {
             planning = false;
             unidad.planeoInvocacion = false;
-            unidad.GetManager().invocaciones.Add(this);
+            unidad.GetManager().invocaciones.Add(this.gameObject);
             foreach (Unit unit in objetivos)
             {
                 if (unit != null)

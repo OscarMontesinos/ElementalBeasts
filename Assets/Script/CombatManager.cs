@@ -11,7 +11,7 @@ public class CombatManager : MonoBehaviour
     public List<Player> turnOrderList;
     public List<Player> playerList;
     public List<int> turnos;
-    public List<ObjetoInvocado> invocaciones;
+    public List<GameObject> invocaciones = new List<GameObject>();
     public GameObject spawnCells;
     public GameObject pathShower;
     public int turnoActual = -1;
@@ -41,10 +41,7 @@ public class CombatManager : MonoBehaviour
         playerList = new List<Player>(FindObjectsOfType<Player>());
 
         
-        foreach (GameObject invoc in listGameObjectInvoc)
-        {
-            invocaciones.Add(invoc.GetComponent<ObjetoInvocado>());
-        }
+        
 
         foreach (Player player in playerList)
         {
@@ -77,9 +74,9 @@ public class CombatManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (casteando)
+        if (casteando)
         {
-            foreach (ObjetoInvocado habilidad in invocaciones)
+            foreach (GameObject habilidad in invocaciones)
             {
                 if (habilidad != null)
                 {
@@ -89,14 +86,14 @@ public class CombatManager : MonoBehaviour
         }
         else
         {
-            foreach (ObjetoInvocado habilidad in invocaciones)
+            foreach (GameObject habilidad in invocaciones)
             {
                 if (habilidad != null)
                 {
                     habilidad.gameObject.SetActive(true);
                 }
             }
-        }*/
+        }
     }
     void StartMatch()
     {
