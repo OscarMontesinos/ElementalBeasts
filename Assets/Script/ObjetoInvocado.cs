@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +20,7 @@ public class ObjetoInvocado : MonoBehaviour
     public int team;
     public GameObject objeto;
     public bool activatedThisRound;
-    Text indicadorRondas;
+    public TextMeshProUGUI indicadorRondas;
 
     float value;
     int rondas;
@@ -38,7 +39,6 @@ public class ObjetoInvocado : MonoBehaviour
     public virtual void Start()
     {
         objeto = transform.GetChild(0).gameObject;
-        indicadorRondas = FindObjectOfType<Text>();
         cam = FindObjectOfType<Camera>();
         manager = FindObjectOfType<CombatManager>();
 
@@ -65,8 +65,6 @@ public class ObjetoInvocado : MonoBehaviour
         rondasDuracion++;
 
         rondasMax = rondasDuracion;
-        aliado = manager.aliado;
-        enemigo = manager.enemigo;
         muertosPrevios = manager.muertos;
     }
 
@@ -98,20 +96,6 @@ public class ObjetoInvocado : MonoBehaviour
         {
             Destroy(gameObject);
             unidad.planeoInvocacion = false;
-        }
-        if (Input.GetMouseButtonDown(0) && planning)
-        {
-            planning = false;
-            unidad.planeoInvocacion = false;
-            unidad.GetManager().invocaciones.Add(this.gameObject);
-            foreach (Unit unit in objetivos)
-            {
-                if (unit != null)
-                {
-                    Golpear(unit);
-                }
-            }
-
         }
         if (Input.GetKeyDown(KeyCode.Q) && planning)
         {
@@ -152,6 +136,19 @@ public class ObjetoInvocado : MonoBehaviour
         }*/
     }
 
+    public virtual void SetUp()
+    {
+        planning = false;
+        unidad.planeoInvocacion = false;
+        unidad.GetManager().invocaciones.Add(this);
+        foreach (Unit unit in objetivos)
+        {
+            if (unit != null)
+            {
+                Golpear(unit);
+            }
+        }
+    }
     public virtual void Actualizar()
     {
         if (contarRondas) 
@@ -182,7 +179,7 @@ public class ObjetoInvocado : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Character" && !planning)
+        if (collision.gameObject.GetComponent<Unit>() && !planning)
         {
             if (collision.gameObject.GetComponent<Unit>().team == team && aliado || collision.gameObject.GetComponent<Unit>().team != team && enemigo)
             {
@@ -199,7 +196,7 @@ public class ObjetoInvocado : MonoBehaviour
     public virtual void OnTriggerStay2D(Collider2D collision)
     {
 
-        if (collision.gameObject.tag == "Character" && !planning)
+        if (collision.gameObject.GetComponent<Unit>() && !planning)
         {
 
             bool esta = false;
@@ -229,11 +226,7 @@ public class ObjetoInvocado : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Piso")
-        {
-            objeto.gameObject.SetActive(true);
-        }
-        if (collision.gameObject.tag == "Character" && !planning)
+        if (collision.gameObject.GetComponent<Unit>() && !planning)
         {
           
             if (collision.gameObject.GetComponent<Unit>().team == team && aliado  || collision.gameObject.GetComponent<Unit>().team != team && enemigo )

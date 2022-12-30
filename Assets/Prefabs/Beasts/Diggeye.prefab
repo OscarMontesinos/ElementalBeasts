@@ -98,6 +98,11 @@ MonoBehaviour:
   turno: 0
   pasar: 0
   planeoInvocacion: 0
+  marcadorHabilidad: {fileID: 0}
+  rotadorHabilidad: {fileID: 0}
+  conoHabilidad: {fileID: 0}
+  extensionMesher: {fileID: 0}
+  rangoMarcador: {fileID: 0}
   manager: {fileID: 0}
   escondido: 0
   wallLayer:
@@ -116,9 +121,9 @@ MonoBehaviour:
   habilityCasted: 0
   revealed: 0
   chosenHab1: 1
-  chosenHab2: 2
-  chosenHab3: 3
-  chosenHab4: 4
+  chosenHab2: 3
+  chosenHab3: 6
+  chosenHab4: 8
   castingHability: 0
   sinergiaElemental: 8
   fuerza: 46
@@ -187,3 +192,51 @@ MonoBehaviour:
   hab4CdTotal: 2
   hab4Cd: 0
   hab4Range: 3
+  hab5:
+    name: Asalto
+    habilityType: 1
+    habilityEffects: 01000000
+    habilityRange: 1
+    habilityTargetType: 1
+    habilityMovement: 1
+  hab5Turn: 1
+  hab5CdTotal: 1
+  hab5Cd: 0
+  hab5Range: 3
+  hab5Dmg: 20
+  hab6:
+    name: Agilidad
+    habilityType: 1
+    habilityEffects: 01000000
+    habilityRange: 1
+    habilityTargetType: 1
+    habilityMovement: 1
+  hab6Turn: 2
+  hab6CdTotal: 1
+  hab6Cd: 0
+  hab6Range: 3
+  hab6Dmg: 20
+  hab6Stage2: 0
+  hab7:
+    name: Garra Veloz
+    habilityType: 2
+    habilityEffects: 02000000
+    habilityRange: 0
+    habilityTargetType: 0
+    habilityMovement: 0
+  hab7ExtraTurn: 1
+  hab8:
+    name: Trampa de Subsuelo
+    habilityType: 1
+    habilityEffects: 080000000100000007000000
+    habilityRange: 0
+    habilityTargetType: 1
+    habilityMovement: 0
+  hab8Turn: 3
+  hab8CdTotal: 2
+  hab8Cd: 0
+  hab8Range: 1
+  hab8Duration: 4
+  hab8Dmg: 10
+  hab8Trap: {fileID: 7856540793155916339, guid: 1070db7651ea0984aa04fc236eeb2e19, type: 3}
+  hab8CurrentTrap: {fileID: 0}

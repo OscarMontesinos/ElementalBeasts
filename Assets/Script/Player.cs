@@ -149,6 +149,7 @@ public class Player : MonoBehaviour
     
     public void GiveTurnStage()
     {
+        manager.giveTurn = true;
         giveTurno = true;
         panelTurn.SetActive(true);
         foreach (Unit unit in beasts)
@@ -168,6 +169,7 @@ public class Player : MonoBehaviour
         }
         beastSelected = unit;
         giveTurno = false;
+        manager.giveTurn = false;
         panelTurn.SetActive(false);
     }
 

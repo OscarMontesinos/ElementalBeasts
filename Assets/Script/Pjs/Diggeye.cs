@@ -35,6 +35,34 @@ public class Diggeye : Unit
     public int hab4CdTotal;
     public int hab4Cd;
     public int hab4Range;
+    [Header("Hab5")]
+    public Hability hab5;
+    public int hab5Turn;
+    public int hab5CdTotal;
+    public int hab5Cd;
+    public int hab5Range;
+    public float hab5Dmg;
+    [Header("Hab6")]
+    public Hability hab6;
+    public int hab6Turn;
+    public int hab6CdTotal;
+    public int hab6Cd;
+    public int hab6Range;
+    public float hab6Dmg;
+    public bool hab6Stage2;
+    [Header("Hab67")]
+    public Hability hab7;
+    public int hab7ExtraTurn;
+    [Header("Hab8")]
+    public Hability hab8;
+    public int hab8Turn;
+    public int hab8CdTotal;
+    public int hab8Cd;
+    public int hab8Range;
+    public int hab8Duration;
+    public float hab8Dmg;
+    public GameObject hab8Trap;
+    public DiggeyeTrap hab8CurrentTrap;
     public override void Awake()
     {
         base.Awake();
@@ -42,6 +70,7 @@ public class Diggeye : Unit
         repetitions2 = hab2Rmax;
         repetitions3 = hab3Rmax;
         hab4CdTotal++;
+        hab5CdTotal++;
     }
 
     // Update is called once per frame
@@ -62,6 +91,11 @@ public class Diggeye : Unit
                             if (unit.hSelected && CheckAll(unit, unit.transform.position, hab1Range))
                             {
                                 CastHability(hab1.habilityType, hab1.habilityEffects[0], hab1.habilityRange, hab1.habilityTargetType, hab1.habilityMovement);
+                                if(chosenHab1==7||chosenHab2 == 7 ||chosenHab3 == 7 ||chosenHab4 == 7)
+                                {
+                                    turnoRestante+=hab7ExtraTurn; 
+                                    CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab1.habilityMovement);
+                                }
                                 unit.RecibirDanoFisico(CalcularDanoFisico(hab1Dmg));
                                 impacto = true;
                             }
@@ -138,8 +172,8 @@ public class Diggeye : Unit
                         {
                             int x;
                             int y;
-                            Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(),out x, out y);
-                            if (CheckVoid(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab4Range) && Pathfinding.Instance.GetNode(x,y).isWalkable)
+                            Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(), out x, out y);
+                            if (CheckVoid(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab4Range) && Pathfinding.Instance.GetNode(x, y).isWalkable)
                             {
                                 CastHability(hab4.habilityType, hab4.habilityEffects[0], hab4.habilityRange, hab4.habilityTargetType, hab4.habilityMovement);
                                 Dash(this, UtilsClass.GetMouseWorldPosition());
@@ -163,9 +197,89 @@ public class Diggeye : Unit
                             turnoRestante -= hab4Turn;
                         }
                     }
-                    manager.Position(gameObject);
+                    MarcarHabilidad(4, 0, 0);
+                    manager.diggeyeSearcherCasting = false;
+                    break;
+                case 5:
+                    foreach (Unit unit in manager.unitList)
+                    {
+                        if (unit != null)
+                        {
+                            if (unit.hSelected && CheckAll(unit, unit.transform.position, hab2Range))
+                            {
+                                CastHability(hab5.habilityType, hab5.habilityEffects[0],  hab5.habilityRange, hab5.habilityTargetType, hab5.habilityMovement);
+                                if (chosenHab1 == 7 || chosenHab2 == 7 || chosenHab3 == 7 || chosenHab4 == 7)
+                                {
+                                    turnoRestante += hab7ExtraTurn;
+                                    CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab1.habilityMovement);
+                                }
+                                unit.RecibirDanoFisico(CalcularDanoFisico(hab5Dmg));
+                                impacto = true;
+                                DashBehindTarget(this, unit);
+                            }
+                        }
+                    }
+                    if (impacto)
+                    {
+                        hab5Cd = hab5CdTotal;
+                        turnoRestante -= hab5Turn;
+                    }
                     MarcarHabilidad(4, 0, 0);
                     break;
+                case 6:
+                    if (!hab6Stage2)
+                    {
+                        foreach (Unit unit in manager.unitList)
+                        {
+                            if (unit != null)
+                            {
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab6Range))
+                                {
+                                    CastHability(hab6.habilityType, hab6.habilityEffects[0], hab6.habilityRange, hab6.habilityTargetType, hab6.habilityMovement);
+                                    if (chosenHab1 == 7 || chosenHab2 == 7 || chosenHab3 == 7 || chosenHab4 == 7)
+                                    {
+                                        turnoRestante += hab7ExtraTurn;
+                                        CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab1.habilityMovement);
+                                    }
+                                    unit.RecibirDanoFisico(CalcularDanoFisico(hab6Dmg));
+                                    UpdateCell(true);
+                                    transform.position = unit.transform.position;
+                                    impacto = true;
+                                }
+                            }
+                        }
+                        if (impacto)
+                        {
+                            hab6Stage2 = true;
+                        }
+                    }
+                    else
+                    {
+                        int x;
+                        int y;
+                        Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(), out x, out y);
+                        if (CheckWalls(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab6Range) && Pathfinding.Instance.GetNode(x, y).isWalkable)
+                        {
+                            Dash(this, UtilsClass.GetMouseWorldPosition());
+
+                            hab6Cd = hab6CdTotal;
+                            turnoRestante -= hab6Turn;
+                            MarcarHabilidad(4, 0, 0);
+                            hab6Stage2 = false;
+                        }
+                    }
+                    break;
+                case 8:
+                    if(CheckRange(UtilsClass.GetMouseWorldPosition(), hab8Range))
+                    {
+                        
+                        hab8CurrentTrap.SetUp();
+                        hab8Cd = hab8Duration + hab8CdTotal;
+                        turnoRestante -= hab8Turn;
+                        MarcarHabilidad(4, 0, 0);
+                    }
+                    break;
+
             }
         }
 
@@ -198,17 +312,22 @@ public class Diggeye : Unit
             }
         }
 
+        if (hab6Stage2)
+        {
+            ShowHability(6);
+        }
+
     }
 
     public override void ShowHability(int hability)
     {
-        manager.DestroyShowNodes();
-        castingHability = hability;
         switch (castingHability)
         {
             case 1:
                 if (repetitions1 > 0 && turnoRestante >= hab1Turn)
                 {
+                    manager.DestroyShowNodes();
+                    castingHability = hability;
                     manager.aliado = false;
                     manager.enemigo = true;
                     MarcarHabilidad(0, hab1Range, 0);
@@ -217,6 +336,8 @@ public class Diggeye : Unit
             case 2:
                 if (repetitions2 > 0 &&  turnoRestante >= hab2Turn)
                 {
+                    manager.DestroyShowNodes();
+                    castingHability = hability;
                     manager.aliado = false;
                     manager.enemigo = true;
                     MarcarHabilidad(0, hab2Range, 0);
@@ -225,6 +346,8 @@ public class Diggeye : Unit
             case 3:
                 if(repetitions3 > 0 && turnoRestante >= hab3Turn)
                 {
+                    manager.DestroyShowNodes();
+                    castingHability = hability;
                     manager.aliado = false;
                     manager.enemigo = false;
                     MarcarHabilidad(0, hab3Range, 0);
@@ -233,9 +356,42 @@ public class Diggeye : Unit
             case 4:
                 if(hab4Cd<= 0 && turnoRestante >= hab4Turn)
                 {
+                    manager.DestroyShowNodes();
+                    castingHability = hability;
+                    manager.diggeyeSearcherCasting = true;
                     manager.aliado = false;
                     manager.enemigo = false;
                     MarcarHabilidad(0, hab4Range, 0);
+                }
+                break;
+            case 5:
+                if(hab5Cd<= 0 && turnoRestante >= hab5Turn)
+                {
+                    manager.DestroyShowNodes();
+                    castingHability = hability;
+                    manager.aliado = false;
+                    manager.enemigo = true;
+                    MarcarHabilidad(0, hab5Range, 0);
+                }
+                break;
+            case 6:
+                if(hab6Cd<= 0 && turnoRestante >= hab6Turn)
+                {
+                    manager.DestroyShowNodes();
+                    castingHability = hability;
+                    manager.aliado = false;
+                    manager.enemigo = true;
+                    MarcarHabilidad(0, hab6Range, 0);
+                }
+                break;
+            case 8:
+                if (hab8Cd <= 0 && turnoRestante >= hab8Turn)
+                {
+                    manager.DestroyShowNodes();
+                    castingHability = hability;
+                    manager.aliado = false;
+                    manager.enemigo = false;
+                    MarcarHabilidad(6, hab8Range, 0);
                 }
                 break;
         }
@@ -243,7 +399,6 @@ public class Diggeye : Unit
 
     public override void AcabarTurno()
     {
-        base.AcabarTurno();
 
         repetitions1 = hab1Rmax;
         repetitions2 = hab2Rmax;
@@ -252,8 +407,30 @@ public class Diggeye : Unit
         {
             hab4Cd--;
         }
+        if (hab5Cd != 0)
+        {
+            hab5Cd--;
+        }
         castingHability = 0;
+        base.AcabarTurno();
 
+    }
+
+    public override void MarcarHabilidad(int forma, int rango, int ancho)
+    {
+        base.MarcarHabilidad(forma, rango, ancho);
+        if (forma == 6)
+        {
+            planeoInvocacion = true;
+            manager.habSingle = false;
+            rangoMarcador.SetActive(true);
+            conoHabilidad.SetActive(false);
+            marcadorHabilidad.SetActive(false);
+            extensionMesher.SetActive(false);
+            rangoMarcador.transform.localScale = new Vector3((rango + 1) * 2 - 1, (rango + 1) * 2 - 1, rangoMarcador.transform.localScale.z);
+            GameObject trap = Instantiate(hab8Trap);
+            hab8CurrentTrap= trap.GetComponent<DiggeyeTrap>();
+        }
     }
 }
     

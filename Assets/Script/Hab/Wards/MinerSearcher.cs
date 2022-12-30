@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MinerSearcher : MonoBehaviour
+public class MinerSearcher : ObjetoInvocado
 {
     public int team;
     public Unit owner;
@@ -14,22 +14,30 @@ public class MinerSearcher : MonoBehaviour
     public int x;
     public int y;
 
+    public override void Start()
+    {
+    }
+
+    public override void Update()
+    {
+        if (owner == null)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public override void Actualizar()
+    {
+    }
     public void SetUp(int team, Vector3 destinyPos, int range, Unit owner)
     {
         this.owner = owner;
         this.team = team;
         this.range = range;
         this.destinyPos = destinyPos;
-        Pathfinding.Instance.GetGrid().GetXY(transform.position, out x, out y); 
-        owner.GetManager().invocaciones.Add(this.gameObject);
+        Pathfinding.Instance.GetGrid().GetXY(transform.position, out x, out y);
+        owner.GetManager().invocaciones.Add(this);
         StartCoroutine(goForward());
-    }
-    public virtual void Update()
-    {
-        if (owner == null)
-        {
-            Destroy(gameObject);
-        }
     }
 
     IEnumerator goForward()

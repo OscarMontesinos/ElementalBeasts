@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Ward : MonoBehaviour
 {
-    public int rounds;
     public int team;
     public Unit owner;
     public bool DontDestroyOnOwnerNull;

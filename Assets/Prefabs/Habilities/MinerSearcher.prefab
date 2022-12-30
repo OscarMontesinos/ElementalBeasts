@@ -201,7 +201,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   walls: 0
   range: 0
-  speed: 5
+  speed: 10
   destinyPos: {x: 0, y: 0, z: 0}
   avaliable: 0
   x: 0

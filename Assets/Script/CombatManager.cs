@@ -11,19 +11,21 @@ public class CombatManager : MonoBehaviour
     public List<Player> turnOrderList;
     public List<Player> playerList;
     public List<int> turnos;
-    public List<GameObject> invocaciones = new List<GameObject>();
+    public List<ObjetoInvocado> invocaciones = new List<ObjetoInvocado>();
     public GameObject spawnCells;
     public GameObject pathShower;
     public int turnoActual = -1;
     public bool nuevaRonda = true;
     public int ronda = 1;
     public bool casteando;
+    public bool diggeyeSearcherCasting;
     public bool habSingle;
     public bool aliado;
     public bool enemigo;
     public int singleTeam;
     public int muertos;
     public bool centrarCamara;
+    public bool giveTurn;
 
     public TextMeshProUGUI rondaText;
 
@@ -74,19 +76,26 @@ public class CombatManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (casteando)
+        if (casteando || giveTurn)
         {
-            foreach (GameObject habilidad in invocaciones)
+            foreach (ObjetoInvocado habilidad in invocaciones)
             {
                 if (habilidad != null)
                 {
-                    habilidad.gameObject.SetActive(false);
+                    if (diggeyeSearcherCasting && habilidad.GetComponent<MinerSearcher>())
+                    {
+
+                    }
+                    else
+                    {
+                        habilidad.gameObject.SetActive(false);
+                    }
                 }
             }
         }
         else
         {
-            foreach (GameObject habilidad in invocaciones)
+            foreach (ObjetoInvocado habilidad in invocaciones)
             {
                 if (habilidad != null)
                 {
@@ -153,8 +162,14 @@ public class CombatManager : MonoBehaviour
 
     public void SiguienteTurno()
     {
+        foreach(ObjetoInvocado invoc in invocaciones)
+        {
+            if (invoc != null)
+            {
+                invoc.Actualizar();
+            }
+        }
         turnoActual++;
-        Debug.Log(turnoActual);
         if (turnoActual >= unitList.Count)
         {
             turnoActual = 0;

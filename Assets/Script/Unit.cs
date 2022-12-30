@@ -21,11 +21,11 @@ public class Unit : MonoBehaviour
     public bool turno;
     public bool pasar;
     public bool planeoInvocacion;
-    GameObject marcadorHabilidad;
-    GameObject rotadorHabilidad;
-    GameObject conoHabilidad;
-    GameObject extensionMesher;
-    GameObject rangoMarcador;
+    public GameObject marcadorHabilidad;
+    public GameObject rotadorHabilidad;
+    public GameObject conoHabilidad;
+    public GameObject extensionMesher;
+    public GameObject rangoMarcador;
     GameObject inmortalMarcador;
     GameObject stunnMarcador;
     GameObject imparableMarcador;
@@ -230,6 +230,7 @@ public class Unit : MonoBehaviour
 
             manager.casteando = false;
             MarcarHabilidad(4, 0, 0);
+            manager.ShowNodesInRange();
         }
 
                
@@ -384,7 +385,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    void StopMoving()
+    public void StopMoving()
     {
 
         moving = false;
@@ -441,17 +442,14 @@ public class Unit : MonoBehaviour
         {
             turnoRestante = 0;
         }
-        collider2D.enabled = false;
         movementPoints = maxMovementPoints -slow;
         mapPathfinder.unitToMove = this;
 
         manager.ShowNodesInRange();
         turno = true;
-        Debug.Log(collider2D.enabled);
     }
     public virtual void AcabarTurno()
     {
-        collider2D.enabled = true;
         habilityCasted = false;
         owner.beastSelected = null;
         manager.DestroyShowNodes();
@@ -561,7 +559,6 @@ public class Unit : MonoBehaviour
     #endregion
 
     #region Habilities
-
 
     public virtual void ShowHability(int hability)
     {
@@ -888,6 +885,66 @@ public class Unit : MonoBehaviour
         UpdateCell(true);
         unit.transform.position = new Vector3(newPos.x, newPos.y, transform.position.z);
         UpdateCell(false);
+        manager.Position(gameObject);
+
+    }
+    public virtual void DashBehindTarget(Unit unit, Unit targetUnit)
+    {
+        UpdateCell(true);
+        Pathfinding.Instance.GetGrid().GetXY(unit.transform.position, out int x, out int y);
+        Pathfinding.Instance.GetGrid().GetXY(targetUnit.transform.position, out int tx, out int ty);
+        x -= tx;
+        y -= ty;
+        if (x != 0)
+        {
+            if (x > 0)
+            {
+                tx--;
+            }
+            else
+            {
+                tx++;
+            }
+        }
+        if (y != 0)
+        {
+            if (y > 0)
+            {
+                ty--;
+            }
+            else
+            {
+                ty++;
+            }
+        }
+        if (Pathfinding.Instance.GetNode(tx, ty) == null || !Pathfinding.Instance.GetNode(tx, ty).isWalkable)
+        {
+            if (x != 0)
+            {
+                if (x > 0)
+                {
+                    tx += 2;
+                }
+                else
+                {
+                    tx -= 2;
+                }
+            }
+            if (y != 0)
+            {
+                if (y > 0)
+                {
+                    ty += 2;
+                }
+                else
+                {
+                    ty -= 2;
+                }
+            }
+        }
+        unit.transform.position = new Vector3(tx, ty, transform.position.z);
+        UpdateCell(false);
+        manager.Position(gameObject);
 
     }
     #endregion
@@ -979,6 +1036,7 @@ public class Unit : MonoBehaviour
     public virtual void MarcarHabilidad(int forma, int rango, int ancho)
     {
         manager.casteando = true;
+        collider2D.enabled = false;
         if (forma == 0)
         {
             manager.habSingle = true;
@@ -1066,6 +1124,7 @@ public class Unit : MonoBehaviour
             rangoMarcador.SetActive(false);
             marcadorHabilidad.SetActive(false);
             extensionMesher.SetActive(false);
+            collider2D.enabled = true;
             manager.ShowNodesInRange();
         }
     }
