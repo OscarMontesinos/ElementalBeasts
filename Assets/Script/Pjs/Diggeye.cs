@@ -1,6 +1,7 @@
 using CodeMonkey.Utils;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Diggeye : Unit
@@ -50,7 +51,7 @@ public class Diggeye : Unit
     public int hab6Range;
     public float hab6Dmg;
     public bool hab6Stage2;
-    [Header("Hab67")]
+    [Header("Hab7")]
     public Hability hab7;
     public int hab7ExtraTurn;
     [Header("Hab8")]
@@ -66,6 +67,7 @@ public class Diggeye : Unit
     public override void Awake()
     {
         base.Awake();
+        Debug.Log("helo?");
         repetitions1 = hab1Rmax;
         repetitions2 = hab2Rmax;
         repetitions3 = hab3Rmax;
@@ -321,6 +323,7 @@ public class Diggeye : Unit
 
     public override void ShowHability(int hability)
     {
+        Debug.Log(hability);
         switch (castingHability)
         {
             case 1:
@@ -331,6 +334,7 @@ public class Diggeye : Unit
                     manager.aliado = false;
                     manager.enemigo = true;
                     MarcarHabilidad(0, hab1Range, 0);
+                    Debug.Log("yo wtf chat");
                 }
                 break;
             case 2:
