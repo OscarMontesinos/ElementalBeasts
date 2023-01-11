@@ -215,7 +215,7 @@ MonoBehaviour:
   hab6CdTotal: 1
   hab6Cd: 0
   hab6Range: 3
-  hab6Dmg: 20
+  hab6Dmg: 30
   hab6Stage2: 0
   hab7:
     name: Garra Veloz
