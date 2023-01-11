@@ -1089,7 +1089,7 @@ public class Unit : MonoBehaviour
             }
             else
             {
-                conoHabilidad.transform.localScale = new Vector3(0.85f + (1.7f * (ancho-1)), 0.5f + rango, conoHabilidad.transform.localScale.z);
+                conoHabilidad.transform.localScale = new Vector3(0.85f + (1.7f * (ancho - 1)), 0.5f + rango, conoHabilidad.transform.localScale.z);
             }
             conoHabilidad.transform.up = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z - cam.transform.position.z)) - transform.localPosition;
             conoHabilidad.transform.localEulerAngles = new Vector3(0, 0, conoHabilidad.transform.localEulerAngles.z);
@@ -1116,7 +1116,7 @@ public class Unit : MonoBehaviour
             marcadorHabilidad.transform.localScale = new Vector3(rango + 2, rango + 2, marcadorHabilidad.transform.localScale.z);
             marcadorHabilidad.transform.position = transform.position;
         }
-        else if(forma == 4)
+        else if (forma == 4)
         {
             manager.casteando = false;
             manager.habSingle = false;
@@ -1125,7 +1125,10 @@ public class Unit : MonoBehaviour
             marcadorHabilidad.SetActive(false);
             extensionMesher.SetActive(false);
             collider2D.enabled = true;
-            manager.ShowNodesInRange();
+            if (turno)
+            {
+                manager.ShowNodesInRange();
+            }
         }
     }
 
