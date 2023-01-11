@@ -1,4 +1,5 @@
 using CodeMonkey.Utils;
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -253,6 +254,7 @@ public class Diggeye : Unit
                         if (impacto)
                         {
                             hab6Stage2 = true;
+                            manager.enemigo = false;
                         }
                     }
                     else
@@ -284,6 +286,7 @@ public class Diggeye : Unit
 
             }
         }
+        
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && turno && !moving)
         {
@@ -323,8 +326,7 @@ public class Diggeye : Unit
 
     public override void ShowHability(int hability)
     {
-        Debug.Log(hability);
-        switch (castingHability)
+        switch (hability)
         {
             case 1:
                 if (repetitions1 > 0 && turnoRestante >= hab1Turn)
@@ -334,7 +336,6 @@ public class Diggeye : Unit
                     manager.aliado = false;
                     manager.enemigo = true;
                     MarcarHabilidad(0, hab1Range, 0);
-                    Debug.Log("yo wtf chat");
                 }
                 break;
             case 2:
