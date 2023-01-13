@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BeastSelectorManager : MonoBehaviour
 {
     bool firstPick = true;
-    int maxBeasts;
+    public int maxBeasts;
     int selectionTurn;
     public float maxTime;
     float actualTime;
+    public TextMeshProUGUI timeText;
 
     public BeastSelectorPlayer player1;
     List<UnitData> team1;
@@ -22,6 +24,8 @@ public class BeastSelectorManager : MonoBehaviour
     public GameObject baseBeastImageMirror;
     public List<BeastImage> beastImages;
 
+
+
     bool player1Turn;
     private void Awake()
     {
@@ -29,13 +33,14 @@ public class BeastSelectorManager : MonoBehaviour
     }
     void Start()
     {
-        
+        CreateTeams();
     }
 
     // Update is called once per frame
     void Update()
     {
-        actualTime -= Time.deltaTime; 
+        actualTime -= Time.deltaTime;
+        timeText.text = actualTime.ToString("F0");
     }
 
     void CreateTeams()
