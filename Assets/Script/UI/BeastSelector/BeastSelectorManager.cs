@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BeastSelectorManager : MonoBehaviour
 {
@@ -13,10 +14,7 @@ public class BeastSelectorManager : MonoBehaviour
     public TextMeshProUGUI timeText;
 
     public BeastSelectorPlayer player1;
-    List<UnitData> team1;
-
     public BeastSelectorPlayer player2;
-    List<UnitData> team2;
 
     public GameObject contentTeam1;
     public GameObject contentTeam2;
@@ -24,9 +22,11 @@ public class BeastSelectorManager : MonoBehaviour
     public GameObject baseBeastImageMirror;
     public List<BeastImage> beastImages;
 
+    public Unit defaultUnit;
+    public Sprite defaultBeast;
+    public Sprite defaultIcon;
+    public string defaultBeastName = "Diggeye";
 
-
-    bool player1Turn;
     private void Awake()
     {
         actualTime = maxTime;
@@ -41,6 +41,10 @@ public class BeastSelectorManager : MonoBehaviour
     {
         actualTime -= Time.deltaTime;
         timeText.text = actualTime.ToString("F0");
+        if(actualTime < 0)
+        {
+            TimeUp();
+        }
     }
 
     void CreateTeams()
@@ -70,8 +74,47 @@ public class BeastSelectorManager : MonoBehaviour
         beastImages.Add(instance.GetComponent<BeastImage>());
     }
 
-    public void SelectBeast(Sprite beastImage, string beastName)
+    public void SelectBeast(Sprite beastImage, Sprite beastIcon, string beastName, Unit unit)
     {
-        beastImages[selectionTurn].ChangeImage(beastImage, beastName);
+        beastImages[selectionTurn].ChangeImage(beastImage, beastIcon, beastName, unit);
+    }
+
+    public void Lock()
+    {
+        if (beastImages[selectionTurn].beastSelected)
+        {
+            actualTime = maxTime;
+            UnitData newBeast = new UnitData();
+            newBeast.unit = beastImages[selectionTurn].beast;
+            newBeast.name = beastImages[selectionTurn].name;
+            newBeast.icon = beastImages[selectionTurn].beastIcon;
+            newBeast.image = beastImages[selectionTurn].beastImage;
+            if (beastImages[selectionTurn].mirror)
+            {
+                player2.team.Add(newBeast);
+            }
+            else
+            {
+                player1.team.Add(newBeast);
+            }
+            selectionTurn++;
+            if (selectionTurn>beastImages.Count-1)
+            {
+                SceneManager.LoadScene("TeamBuilder");
+            }
+        }
+    }
+    
+    public void TimeUp()
+    {
+        if (beastImages[selectionTurn].beastSelected)
+        {
+            Lock();
+        }
+        else
+        {
+            SelectBeast(defaultBeast, defaultIcon, defaultBeastName, defaultUnit);
+            Lock();
+        }
     }
 }

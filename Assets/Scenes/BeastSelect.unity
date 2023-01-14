@@ -720,6 +720,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8994433720623655160, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
   m_PrefabInstance: {fileID: 8994433720593576957}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &266826176 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4897034808382056868, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
+  m_PrefabInstance: {fileID: 8994433720593576957}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f37a70874a4324a8dfdef6f890a5b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &331491483
 GameObject:
   m_ObjectHideFlags: 0
@@ -1396,6 +1407,10 @@ MonoBehaviour:
   baseBeastImage: {fileID: 6471407656738779349, guid: a7939f769499eed4ebf12084eb3082f6, type: 3}
   baseBeastImageMirror: {fileID: 4281430683417908031, guid: f85b130a0f4c02f48bd3a4573e893032, type: 3}
   beastImages: []
+  defaultUnit: {fileID: 912122944978749269, guid: 6b709b475553293439d7884231be27cb, type: 3}
+  defaultBeast: {fileID: 21300000, guid: ec7bca7112818444f838d47d4395901e, type: 3}
+  defaultIcon: {fileID: 7482667652216324306, guid: 3010a37501e3f5845b9d4caec1fbc3df, type: 3}
+  defaultBeastName: Diggeye
 --- !u!4 &530461617
 Transform:
   m_ObjectHideFlags: 0
@@ -2158,7 +2173,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1347762393}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 530461616}
+        m_TargetAssemblyTypeName: BeastSelectorManager, Assembly-CSharp
+        m_MethodName: Lock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1347762393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3102,6 +3129,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 912122944978749269, guid: 6b709b475553293439d7884231be27cb, type: 3}
     - target: {fileID: 4897034808382056868, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
+      propertyPath: beastIcon
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 3010a37501e3f5845b9d4caec1fbc3df, type: 3}
+    - target: {fileID: 4897034808382056868, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
       propertyPath: beastName
       value: Diggeye
       objectReference: {fileID: 0}
@@ -3196,6 +3227,34 @@ PrefabInstance:
     - target: {fileID: 8994433720623655161, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
       propertyPath: m_Name
       value: Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994433720623655163, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994433720623655163, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994433720623655163, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 266826176}
+    - target: {fileID: 8994433720623655163, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994433720623655163, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectBeast
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994433720623655163, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BeastButton, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8994433720623655163, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}

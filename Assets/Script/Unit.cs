@@ -98,6 +98,9 @@ public class Unit : MonoBehaviour
     List<Vector3> pathVectorList;
     MapPathfinder mapPathfinder;
 
+    [Header("HabilitiesData")]
+    public Sprite defaultHabSprite;
+
     public CombatManager GetManager()
     {
         return manager;
@@ -1130,6 +1133,18 @@ public class Unit : MonoBehaviour
                 manager.ShowNodesInRange();
             }
         }
+    }
+    public virtual Sprite GetHabIcon(int hability)
+    {
+        return null;
+    }
+    public virtual string GetHabName(int hability)
+    {
+        return null;
+    }
+    public virtual string GetHabDescription(int hability)
+    {
+        return null;
     }
 
     public virtual void Die()

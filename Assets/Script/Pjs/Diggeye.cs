@@ -437,5 +437,86 @@ public class Diggeye : Unit
             hab8CurrentTrap= trap.GetComponent<DiggeyeTrap>();
         }
     }
+
+    public override Sprite GetHabIcon(int hability)
+    {
+        switch (hability)
+        {
+            case -1:
+                return defaultHabSprite;
+            case 0:
+                return hab1.icon;
+            case 1:
+                return hab2.icon;
+            case 2:
+                return hab3.icon;
+            case 3:
+                return hab4.icon;
+            case 4:
+                return hab5.icon;
+            case 5:
+                return hab6.icon;
+            case 6:
+                return hab7.icon;
+            case 7:
+                return hab8.icon;
+            default:
+                return null;
+        }
+    }
+
+    public override string GetHabName(int hability)
+    {
+        switch (hability)
+        {
+            case -1:
+                return " ";
+            case 0:
+                return hab1.name;
+            case 1:
+                return hab2.name;
+            case 2:
+                return hab3.name;
+            case 3:
+                return hab4.name;
+            case 4:
+                return hab5.name;
+            case 5:
+                return hab6.name;
+            case 6:
+                return hab7.name;
+            case 7:
+                return hab8.name;
+            default:
+                return null;
+        }
+    }
+
+    public override string GetHabDescription(int hability)
+    {
+        switch (hability)
+        {
+            case -1:
+                return " ";
+            case 0:
+                return "Lanza una cuchillada cuerpo cuerpo que inflige " + CalcularDanoFisico(hab1Dmg) + " (F) de daño al objetivo.";
+            case 1:
+                return "Lanza un clavo a un objetivo haciendo " + CalcularDanoFisico(hab2Dmg) + " (F) de daño. Revela.";
+            case 2:
+                return "Lanza un buscador una corta distancia, otorga visión en el área que guarda, si impacta contra una pared excava atravesándola y quedándose en la casilla por la que salga.";
+            case 3:
+                return "Excava una corta distancia para reposicionarse, también puede viajar a la posición de cualquier buscador subterráneo";
+            case 4:
+                return "Se abalanza a la bestia objetivo haciendo " + CalcularDanoFisico(hab5Dmg) + " (F) de daño y se coloca en su espalda";
+            case 5:
+                return "Salta a la bestia objetivo e inflige" + CalcularDanoFisico(hab6Dmg) + " (F) de daño. Después salta a una posicion cercana";
+            case 6:
+                return "Cada vez que ataques recupera 1 de turno al finalizar la habilidad";
+            case 7:
+                return "Coloca una trampa en tus pies. Cuando un objetivo la pise le inflige, " + CalcularDanoFisico(hab8Dmg) + " (F) de daño, lo ancla y finaliza su turno";
+            default:
+                return null;
+        }
+    }
 }
     

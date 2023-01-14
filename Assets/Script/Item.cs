@@ -3,6 +3,7 @@ using UnityEngine;
 [Serializable]
 public class Item
 {
+    public Sprite icon;
     public string nombre;
     public bool equipado;
     public int cantidad = 1;
@@ -12,7 +13,7 @@ public class Item
     public float hp;
     public float rFisica;
     public float rMagica;
-    public int iniciativa;
+    public int movimiento;
 
 
 }

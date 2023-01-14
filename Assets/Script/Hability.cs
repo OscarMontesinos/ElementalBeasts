@@ -7,6 +7,7 @@ using UnityEngine;
 [Serializable]
 public class Hability
 {
+    public Sprite icon;
     public string name;
     public enum HabilityType
     {

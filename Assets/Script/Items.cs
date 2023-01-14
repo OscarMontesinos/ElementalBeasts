@@ -8,20 +8,25 @@ public class Items : MonoBehaviour
 
     public List<Item> items;
 
+    public bool ItemList;
+
     private void Awake()
     {
-        unidad = GetComponent<Unit>();
-        foreach(Item item in items)
+        if (!ItemList)
         {
-            if (item.equipado)
+            unidad = GetComponent<Unit>();
+            foreach (Item item in items)
             {
-                unidad.sinergiaElemental += item.sinergia * item.cantidad;
-                unidad.fuerza += item.fuerza * item.cantidad; ;
-                unidad.control += item.control * item.cantidad; ;
-                unidad.mHp += item.hp * item.cantidad;
-                unidad.resistenciaFisica += item.rFisica * item.cantidad; ;
-                unidad.resistenciaMagica += item.rMagica * item.cantidad; ;
-                unidad.iniciativa += item.iniciativa * item.cantidad; ;
+                if (item.equipado)
+                {
+                    unidad.sinergiaElemental += item.sinergia * item.cantidad;
+                    unidad.fuerza += item.fuerza * item.cantidad; ;
+                    unidad.control += item.control * item.cantidad; ;
+                    unidad.mHp += item.hp * item.cantidad;
+                    unidad.resistenciaFisica += item.rFisica * item.cantidad; ;
+                    unidad.resistenciaMagica += item.rMagica * item.cantidad; ;
+                    unidad.maxMovementPoints += item.movimiento * item.cantidad; ;
+                }
             }
         }
     }

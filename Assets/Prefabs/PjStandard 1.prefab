@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 8857036762000175363}
   - component: {fileID: 3103279980379640668}
   - component: {fileID: 695451110616396888}
+  - component: {fileID: -4411040253175021557}
   m_Layer: 3
   m_Name: PjStandard 1
   m_TagString: Character
@@ -170,6 +171,90 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-4411040253175021557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8887353973305685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63a88456c1ecbc4f8f1d76050d24ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unidad: {fileID: 0}
+  items:
+  - nombre: Crisal de agua
+    equipado: 0
+    cantidad: 1
+    sinergia: 0
+    fuerza: 0
+    control: 0
+    hp: 10
+    rFisica: 0
+    rMagica: 0
+    iniciativa: 0
+  - nombre: Crisal de fuego
+    equipado: 0
+    cantidad: 1
+    sinergia: 0
+    fuerza: 10
+    control: 0
+    hp: 0
+    rFisica: 0
+    rMagica: 0
+    iniciativa: 0
+  - nombre: Crisal de vida
+    equipado: 0
+    cantidad: 1
+    sinergia: 0
+    fuerza: 0
+    control: 10
+    hp: 0
+    rFisica: 0
+    rMagica: 0
+    iniciativa: 0
+  - nombre: Crisal del desierto
+    equipado: 0
+    cantidad: 1
+    sinergia: 0
+    fuerza: 0
+    control: 0
+    hp: 0
+    rFisica: 10
+    rMagica: 0
+    iniciativa: 0
+  - nombre: Crisal de hielo
+    equipado: 0
+    cantidad: 1
+    sinergia: 0
+    fuerza: 0
+    control: 0
+    hp: 0
+    rFisica: 0
+    rMagica: 10
+    iniciativa: 0
+  - nombre: Crisal de viento
+    equipado: 0
+    cantidad: 1
+    sinergia: 0
+    fuerza: 0
+    control: 0
+    hp: 0
+    rFisica: 0
+    rMagica: 0
+    iniciativa: 1
+  - nombre: Crisal de rayo
+    equipado: 0
+    cantidad: 1
+    sinergia: 10
+    fuerza: 0
+    control: 0
+    hp: 0
+    rFisica: 0
+    rMagica: 0
+    iniciativa: 0
 --- !u!1 &588789201525312391
 GameObject:
   m_ObjectHideFlags: 0

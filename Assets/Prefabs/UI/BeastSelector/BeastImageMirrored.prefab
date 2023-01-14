@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6471407656738779349, guid: a7939f769499eed4ebf12084eb3082f6, type: 3}
       propertyPath: m_Name
-      value: BeastImage
+      value: BeastImageMirrored
       objectReference: {fileID: 0}
     - target: {fileID: 7259637714765778929, guid: a7939f769499eed4ebf12084eb3082f6, type: 3}
       propertyPath: m_Pivot.x
@@ -102,6 +102,10 @@ PrefabInstance:
     - target: {fileID: 7259637714765778929, guid: a7939f769499eed4ebf12084eb3082f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491247962837275662, guid: a7939f769499eed4ebf12084eb3082f6, type: 3}
+      propertyPath: mirror
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8852288776005545614, guid: a7939f769499eed4ebf12084eb3082f6, type: 3}
       propertyPath: m_HorizontalAlignment
