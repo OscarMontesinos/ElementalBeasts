@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class UnitData
 {
+    public GameObject unitGO;
     public Unit unit;
     public string name;
     public Sprite icon;

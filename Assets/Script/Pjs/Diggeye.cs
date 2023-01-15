@@ -518,5 +518,31 @@ public class Diggeye : Unit
                 return null;
         }
     }
+    public override string GetHabDescription(int hability, float sinergia, float fuerza, float control)
+    {
+        switch (hability)
+        {
+            case -1:
+                return " ";
+            case 0:
+                return "Lanza una cuchillada cuerpo cuerpo que inflige " + CalcularDanoFisico(hab1Dmg,fuerza) + " (F) de daño al objetivo.";
+            case 1:
+                return "Lanza un clavo a un objetivo haciendo " + CalcularDanoFisico(hab2Dmg, fuerza) + " (F) de daño. Revela.";
+            case 2:
+                return "Lanza un buscador una corta distancia, otorga visión en el área que guarda, si impacta contra una pared excava atravesándola y quedándose en la casilla por la que salga.";
+            case 3:
+                return "Excava una corta distancia para reposicionarse, también puede viajar a la posición de cualquier buscador subterráneo";
+            case 4:
+                return "Se abalanza a la bestia objetivo haciendo " + CalcularDanoFisico(hab5Dmg, fuerza) + " (F) de daño y se coloca en su espalda";
+            case 5:
+                return "Salta a la bestia objetivo e inflige" + CalcularDanoFisico(hab6Dmg, fuerza) + " (F) de daño. Después salta a una posicion cercana";
+            case 6:
+                return "Cada vez que ataques recupera 1 de turno al finalizar la habilidad";
+            case 7:
+                return "Coloca una trampa en tus pies. Cuando un objetivo la pise le inflige, " + CalcularDanoFisico(hab8Dmg, fuerza) + " (F) de daño, lo ancla y finaliza su turno";
+            default:
+                return null;
+        }
+    }
 }
     

@@ -185,7 +185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unidad: {fileID: 0}
   items:
-  - nombre: Crisal de agua
+  - icon: {fileID: 0}
+    nombre: Crisal de agua
     equipado: 0
     cantidad: 1
     sinergia: 0
@@ -194,8 +195,9 @@ MonoBehaviour:
     hp: 10
     rFisica: 0
     rMagica: 0
-    iniciativa: 0
-  - nombre: Crisal de fuego
+    movimiento: 0
+  - icon: {fileID: 0}
+    nombre: Crisal de fuego
     equipado: 0
     cantidad: 1
     sinergia: 0
@@ -204,8 +206,9 @@ MonoBehaviour:
     hp: 0
     rFisica: 0
     rMagica: 0
-    iniciativa: 0
-  - nombre: Crisal de vida
+    movimiento: 0
+  - icon: {fileID: 0}
+    nombre: Crisal de vida
     equipado: 0
     cantidad: 1
     sinergia: 0
@@ -214,8 +217,9 @@ MonoBehaviour:
     hp: 0
     rFisica: 0
     rMagica: 0
-    iniciativa: 0
-  - nombre: Crisal del desierto
+    movimiento: 0
+  - icon: {fileID: 0}
+    nombre: Crisal del desierto
     equipado: 0
     cantidad: 1
     sinergia: 0
@@ -224,8 +228,9 @@ MonoBehaviour:
     hp: 0
     rFisica: 10
     rMagica: 0
-    iniciativa: 0
-  - nombre: Crisal de hielo
+    movimiento: 0
+  - icon: {fileID: 0}
+    nombre: Crisal de hielo
     equipado: 0
     cantidad: 1
     sinergia: 0
@@ -234,8 +239,9 @@ MonoBehaviour:
     hp: 0
     rFisica: 0
     rMagica: 10
-    iniciativa: 0
-  - nombre: Crisal de viento
+    movimiento: 0
+  - icon: {fileID: 0}
+    nombre: Crisal de viento
     equipado: 0
     cantidad: 1
     sinergia: 0
@@ -244,8 +250,9 @@ MonoBehaviour:
     hp: 0
     rFisica: 0
     rMagica: 0
-    iniciativa: 1
-  - nombre: Crisal de rayo
+    movimiento: 0
+  - icon: {fileID: 0}
+    nombre: Crisal de rayo
     equipado: 0
     cantidad: 1
     sinergia: 10
@@ -254,7 +261,19 @@ MonoBehaviour:
     hp: 0
     rFisica: 0
     rMagica: 0
-    iniciativa: 0
+    movimiento: 0
+  - icon: {fileID: 0}
+    nombre: Default
+    equipado: 0
+    cantidad: 1
+    sinergia: 0
+    fuerza: 0
+    control: 0
+    hp: 0
+    rFisica: 0
+    rMagica: 0
+    movimiento: 0
+  ItemList: 0
 --- !u!1 &588789201525312391
 GameObject:
   m_ObjectHideFlags: 0

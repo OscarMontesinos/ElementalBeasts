@@ -5,7 +5,7 @@ using UnityEngine;
 public class BeastButton : MonoBehaviour
 {
     BeastSelectorManager beastSelectorManager;
-    public Unit unit;
+    public GameObject unit;
     public Sprite beastImage;
     public Sprite beastIcon;
     public string beastName;

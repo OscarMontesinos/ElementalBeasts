@@ -11,6 +11,10 @@ public class Cursor : MonoBehaviour
     private void Awake()
     {
         player = transform.parent.gameObject.GetComponent<Player>();
+        
+    }
+    private void Start()
+    {
         team = player.team;
     }
     public int GetTeam()

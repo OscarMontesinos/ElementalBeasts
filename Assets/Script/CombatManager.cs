@@ -114,8 +114,7 @@ public class CombatManager : MonoBehaviour
         {
             unit.UpdateCell(false);
         }
-
-            IniciativaCalc();
+        IniciativaCalc();
     }
     void IniciativaCalc()
     {

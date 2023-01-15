@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public Unit beastSelected;
     public GameObject selector;
     public int indexBeastToPlace;
-    CombatManager manager;
+    public CombatManager manager;
     [Header("UI")]
     public GameObject panelSetUp;
     public GameObject buttonReady;
@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        manager = FindObjectOfType<CombatManager>();
     }
     public bool GetReady()
     {
@@ -38,7 +37,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
     }
-
+    
     private void Update()
     {
 
@@ -138,6 +137,7 @@ public class Player : MonoBehaviour
     {
         settingUnitsUp = true;
         panelSetUp.SetActive(true);
+        manager = FindObjectOfType<CombatManager>();
     }
 
     public  void EndSetUpStage()

@@ -481,6 +481,11 @@ public class Unit : MonoBehaviour
         float value = fuerza + pot;
         value *= calculo / 100;
         return value;
+    } public virtual float CalcularDanoFisico(float calculo, float fuerza)
+    {
+        float value = fuerza + pot;
+        value *= calculo / 100;
+        return value;
     }
     public virtual float CalcularDanoMagico(float calculo)
     {
@@ -489,7 +494,20 @@ public class Unit : MonoBehaviour
         return value;
 
     }
+    public virtual float CalcularDanoMagico(float calculo, float sinergiaElemental)
+    {
+        float value = sinergiaElemental + pot;
+        value *= calculo / 100;
+        return value;
+
+    }
     public virtual float CalcularControl(float calculo)
+    {
+        float value = control + (pot/2);
+        value *= calculo / 100;
+        return value;
+    }
+    public virtual float CalcularControl(float calculo, float control)
     {
         float value = control + (pot/2);
         value *= calculo / 100;
@@ -1142,7 +1160,10 @@ public class Unit : MonoBehaviour
     {
         return null;
     }
-    public virtual string GetHabDescription(int hability)
+    public virtual string GetHabDescription(int hability, float sinergia, float fuerza, float control)
+    {
+        return null;
+    }public virtual string GetHabDescription(int hability)
     {
         return null;
     }

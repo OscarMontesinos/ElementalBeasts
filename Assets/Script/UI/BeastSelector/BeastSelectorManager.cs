@@ -22,7 +22,7 @@ public class BeastSelectorManager : MonoBehaviour
     public GameObject baseBeastImageMirror;
     public List<BeastImage> beastImages;
 
-    public Unit defaultUnit;
+    public GameObject defaultUnit;
     public Sprite defaultBeast;
     public Sprite defaultIcon;
     public string defaultBeastName = "Diggeye";
@@ -49,6 +49,7 @@ public class BeastSelectorManager : MonoBehaviour
 
     void CreateTeams()
     {
+        maxBeasts = FormatManager.Instance.maxBeasts;
         CreateBeastImage(contentTeam1.transform, baseBeastImage);
         CreateBeastImage(contentTeam2.transform, baseBeastImageMirror);
         CreateBeastImage(contentTeam2.transform, baseBeastImageMirror);
@@ -74,7 +75,7 @@ public class BeastSelectorManager : MonoBehaviour
         beastImages.Add(instance.GetComponent<BeastImage>());
     }
 
-    public void SelectBeast(Sprite beastImage, Sprite beastIcon, string beastName, Unit unit)
+    public void SelectBeast(Sprite beastImage, Sprite beastIcon, string beastName, GameObject unit)
     {
         beastImages[selectionTurn].ChangeImage(beastImage, beastIcon, beastName, unit);
     }
@@ -85,8 +86,9 @@ public class BeastSelectorManager : MonoBehaviour
         {
             actualTime = maxTime;
             UnitData newBeast = new UnitData();
+            newBeast.unitGO = beastImages[selectionTurn].beastGO;
             newBeast.unit = beastImages[selectionTurn].beast;
-            newBeast.name = beastImages[selectionTurn].name;
+            newBeast.name = beastImages[selectionTurn].beastName;
             newBeast.icon = beastImages[selectionTurn].beastIcon;
             newBeast.image = beastImages[selectionTurn].beastImage;
             if (beastImages[selectionTurn].mirror)
@@ -100,6 +102,7 @@ public class BeastSelectorManager : MonoBehaviour
             selectionTurn++;
             if (selectionTurn>beastImages.Count-1)
             {
+                Destroy(player2.gameObject);
                 SceneManager.LoadScene("TeamBuilder");
             }
         }

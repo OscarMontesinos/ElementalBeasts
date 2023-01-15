@@ -9,6 +9,8 @@ public class BeastSheet : MonoBehaviour
     BeastSelectorPlayer player;
     public int beastSlot;
     Items itemList;
+    public BeastEditor editor;
+    public BeastEditor editorGO;
 
     [Header("UI")]
     public TextMeshProUGUI nameText;
@@ -39,55 +41,46 @@ public class BeastSheet : MonoBehaviour
     {
         player = FindObjectOfType<BeastSelectorPlayer>();
         itemList = FindObjectOfType<Items>();
+        editor = FindObjectOfType<BeastEditor>();
     }
 
     private void Start()
     {
+        editor.gameObject.SetActive(false);
         UpdateSheet();
     }
-    void UpdateSheet()
+    public void UpdateSheet()
     {
         nameText.text = player.team[beastSlot].name;
         image.sprite = player.team[beastSlot].image;
-        float hp = player.team[beastSlot].unit.mHp;
-        float sinergiaElemental = player.team[beastSlot].unit.sinergiaElemental;
-        float fuerza = player.team[beastSlot].unit.fuerza;
-        float control = player.team[beastSlot].unit.control;
-        float resistenciaFisica = player.team[beastSlot].unit.resistenciaFisica;
-        float resistenciaMagica = player.team[beastSlot].unit.resistenciaMagica;
-        float movementPoints = player.team[beastSlot].unit.maxMovementPoints;
 
-        int index = 0;
-        foreach (Item item in itemList.items)
-        {
-            if (item.equipado)
-            {
-                switch (index)
-                {
-                    case 0:
-                        hp += item.hp * item.cantidad;
-                        break;
-                    case 1:
-                        sinergiaElemental += item.hp * item.cantidad;
-                        break;
-                    case 2:
-                        fuerza += item.fuerza * item.cantidad;
-                        break;
-                    case 3:
-                        control += item.control * item.cantidad;
-                        break;
-                    case 4:
-                        resistenciaFisica += item.rFisica * item.cantidad;
-                        break;
-                    case 5:
-                        resistenciaMagica += item.rMagica * item.cantidad;
-                        break;
-                    case 6:
-                        movementPoints += item.movimiento * item.cantidad;
-                        break;
-                }
-            }
-        }
+        float hp = player.team[beastSlot].unit.mHp +
+                    itemList.items[player.team[beastSlot].item1Selected].hp +
+                    itemList.items[player.team[beastSlot].item2Selected].hp;
+
+        float sinergiaElemental = player.team[beastSlot].unit.sinergiaElemental +
+                                    itemList.items[player.team[beastSlot].item1Selected].sinergia +
+                                    itemList.items[player.team[beastSlot].item2Selected].sinergia;
+
+        float fuerza = player.team[beastSlot].unit.fuerza +
+                        itemList.items[player.team[beastSlot].item1Selected].fuerza +
+                        itemList.items[player.team[beastSlot].item2Selected].fuerza;
+
+        float control = player.team[beastSlot].unit.control +
+                        itemList.items[player.team[beastSlot].item1Selected].control +
+                        itemList.items[player.team[beastSlot].item2Selected].control;
+
+        float resistenciaFisica = player.team[beastSlot].unit.resistenciaFisica +
+                                    itemList.items[player.team[beastSlot].item1Selected].rFisica +
+                                    itemList.items[player.team[beastSlot].item2Selected].rFisica;
+
+        float resistenciaMagica = player.team[beastSlot].unit.resistenciaMagica +
+                                    itemList.items[player.team[beastSlot].item1Selected].rMagica +
+                                    itemList.items[player.team[beastSlot].item2Selected].rMagica;
+
+        float movementPoints = player.team[beastSlot].unit.maxMovementPoints +
+                                itemList.items[player.team[beastSlot].item1Selected].movimiento +
+                                itemList.items[player.team[beastSlot].item2Selected].movimiento;
 
         statsText.text =    hp + "\n" +
                             sinergiaElemental + "\n" +
@@ -114,21 +107,42 @@ public class BeastSheet : MonoBehaviour
 
     void ChangeHabilitiesInfo()
     {
+        float sinergiaElemental = player.team[beastSlot].unit.sinergiaElemental +
+                                    itemList.items[player.team[beastSlot].item1Selected].sinergia +
+                                    itemList.items[player.team[beastSlot].item2Selected].sinergia;
+
+        float fuerza = player.team[beastSlot].unit.fuerza +
+                        itemList.items[player.team[beastSlot].item1Selected].fuerza +
+                        itemList.items[player.team[beastSlot].item2Selected].fuerza;
+
+        float control = player.team[beastSlot].unit.control +
+                        itemList.items[player.team[beastSlot].item1Selected].control +
+                        itemList.items[player.team[beastSlot].item2Selected].control;
+
+
         hab1Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab1Selected - 1);
         hab1Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab1Selected - 1);
-        hab1Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab1Selected - 1);
+        hab1Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab1Selected - 1, sinergiaElemental, fuerza, control);
 
         hab2Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab2Selected - 1);
         hab2Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab2Selected - 1);
-        hab2Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab2Selected - 1);
+        hab2Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab2Selected - 1, sinergiaElemental, fuerza, control);
 
         hab3Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab3Selected - 1);
         hab3Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab3Selected - 1);
-        hab3Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab3Selected - 1);
+        hab3Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab3Selected - 1, sinergiaElemental, fuerza, control);
 
         hab4Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab4Selected - 1);
         hab4Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab4Selected - 1);
-        hab4Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab4Selected - 1);
+        hab4Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab4Selected - 1, sinergiaElemental, fuerza, control);
+    }
+
+    public void EditBeast()
+    {
+        editor.gameObject.SetActive(true);
+        editor.sheet = this;
+        editor.beastSlot = beastSlot;
+        editor.UpdateEditor();
     }
 }
 
