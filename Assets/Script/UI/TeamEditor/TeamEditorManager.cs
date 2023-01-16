@@ -42,26 +42,7 @@ public class TeamEditorManager : MonoBehaviour
         int index = 0;
         while (index < FormatManager.Instance.maxBeasts)
         {
-            GameObject beast = beastSelectorPlayer.team[index].unitGO;
-            Items items = beast.GetComponent<Items>();
-            Unit unit = beast.GetComponent<Unit>();
-            if (beastSelectorPlayer.team[index].item1Selected != items.items.Count - 1)
-            {
-                items.items[beastSelectorPlayer.team[index].item1Selected].equipado = true;
-                items.items[beastSelectorPlayer.team[index].item1Selected].cantidad++;
-            }
-            if (beastSelectorPlayer.team[index].item2Selected != items.items.Count - 1)
-            {
-                items.items[beastSelectorPlayer.team[index].item2Selected].equipado = true;
-                items.items[beastSelectorPlayer.team[index].item2Selected].cantidad++;
-            }
-
-            unit.chosenHab1 = beastSelectorPlayer.team[index].hab1Selected;
-            unit.chosenHab2 = beastSelectorPlayer.team[index].hab2Selected;
-            unit.chosenHab3 = beastSelectorPlayer.team[index].hab3Selected;
-            unit.chosenHab4 = beastSelectorPlayer.team[index].hab4Selected;
-
-            player.beastsToPlace.Add(beast);
+            CreateBeast(index,player);
             index++;
         }
 
@@ -73,5 +54,29 @@ public class TeamEditorManager : MonoBehaviour
 
         Destroy(beastSelectorPlayer.gameObject);
         Destroy(gameObject);
+    }
+
+    void CreateBeast(int index, Player player)
+    {
+        GameObject beast = Instantiate(beastSelectorPlayer.team[index].unitGO, player.transform, false);
+        Items items = beast.GetComponent<Items>();
+        Unit unit = beast.GetComponent<Unit>();
+        if (beastSelectorPlayer.team[index].item1Selected != items.items.Count - 1)
+        {
+            items.items[beastSelectorPlayer.team[index].item1Selected].equipado = true;
+            items.items[beastSelectorPlayer.team[index].item1Selected].cantidad++;
+        }
+        if (beastSelectorPlayer.team[index].item2Selected != items.items.Count - 1)
+        {
+            items.items[beastSelectorPlayer.team[index].item2Selected].equipado = true;
+            items.items[beastSelectorPlayer.team[index].item2Selected].cantidad++;
+        }
+
+        unit.chosenHab1 = beastSelectorPlayer.team[index].hab1Selected;
+        unit.chosenHab2 = beastSelectorPlayer.team[index].hab2Selected;
+        unit.chosenHab3 = beastSelectorPlayer.team[index].hab3Selected;
+        unit.chosenHab4 = beastSelectorPlayer.team[index].hab4Selected;
+
+        player.beastsToPlace.Add(beast);
     }
 }

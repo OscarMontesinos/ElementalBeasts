@@ -1410,7 +1410,7 @@ MonoBehaviour:
   beastImages: []
   defaultUnit: {fileID: 3164781253018283080, guid: 6b709b475553293439d7884231be27cb, type: 3}
   defaultBeast: {fileID: 21300000, guid: ec7bca7112818444f838d47d4395901e, type: 3}
-  defaultIcon: {fileID: 7482667652216324306, guid: 3010a37501e3f5845b9d4caec1fbc3df, type: 3}
+  defaultIcon: {fileID: 21300000, guid: 0b5a18267d60a6248b3ed82050cfb62b, type: 3}
   defaultBeastName: Diggeye
 --- !u!4 &530461617
 Transform:
@@ -2331,7 +2331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a31dab14a0f7ba4193be2e403fd8d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxBeasts: 4
+  maxBeasts: 5
   map: 0
 --- !u!4 &1711141319
 Transform:

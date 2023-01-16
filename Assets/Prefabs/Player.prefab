@@ -55,6 +55,7 @@ MonoBehaviour:
   beastSelected: {fileID: 0}
   selector: {fileID: 1063243709795739696}
   indexBeastToPlace: 0
+  manager: {fileID: 0}
   panelSetUp: {fileID: 1063243710515177340}
   buttonReady: {fileID: 1063243709591804807}
   panelTurn: {fileID: 1063243709841803984}
