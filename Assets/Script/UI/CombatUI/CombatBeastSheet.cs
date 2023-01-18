@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CombatBeastSheet : MonoBehaviour
 {
     [Header("UI")]
+    public CombatUIManager uiManager;
     public Unit unit;
     public TextMeshProUGUI nameText;
     public GameObject turnContent;
@@ -26,6 +27,11 @@ public class CombatBeastSheet : MonoBehaviour
     public GameObject turnImage;
     List<GameObject> turnObjects;
 
+
+    private void Update()
+    {
+        turnUpIndicator.SetActive(unit.selected);
+    }
     private void UpdateSheet()
     {
         nameText.text = unit.name;
@@ -63,7 +69,7 @@ public class CombatBeastSheet : MonoBehaviour
         }
     }
 
-    void ChangeHabilitiesInfo()
+    public void ChangeHabilitiesInfo()
     {
         hab1Image.sprite = unit.GetHabIcon(unit.chosenHab1);
         hab1Name.text = unit.GetHabName(unit.chosenHab1);
@@ -78,5 +84,7 @@ public class CombatBeastSheet : MonoBehaviour
         hab4Name.text = unit.GetHabName(unit.chosenHab4);
 
     }
+
+    
 
 }
