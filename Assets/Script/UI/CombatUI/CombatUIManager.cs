@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,8 @@ public class CombatUIManager : MonoBehaviour
     public GameObject leftTeamVisualizer;
     public GameObject rightTeamVisualizer;
     public GameObject habInformationSign;
-    public Text habInformationSignText;
+    public TextMeshProUGUI habInformationSignText;
+    public Image habInformationSignImage;
 
     public GameObject beastSheet;
     public GameObject mirrorBeastSheet;
@@ -21,10 +23,11 @@ public class CombatUIManager : MonoBehaviour
     {
         manager = FindObjectOfType<CombatManager>();
     }
-    public void ShowHabilitySign(string habText)
+    public void ShowHabilitySign(string habText, Sprite sprite)
     {
         habInformationSign.SetActive(true);
-        habInformationSignText.text = habText; 
+        habInformationSignText.text = habText;
+        habInformationSignImage.sprite = sprite;
     }
 
     public void HideHabilitySign()
@@ -46,6 +49,7 @@ public class CombatUIManager : MonoBehaviour
 
         sheet.GetComponent<CombatBeastSheet>().uiManager = this;
         sheet.GetComponent<CombatBeastSheet>().unit = unit;
+        sheet.GetComponent<CombatBeastSheet>().UpdateSheet();
 
     }
 

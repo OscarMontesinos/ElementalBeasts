@@ -15,13 +15,13 @@ public class CombatBeastSheet : MonoBehaviour
     public TextMeshProUGUI statsText;
     public GameObject turnUpIndicator;
     public Image hab1Image;
-    public TextMeshProUGUI hab1Name;
+    public string hab1Name;
     public Image hab2Image;
-    public TextMeshProUGUI hab2Name;
+    public string hab2Name;
     public Image hab3Image;
-    public TextMeshProUGUI hab3Name;
+    public string hab3Name;
     public Image hab4Image;
-    public TextMeshProUGUI hab4Name;
+    public string hab4Name;
 
     [Header("Resources")]
     public GameObject turnImage;
@@ -32,7 +32,7 @@ public class CombatBeastSheet : MonoBehaviour
     {
         turnUpIndicator.SetActive(unit.selected);
     }
-    private void UpdateSheet()
+    public void UpdateSheet()
     {
         nameText.text = unit.name;
 
@@ -72,16 +72,16 @@ public class CombatBeastSheet : MonoBehaviour
     public void ChangeHabilitiesInfo()
     {
         hab1Image.sprite = unit.GetHabIcon(unit.chosenHab1);
-        hab1Name.text = unit.GetHabName(unit.chosenHab1);
+        hab1Name = unit.GetHabName(unit.chosenHab1);
 
         hab2Image.sprite = unit.GetHabIcon(unit.chosenHab2);
-        hab2Name.text = unit.GetHabName(unit.chosenHab2);
+        hab2Name = unit.GetHabName(unit.chosenHab2);
 
         hab3Image.sprite = unit.GetHabIcon(unit.chosenHab3);
-        hab3Name.text = unit.GetHabName(unit.chosenHab3);
+        hab3Name = unit.GetHabName(unit.chosenHab3);
 
         hab4Image.sprite = unit.GetHabIcon(unit.chosenHab4);
-        hab4Name.text = unit.GetHabName(unit.chosenHab4);
+        hab4Name = unit.GetHabName(unit.chosenHab4);
 
     }
 

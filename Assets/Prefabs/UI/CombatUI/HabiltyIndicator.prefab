@@ -515,3 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cd44cc657d2bb4e995d8e7b7f48b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hability: 0
+  sheet: {fileID: 0}
+  cdText: {fileID: 7167944840635731656}
+  maxRText: {fileID: 2208940070584787247}

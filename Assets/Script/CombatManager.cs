@@ -5,6 +5,7 @@ using TMPro;
 
 public class CombatManager : MonoBehaviour
 {
+    public CombatUIManager uiManager;
     public bool settingUp;
     public List<Color32> teamColorList;
     public List<Unit> unitList;
@@ -106,6 +107,15 @@ public class CombatManager : MonoBehaviour
     }
     void StartMatch()
     {
+        bool mirror = false;
+        foreach(Player player in playerList)
+        {
+            foreach (Unit unit in player.beasts)
+            {
+                uiManager.CreateBeastSheet(unit,mirror);
+            }
+            mirror=true;
+        }
         Destroy(spawnCells);
         settingUp = false;
         unitList = new List<Unit>(FindObjectsOfType<Unit>());
