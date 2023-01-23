@@ -120,21 +120,21 @@ public class BeastSheet : MonoBehaviour
                         itemList.items[player.team[beastSlot].item2Selected].control;
 
 
-        hab1Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab1Selected - 1);
-        hab1Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab1Selected - 1);
-        hab1Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab1Selected - 1, sinergiaElemental, fuerza, control);
+        hab1Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab1Selected);
+        hab1Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab1Selected);
+        hab1Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab1Selected, sinergiaElemental, fuerza, control);
 
-        hab2Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab2Selected - 1);
-        hab2Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab2Selected - 1);
-        hab2Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab2Selected - 1, sinergiaElemental, fuerza, control);
+        hab2Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab2Selected);
+        hab2Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab2Selected);
+        hab2Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab2Selected, sinergiaElemental, fuerza, control);
 
-        hab3Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab3Selected - 1);
-        hab3Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab3Selected - 1);
-        hab3Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab3Selected - 1, sinergiaElemental, fuerza, control);
+        hab3Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab3Selected);
+        hab3Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab3Selected);
+        hab3Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab3Selected, sinergiaElemental, fuerza, control);
 
-        hab4Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab4Selected - 1);
-        hab4Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab4Selected - 1);
-        hab4Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab4Selected - 1, sinergiaElemental, fuerza, control);
+        hab4Image.sprite = player.team[beastSlot].unit.GetHabIcon(player.team[beastSlot].hab4Selected);
+        hab4Name.text = player.team[beastSlot].unit.GetHabName(player.team[beastSlot].hab4Selected);
+        hab4Description.text = player.team[beastSlot].unit.GetHabDescription(player.team[beastSlot].hab4Selected, sinergiaElemental, fuerza, control);
     }
 
     public void EditBeast()

@@ -125,12 +125,12 @@ MonoBehaviour:
   chosenHab3: 6
   chosenHab4: 1
   castingHability: 0
-  sinergiaElemental: 8
-  fuerza: 46
-  control: 12
-  mHp: 43
-  resistenciaFisica: 48
-  resistenciaMagica: 16
+  sinergiaElemental: 10
+  fuerza: 50
+  control: 20
+  mHp: 50
+  resistenciaFisica: 60
+  resistenciaMagica: 25
   iniciativa: 3
   maxMovementPoints: 6
   movementPoints: 0
@@ -145,6 +145,7 @@ MonoBehaviour:
   pot: 0
   owner: {fileID: 0}
   teamColor: {fileID: 0}
+  sheet: {fileID: 0}
   speed: 10
   defaultHabSprite: {fileID: 7482667652216324306, guid: 3010a37501e3f5845b9d4caec1fbc3df, type: 3}
   hab1:

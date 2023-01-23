@@ -123,37 +123,37 @@ public class BeastEditor : MonoBehaviour
                         itemList.items[player.team[beastSlot].item1Selected].control +
                         itemList.items[player.team[beastSlot].item2Selected].control;
 
-        hab1Image.sprite = player.team[beastSlot].unit.GetHabIcon(0);
-        hab1Name.text = player.team[beastSlot].unit.GetHabName(0);
-        hab1Description.text = player.team[beastSlot].unit.GetHabDescription(0, sinergiaElemental, fuerza, control);
+        hab1Image.sprite = player.team[beastSlot].unit.GetHabIcon(1);
+        hab1Name.text = player.team[beastSlot].unit.GetHabName(1);
+        hab1Description.text = player.team[beastSlot].unit.GetHabDescription(1, sinergiaElemental, fuerza, control);
 
-        hab2Image.sprite = player.team[beastSlot].unit.GetHabIcon(1);
-        hab2Name.text = player.team[beastSlot].unit.GetHabName(1);
-        hab2Description.text = player.team[beastSlot].unit.GetHabDescription(1, sinergiaElemental, fuerza, control);
+        hab2Image.sprite = player.team[beastSlot].unit.GetHabIcon(2);
+        hab2Name.text = player.team[beastSlot].unit.GetHabName(2);
+        hab2Description.text = player.team[beastSlot].unit.GetHabDescription(2, sinergiaElemental, fuerza, control);
 
-        hab3Image.sprite = player.team[beastSlot].unit.GetHabIcon(2);
-        hab3Name.text = player.team[beastSlot].unit.GetHabName(2);
-        hab3Description.text = player.team[beastSlot].unit.GetHabDescription(2, sinergiaElemental, fuerza, control);
+        hab3Image.sprite = player.team[beastSlot].unit.GetHabIcon(3);
+        hab3Name.text = player.team[beastSlot].unit.GetHabName(3);
+        hab3Description.text = player.team[beastSlot].unit.GetHabDescription(3, sinergiaElemental, fuerza, control);
 
-        hab4Image.sprite = player.team[beastSlot].unit.GetHabIcon(3);
-        hab4Name.text = player.team[beastSlot].unit.GetHabName(3);
-        hab4Description.text = player.team[beastSlot].unit.GetHabDescription(3, sinergiaElemental, fuerza, control);
+        hab4Image.sprite = player.team[beastSlot].unit.GetHabIcon(4);
+        hab4Name.text = player.team[beastSlot].unit.GetHabName(4);
+        hab4Description.text = player.team[beastSlot].unit.GetHabDescription(4, sinergiaElemental, fuerza, control);
 
-        hab5Image.sprite = player.team[beastSlot].unit.GetHabIcon(4);
-        hab5Name.text = player.team[beastSlot].unit.GetHabName(4);
-        hab5Description.text = player.team[beastSlot].unit.GetHabDescription(4, sinergiaElemental, fuerza, control);
+        hab5Image.sprite = player.team[beastSlot].unit.GetHabIcon(5);
+        hab5Name.text = player.team[beastSlot].unit.GetHabName(5);
+        hab5Description.text = player.team[beastSlot].unit.GetHabDescription(5, sinergiaElemental, fuerza, control);
 
-        hab6Image.sprite = player.team[beastSlot].unit.GetHabIcon(5);
-        hab6Name.text = player.team[beastSlot].unit.GetHabName(5);
-        hab6Description.text = player.team[beastSlot].unit.GetHabDescription(5, sinergiaElemental, fuerza, control);
+        hab6Image.sprite = player.team[beastSlot].unit.GetHabIcon(6);
+        hab6Name.text = player.team[beastSlot].unit.GetHabName(6);
+        hab6Description.text = player.team[beastSlot].unit.GetHabDescription(6, sinergiaElemental, fuerza, control);
 
-        hab7Image.sprite = player.team[beastSlot].unit.GetHabIcon(6);
-        hab7Name.text = player.team[beastSlot].unit.GetHabName(6);
-        hab7Description.text = player.team[beastSlot].unit.GetHabDescription(6, sinergiaElemental, fuerza, control);
+        hab7Image.sprite = player.team[beastSlot].unit.GetHabIcon(7);
+        hab7Name.text = player.team[beastSlot].unit.GetHabName(7);
+        hab7Description.text = player.team[beastSlot].unit.GetHabDescription(7, sinergiaElemental, fuerza, control);
 
-        hab8Image.sprite = player.team[beastSlot].unit.GetHabIcon(7);
-        hab8Name.text = player.team[beastSlot].unit.GetHabName(7);
-        hab8Description.text = player.team[beastSlot].unit.GetHabDescription(7, sinergiaElemental, fuerza, control);
+        hab8Image.sprite = player.team[beastSlot].unit.GetHabIcon(8);
+        hab8Name.text = player.team[beastSlot].unit.GetHabName(8);
+        hab8Description.text = player.team[beastSlot].unit.GetHabDescription(8, sinergiaElemental, fuerza, control);
 
 
     }

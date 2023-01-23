@@ -50,7 +50,6 @@ public class TeamEditorManager : MonoBehaviour
         DontDestroyOnLoad(playerGO2);
         Player player2 = playerGO2.GetComponent<Player>();
         player2.team = 1;
-        player2.beastsToPlace = new List<GameObject>(player.beastsToPlace);
 
         Destroy(beastSelectorPlayer.gameObject);
         Destroy(gameObject);

@@ -45,7 +45,7 @@ public class MapPathfinder : MonoBehaviour
                     i++;
                 }
             }*/
-                unitToMove.SetTargetPosition(mousePosition);
+                unitToMove.SetTargetPosition(mousePosition);    
         }
     }
     void CalculateNotWalkables()

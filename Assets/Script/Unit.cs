@@ -74,6 +74,7 @@ public class Unit : MonoBehaviour
     [Header("Bufos o debufos")]
     public float prot = 0;
     public float pot = 0;
+    public float[] contadorEsc;
     [Header("Owner")]
     public Player owner;
     [Header("UI")]
@@ -91,6 +92,7 @@ public class Unit : MonoBehaviour
     Text protText;
     Text slowText;
     Slider hpBar;
+    public CombatBeastSheet sheet;
 
     [Header("Pathfinding")]
     public float speed;
@@ -418,6 +420,7 @@ public class Unit : MonoBehaviour
     }
     public virtual void PrepararTurno()
     {
+        sheet.UpdateSheet();
         owner.TurnGived(this);
         if (manager.centrarCamara)
         {
@@ -465,6 +468,7 @@ public class Unit : MonoBehaviour
     }
     public void NuevaRonda()
     {
+        sheet.UpdateSheet();
         turnoRestante = 5;
         pasar = false;
         
@@ -513,6 +517,64 @@ public class Unit : MonoBehaviour
         value *= calculo / 100;
         return value;
     }
+    public virtual void Escudo(float value, int rondas)
+    {
+        escudo = 0;
+        int buscador = 0;
+        while (contadorEsc[buscador] > 0)
+        {
+            buscador += 2;
+        }
+        contadorEsc[buscador] = rondas;
+        contadorEsc[buscador + 1] = value;
+        buscador = 0;
+        while (buscador < contadorEsc.Length)
+        {
+            escudo += contadorEsc[buscador + 1];
+            buscador += 2;
+        }
+        if (escudo <= 0)
+        {
+            escudo = 0;
+            escudoText.text = "";
+        }
+        else
+        {
+            escudoText.text = "(" + escudo.ToString("F0") + ")";
+        }
+    }
+    void CalcEscudo()
+    {
+        int buscador = 0;
+        escudo = 0;
+        while (buscador < contadorEsc.Length)
+        {
+            escudo += contadorEsc[buscador + 1];
+            buscador += 2;
+        }
+        if (escudo <= 0)
+        {
+            escudo = 0;
+            escudoText.text = "";
+        }
+        else
+        {
+            escudoText.text = "(" + escudo.ToString("F0") + ")";
+        }
+    }
+    public void EliminarEscudo()
+    {
+        int buscador = 0;
+        while (buscador < contadorEsc.Length)
+        {
+            contadorEsc[buscador] = 0;
+            contadorEsc[buscador + 1] = 0;
+            buscador += 2;
+        }
+        CalcEscudo();
+
+
+    }
     public virtual void RecibirDanoFisico(float value)
     {
         if (!inmortal)
@@ -551,10 +613,45 @@ public class Unit : MonoBehaviour
         }
         if (escudo < value || escudo < 0)
         {
-            
-            hp -= value;
-            StartCoroutine(SetHpBar());
-
+            value -= escudo;
+            escudo = 0;
+            int buscador = 0;
+            while (buscador < contadorEsc.Length)
+            {
+                contadorEsc[buscador] = 0;
+                buscador += 1;
+            }
+        }
+        else
+        {
+            escudo -= value;
+            int buscador = 0;
+            while (buscador < contadorEsc.Length)
+            {
+                contadorEsc[buscador + 1] -= value;
+                if (contadorEsc[buscador] > 0)
+                {
+                    if (contadorEsc[buscador + 1] < 0)
+                    {
+                        value += contadorEsc[buscador + 1];
+                        contadorEsc[buscador] = 0;
+                        contadorEsc[buscador + 1] = 0;
+                    }
+                    else if (contadorEsc[buscador + 1] > 0)
+                    {
+                        contadorEsc[buscador + 1] -= value;
+                        value = 0;
+                    }
+                    else
+                    {
+                        value = 0;
+                        contadorEsc[buscador + 1] = 0;
+                        contadorEsc[buscador] = 0;
+                    }
+                }
+                buscador += 2;
+            }
+            escudoText.text = "(" + escudo.ToString("F0") + ")";
         }
 
     }
@@ -1000,6 +1097,8 @@ public class Unit : MonoBehaviour
         {
             Die();
         }
+
+        sheet.UpdateSheet();
     }
 
     private void OnMouseDown()
@@ -1139,6 +1238,7 @@ public class Unit : MonoBehaviour
         }
         else if (forma == 4)
         {
+            sheet.UpdateSheet();
             manager.casteando = false;
             manager.habSingle = false;
             conoHabilidad.SetActive(false);

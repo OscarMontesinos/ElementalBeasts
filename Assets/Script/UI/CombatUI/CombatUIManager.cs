@@ -49,6 +49,7 @@ public class CombatUIManager : MonoBehaviour
 
         sheet.GetComponent<CombatBeastSheet>().uiManager = this;
         sheet.GetComponent<CombatBeastSheet>().unit = unit;
+        sheet.GetComponent<CombatBeastSheet>().unit.sheet = sheet.GetComponent<CombatBeastSheet>();
         sheet.GetComponent<CombatBeastSheet>().UpdateSheet();
 
     }

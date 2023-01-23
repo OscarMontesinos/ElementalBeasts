@@ -66,6 +66,7 @@ public class SpawnCell : MonoBehaviour
             {
                 player.indexBeastToPlace--;
             }
+            Destroy(unitToSpawn);
         }
     }
 
