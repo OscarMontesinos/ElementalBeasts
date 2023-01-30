@@ -6,12 +6,17 @@ public class FormatManager : MonoBehaviour
 {
     public static FormatManager Instance;
     public int maxBeasts;
-    public int map;
+    public string map;
 
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
         Instance = this;
+    }
+
+    public void SetMap(string map)
+    {
+        this.map = map;
     }
 }
 

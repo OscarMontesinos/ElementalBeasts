@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/GameLauncher.unity
+    guid: 56922f392b51e0243ac19f7b0472b8fb
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: a94c63f7d02c3e549bb8c211c0316679
+  - enabled: 1
     path: Assets/Scenes/BeastSelect.unity
     guid: 37f840b01d2909f46b58f3f69c8cbda3
   - enabled: 1

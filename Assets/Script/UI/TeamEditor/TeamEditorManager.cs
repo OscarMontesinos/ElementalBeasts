@@ -35,7 +35,7 @@ public class TeamEditorManager : MonoBehaviour
     public void StartCombat()
     {
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(FormatManager.Instance.map);
         GameObject playerGO = Instantiate(playerPrefab);
         DontDestroyOnLoad(playerGO);
         Player player = playerGO.GetComponent<Player>();

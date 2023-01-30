@@ -1,17 +1,23 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerNameInputManager : MonoBehaviour
 {
-    public void SetPlayerName(string playername)
+    TMP_InputField nameIF;
+    private void Awake()
     {
-        if (string.IsNullOrEmpty(playername))
+        nameIF = GetComponent<TMP_InputField>();
+    }
+    public void SetPlayerName()
+    {
+        if (string.IsNullOrEmpty(nameIF.text))
         {
             return;
         }
 
-        PhotonNetwork.NickName = playername;
+        PhotonNetwork.NickName = nameIF.text;
     }
 }
