@@ -18,6 +18,10 @@ public class FormatManager : MonoBehaviour
     {
         this.map = map;
     }
+    public void SetBeasts(int beast)
+    {
+        this.maxBeasts = beast;
+    }
 }
 
 

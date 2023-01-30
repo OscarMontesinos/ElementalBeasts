@@ -1399,7 +1399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxBeasts: 0
-  maxTime: 0.1
+  maxTime: 45
   timeText: {fileID: 1059441192}
   player1: {fileID: 2125597796}
   player2: {fileID: 498863687}
