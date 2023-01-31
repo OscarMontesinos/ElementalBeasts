@@ -322,10 +322,12 @@ public class BeastEditor : MonoBehaviour
         if (itemSlot == 1)
         {
             player.team[beastSlot].item1Selected = itemToChange;
+            item1Image.sprite = itemList.items[itemToChange].icon;
         }
         else
         {
             player.team[beastSlot].item2Selected = itemToChange;
+            item2Image.sprite = itemList.items[itemToChange].icon;
         }
 
         itemList.items[itemToChange].equipado = true;
