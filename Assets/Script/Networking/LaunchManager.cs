@@ -5,11 +5,14 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Pun.Demo.Cockpit.Forms;
 using Photon.Realtime;
+using TMPro;
 
 public class LaunchManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject connectionStatusPanel;
     [SerializeField] private GameObject lobbyPanel;
+    [SerializeField] private GameObject waitingRoomPanel;
+    [SerializeField] private TextMeshProUGUI roomText;
     // Start is called before the first frame update
 
     private void Awake()
@@ -20,6 +23,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     {
         connectionStatusPanel.SetActive(false);
         lobbyPanel.SetActive(false);
+        waitingRoomPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -61,12 +65,15 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("Lobby");
+        
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
-        
+        if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
+        {
+            PhotonNetwork.LoadLevel("Lobby");
+        }
     }
 
     public void CreateAndJoinRoom()
@@ -79,5 +86,8 @@ public class LaunchManager : MonoBehaviourPunCallbacks
         roomOptions.MaxPlayers = 2;
 
         PhotonNetwork.CreateRoom(randomRoomName, roomOptions);
+
+        waitingRoomPanel.SetActive(true);
+        roomText.text = randomRoomName;
     }
 }

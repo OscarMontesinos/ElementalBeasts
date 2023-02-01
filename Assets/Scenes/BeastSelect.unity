@@ -2332,7 +2332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxBeasts: 3
-  map: 0
+  map: SampleScene
 --- !u!4 &1711141319
 Transform:
   m_ObjectHideFlags: 0

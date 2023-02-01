@@ -341,7 +341,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 127285991}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1882495431}
+        m_TargetAssemblyTypeName: LaunchManager, Assembly-CSharp
+        m_MethodName: CreateAndJoinRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &127285991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1959,6 +1971,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connectionStatusPanel: {fileID: 1061300218}
   lobbyPanel: {fileID: 2007806101}
+  waitingRoomPanel: {fileID: 145467639}
+  roomText: {fileID: 93070943}
 --- !u!4 &1882495432
 Transform:
   m_ObjectHideFlags: 0
