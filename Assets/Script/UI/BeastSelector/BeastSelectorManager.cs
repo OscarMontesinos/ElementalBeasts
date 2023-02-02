@@ -1,10 +1,11 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BeastSelectorManager : MonoBehaviour
+public class BeastSelectorManager : MonoBehaviourPunCallbacks
 {
     bool firstPick = true;
     public int maxBeasts;
@@ -13,9 +14,11 @@ public class BeastSelectorManager : MonoBehaviour
     float actualTime;
     public TextMeshProUGUI timeText;
 
-    public BeastSelectorPlayer player1;
-    public BeastSelectorPlayer player2;
+    public GameObject playerPrefab;
 
+    public BeastSelectorPlayer player1;
+
+    public GameObject contentTeam;
     public GameObject contentTeam1;
     public GameObject contentTeam2;
     public GameObject baseBeastImage;
@@ -27,12 +30,24 @@ public class BeastSelectorManager : MonoBehaviour
     public Sprite defaultIcon;
     public string defaultBeastName = "Diggeye";
 
+    Dictionary<string, GameObject> beastSheetsDic = new Dictionary<string, GameObject>();
+
+
+    public bool turn;
+
+    
+
+
     private void Awake()
     {
         actualTime = maxTime;
     }
     void Start()
     {
+        GameObject instance = PhotonNetwork.Instantiate(playerPrefab.name,new Vector3(0,0,0),new Quaternion(0,0,0,0));
+        player1 = instance.GetComponent<BeastSelectorPlayer>();
+        beastSheetsDic.Add("beastSheet", baseBeastImage);
+        beastSheetsDic.Add("beastSheetMirror", baseBeastImageMirror);
         CreateTeams();
     }
 
@@ -46,41 +61,76 @@ public class BeastSelectorManager : MonoBehaviour
             TimeUp();
         }
     }
-
     void CreateTeams()
     {
+        
         maxBeasts = FormatManager.Instance.maxBeasts;
-        CreateBeastImage(contentTeam1.transform, baseBeastImage);
-        CreateBeastImage(contentTeam2.transform, baseBeastImageMirror);
-        CreateBeastImage(contentTeam2.transform, baseBeastImageMirror);
-        CreateBeastImage(contentTeam1.transform, baseBeastImage);
-        CreateBeastImage(contentTeam1.transform, baseBeastImage);
-        CreateBeastImage(contentTeam2.transform, baseBeastImageMirror);
-        if (maxBeasts > 3)
+        if (PhotonNetwork.IsMasterClient)
         {
-            CreateBeastImage(contentTeam2.transform, baseBeastImageMirror);
-            CreateBeastImage(contentTeam1.transform, baseBeastImage);
-            if (maxBeasts > 4)
+            contentTeam = contentTeam1;
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImage);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImage);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImage);
+            if (maxBeasts > 3)
             {
-                CreateBeastImage(contentTeam1.transform, baseBeastImage);
-                CreateBeastImage(contentTeam2.transform, baseBeastImageMirror);
+                photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImage);
+                if (maxBeasts > 4)
+                {
+                    photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImage);
+                }
+
             }
-            
+            turn = true;
+
+        }
+        else
+        {
+            contentTeam = contentTeam2;
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam ,baseBeastImageMirror);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImageMirror);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImageMirror);
+            if (maxBeasts > 3)
+            {
+                photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImageMirror);
+                if (maxBeasts > 4)
+                {
+                    photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImageMirror);
+                }
+
+            }
         }
     }
 
-    void CreateBeastImage(Transform targetParent, GameObject objectToInstantiate)
+    [PunRPC]
+    void CreateBeastImage(string objectToInstantiate)
     {
-        GameObject instance = Instantiate(objectToInstantiate, targetParent);
+        GameObject instance = PhotonNetwork.Instantiate(beastSheetsDic[objectToInstantiate], new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+        instance.transform.parent = contentTeam.transform;
         beastImages.Add(instance.GetComponent<BeastImage>());
     }
 
-    public void SelectBeast(Sprite beastImage, Sprite beastIcon, string beastName, GameObject unit)
+    
+
+    public void SelectBeastCall(Sprite beastImage, Sprite beastIcon, string beastName, GameObject unit)
     {
-        beastImages[selectionTurn].ChangeImage(beastImage, beastIcon, beastName, unit);
+        photonView.RPC("SelectBeast", RpcTarget.AllBuffered, beastImage,  beastIcon, beastName, unit);
     }
 
-    public void Lock()
+    [PunRPC]
+    void SelectBeast(Sprite beastImage, Sprite beastIcon, string beastName, GameObject unit)
+    {
+        if (turn)
+        {
+            beastImages[selectionTurn].ChangeImage(beastImage, beastIcon, beastName, unit);
+        }
+    }
+
+    public void LockButton()
+    {
+        photonView.RPC("Lock", RpcTarget.AllBuffered);
+    }
+    [PunRPC]
+    void Lock()
     {
         if (beastImages[selectionTurn].beastSelected)
         {
@@ -91,19 +141,19 @@ public class BeastSelectorManager : MonoBehaviour
             newBeast.name = beastImages[selectionTurn].beastName;
             newBeast.icon = beastImages[selectionTurn].beastIcon;
             newBeast.image = beastImages[selectionTurn].beastImage;
-            if (beastImages[selectionTurn].mirror)
+            if (turn)
             {
-                player2.team.Add(newBeast);
+                player1.team.Add(newBeast);
+                turn = false; 
             }
             else
             {
-                player1.team.Add(newBeast);
+                turn = true;
             }
             selectionTurn++;
             if (selectionTurn>beastImages.Count-1)
             {
-                Destroy(player2.gameObject);
-                SceneManager.LoadScene("TeamBuilder");
+                PhotonNetwork.LoadLevel("TeamBuilder");
             }
         }
     }
@@ -112,12 +162,12 @@ public class BeastSelectorManager : MonoBehaviour
     {
         if (beastImages[selectionTurn].beastSelected)
         {
-            Lock();
+            photonView.RPC("Lock", RpcTarget.AllBuffered);
         }
         else
         {
-            SelectBeast(defaultBeast, defaultIcon, defaultBeastName, defaultUnit);
-            Lock();
+            photonView.RPC("SelectBeast", RpcTarget.AllBuffered, defaultBeast, defaultIcon, defaultBeastName, defaultUnit);
+            photonView.RPC("Lock", RpcTarget.AllBuffered);
         }
     }
 }

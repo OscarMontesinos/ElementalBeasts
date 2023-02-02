@@ -23,7 +23,7 @@ public class FormatManager : MonoBehaviourPunCallbacks
     {
         photonView.RPC("PunSetBeasts", RpcTarget.AllBuffered, beast);
     }
-    public void StartGame(int beast)
+    public void StartGame()
     {
         photonView.RPC("PunStartGame", RpcTarget.AllBuffered);
     }
@@ -43,7 +43,7 @@ public class FormatManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void PunStartGame()
     {
-        PhotonNetwork.LoadLevel("Lobby");
+        PhotonNetwork.LoadLevel("BeastSelect");
     }
 }
 

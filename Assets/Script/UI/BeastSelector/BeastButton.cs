@@ -17,7 +17,7 @@ public class BeastButton : MonoBehaviour
 
     public void SelectBeast()
     {
-        beastSelectorManager.SelectBeast(beastImage, beastIcon, beastName, unit);
+        beastSelectorManager.SelectBeastCall(beastImage, beastIcon, beastName, unit);
     }
 
 
