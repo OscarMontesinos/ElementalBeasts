@@ -30,7 +30,6 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
     public Sprite defaultIcon;
     public string defaultBeastName = "Diggeye";
 
-    Dictionary<string, GameObject> beastSheetsDic = new Dictionary<string, GameObject>();
 
 
     public bool turn;
@@ -46,8 +45,6 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
     {
         GameObject instance = PhotonNetwork.Instantiate(playerPrefab.name,new Vector3(0,0,0),new Quaternion(0,0,0,0));
         player1 = instance.GetComponent<BeastSelectorPlayer>();
-        beastSheetsDic.Add("beastSheet", baseBeastImage);
-        beastSheetsDic.Add("beastSheetMirror", baseBeastImageMirror);
         CreateTeams();
     }
 
@@ -68,15 +65,15 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             contentTeam = contentTeam1;
-            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImage);
-            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImage);
-            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImage);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
             if (maxBeasts > 3)
             {
-                photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImage);
+                photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
                 if (maxBeasts > 4)
                 {
-                    photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImage);
+                    photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
                 }
 
             }
@@ -86,15 +83,15 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
         else
         {
             contentTeam = contentTeam2;
-            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam ,baseBeastImageMirror);
-            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImageMirror);
-            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImageMirror);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 1);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 1);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 1);
             if (maxBeasts > 3)
             {
-                photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImageMirror);
+                photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 1);
                 if (maxBeasts > 4)
                 {
-                    photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, contentTeam, baseBeastImageMirror);
+                    photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 1);
                 }
 
             }
@@ -102,11 +99,20 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void CreateBeastImage(string objectToInstantiate)
+    public void CreateBeastImage(int mirrored)
     {
-        GameObject instance = PhotonNetwork.Instantiate(beastSheetsDic[objectToInstantiate], new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
-        instance.transform.parent = contentTeam.transform;
-        beastImages.Add(instance.GetComponent<BeastImage>());
+        if (mirrored == 0) 
+        {
+            GameObject instance = PhotonNetwork.Instantiate(baseBeastImage.name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+            instance.transform.parent = contentTeam.transform;
+            beastImages.Add(instance.GetComponent<BeastImage>()); 
+        }
+        else
+        {
+            GameObject instance = PhotonNetwork.Instantiate(baseBeastImageMirror.name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+            instance.transform.parent = contentTeam.transform;
+            beastImages.Add(instance.GetComponent<BeastImage>());
+        }
     }
 
     
