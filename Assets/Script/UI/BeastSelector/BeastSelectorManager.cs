@@ -1,5 +1,5 @@
+using ExitGames.Client.Photon;
 using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -24,17 +24,8 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
     public GameObject baseBeastImageMirror;
     public List<BeastImage> beastImages;
 
-    public GameObject defaultUnit;
-    public Sprite defaultBeast;
-    public Sprite defaultIcon;
-    public string defaultBeastName = "Diggeye";
 
-    Sprite selectedBeastImage;
-    Sprite selectedBeastIcon;
-    string selectedBeastName;
-    GameObject selectedUnit;
 
-    public bool turn;
 
     
 
@@ -42,10 +33,13 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         actualTime = maxTime;
+        Hashtable turnController = new Hashtable();
+        turnController.Add("turn", 0);
+        PhotonNetwork.LocalPlayer.CustomProperties = turnController;
     }
     void Start()
     {
-        GameObject instance = PhotonNetwork.Instantiate(playerPrefab.name,new Vector3(0,0,0),new Quaternion(0,0,0,0));
+        GameObject instance = Instantiate(playerPrefab,new Vector3(0,0,0),new Quaternion(0,0,0,0));
         player1 = instance.GetComponent<BeastSelectorPlayer>();
         CreateTeams();
     }
@@ -84,7 +78,10 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
                 }
 
             }
-            turn = true;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.LocalPlayer.CustomProperties["turn"] = 1;
+            }
         }
     }
 
@@ -96,7 +93,7 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
             GameObject instance = PhotonNetwork.Instantiate(baseBeastImage.name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
             instance.transform.parent = contentTeam1.transform;
             beastImages.Add(instance.GetComponent<BeastImage>());
-            turn = true;
+            
         }
         else
         {
@@ -108,56 +105,62 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
 
     
 
-    public void SelectBeastCall(Sprite beastImage, Sprite beastIcon, string beastName, GameObject unit)
+    public void SelectBeastCall(int beast)
     {
-        selectedBeastImage = beastImage;
-        selectedBeastIcon = beastIcon;  
-        selectedBeastName = beastName;
-        selectedUnit = unit;
-
-        photonView.RPC("SelectBeast", RpcTarget.AllBuffered);
+        if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
+        {
+            photonView.RPC("SelectBeast", RpcTarget.AllBuffered, beast);
+        }
     }
 
     [PunRPC]
-    void SelectBeast()
+    void SelectBeast(int beast)
     {
-        if (turn)
-        {
-            beastImages[selectionTurn].ChangeImage(selectedBeastImage, selectedBeastIcon, selectedBeastName, selectedUnit);
-        }
+        
+            beastImages[selectionTurn].ChangeImageCall(beast);
+        
     }
 
     public void LockButton()
     {
-        photonView.RPC("Lock", RpcTarget.AllBuffered);
+        if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
+        {
+            if (beastImages[selectionTurn].beastSelected)
+            {
+                UnitData newBeast = new UnitData();
+                newBeast.unitGO = beastImages[selectionTurn].beastGO;
+                newBeast.unit = beastImages[selectionTurn].beast;
+                newBeast.name = beastImages[selectionTurn].beastName;
+                newBeast.icon = beastImages[selectionTurn].beastIcon;
+                newBeast.image = beastImages[selectionTurn].beastImage;
+                player1.team.Add(newBeast);
+
+
+            }
+            photonView.RPC("Lock", RpcTarget.AllBuffered);
+        }
     }
     [PunRPC]
     void Lock()
     {
-        if (beastImages[selectionTurn].beastSelected)
+        if (selectionTurn % 2 == 0)
         {
-            actualTime = maxTime;
-            UnitData newBeast = new UnitData();
-            newBeast.unitGO = beastImages[selectionTurn].beastGO;
-            newBeast.unit = beastImages[selectionTurn].beast;
-            newBeast.name = beastImages[selectionTurn].beastName;
-            newBeast.icon = beastImages[selectionTurn].beastIcon;
-            newBeast.image = beastImages[selectionTurn].beastImage;
-            if (turn)
+            if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
             {
-                player1.team.Add(newBeast);
-                turn = false; 
+                PhotonNetwork.LocalPlayer.CustomProperties["turn"] = 0;
             }
             else
             {
-                turn = true;
-            }
-            selectionTurn++;
-            if (selectionTurn>beastImages.Count-1)
-            {
-                PhotonNetwork.LoadLevel("TeamBuilder");
+                PhotonNetwork.LocalPlayer.CustomProperties["turn"] = 1;
             }
         }
+        actualTime = maxTime; 
+        selectionTurn++;
+        if (selectionTurn > beastImages.Count - 1)
+        {
+            PhotonNetwork.LoadLevel("TeamBuilder");
+        }
+
     }
     
     public void TimeUp()
@@ -168,7 +171,7 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            photonView.RPC("SelectBeast", RpcTarget.AllBuffered, defaultBeast, defaultIcon, defaultBeastName, defaultUnit);
+            photonView.RPC("SelectBeast", RpcTarget.AllBuffered,0);
             photonView.RPC("Lock", RpcTarget.AllBuffered);
         }
     }

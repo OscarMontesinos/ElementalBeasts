@@ -9,6 +9,7 @@ public class BeastButton : MonoBehaviour
     public Sprite beastImage;
     public Sprite beastIcon;
     public string beastName;
+    public int beast;
 
     private void Awake()
     {
@@ -17,7 +18,7 @@ public class BeastButton : MonoBehaviour
 
     public void SelectBeast()
     {
-        beastSelectorManager.SelectBeastCall(beastImage, beastIcon, beastName, unit);
+        beastSelectorManager.SelectBeastCall(beast);
     }
 
 

@@ -594,6 +594,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142179145}
   m_CullTransparentMesh: 1
+--- !u!1 &170172488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 170172490}
+  - component: {fileID: 170172489}
+  m_Layer: 0
+  m_Name: Beasts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &170172489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170172488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbb971ef1cfde5a44a159161df0065d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beastListRaw:
+  - unitGO: {fileID: 3164781253018283080, guid: 6b709b475553293439d7884231be27cb, type: 3}
+    unit: {fileID: 912122944978749269, guid: 6b709b475553293439d7884231be27cb, type: 3}
+    name: Diggeye
+    icon: {fileID: 21300000, guid: 0b5a18267d60a6248b3ed82050cfb62b, type: 3}
+    image: {fileID: 21300000, guid: ec7bca7112818444f838d47d4395901e, type: 3}
+    hab1Selected: 0
+    hab2Selected: 0
+    hab3Selected: 0
+    hab4Selected: 0
+    item1Selected: 0
+    item2Selected: 0
+--- !u!4 &170172490
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170172488}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 63.145916, y: 44.844795, z: -5.168812}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &206798053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,11 +1420,6 @@ MonoBehaviour:
   baseBeastImage: {fileID: 6471407656738779349, guid: a7939f769499eed4ebf12084eb3082f6, type: 3}
   baseBeastImageMirror: {fileID: 4281430683417908031, guid: f85b130a0f4c02f48bd3a4573e893032, type: 3}
   beastImages: []
-  defaultUnit: {fileID: 3164781253018283080, guid: 6b709b475553293439d7884231be27cb, type: 3}
-  defaultBeast: {fileID: 21300000, guid: ec7bca7112818444f838d47d4395901e, type: 3}
-  defaultIcon: {fileID: 21300000, guid: 0b5a18267d60a6248b3ed82050cfb62b, type: 3}
-  defaultBeastName: Diggeye
-  turn: 0
 --- !u!4 &530461617
 Transform:
   m_ObjectHideFlags: 0
@@ -3076,6 +3127,10 @@ PrefabInstance:
       propertyPath: beastImage
       value: 
       objectReference: {fileID: 21300000, guid: ec7bca7112818444f838d47d4395901e, type: 3}
+    - target: {fileID: 5533272986623773952, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
+      propertyPath: sceneViewId
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8994433720623655160, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
