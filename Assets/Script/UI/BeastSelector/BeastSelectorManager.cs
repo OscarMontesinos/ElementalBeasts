@@ -18,7 +18,6 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
 
     public BeastSelectorPlayer player1;
 
-    public GameObject contentTeam;
     public GameObject contentTeam1;
     public GameObject contentTeam2;
     public GameObject baseBeastImage;
@@ -30,7 +29,10 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
     public Sprite defaultIcon;
     public string defaultBeastName = "Diggeye";
 
-
+    Sprite selectedBeastImage;
+    Sprite selectedBeastIcon;
+    string selectedBeastName;
+    GameObject selectedUnit;
 
     public bool turn;
 
@@ -60,57 +62,46 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
     }
     void CreateTeams()
     {
-        
+
         maxBeasts = FormatManager.Instance.maxBeasts;
+
         if (PhotonNetwork.IsMasterClient)
         {
-            contentTeam = contentTeam1;
             photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
-            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
-            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
-            if (maxBeasts > 3)
-            {
-                photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
-                if (maxBeasts > 4)
-                {
-                    photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
-                }
-
-            }
-            turn = true;
-
-        }
-        else
-        {
-            contentTeam = contentTeam2;
             photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 1);
             photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 1);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
+            photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
             photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 1);
             if (maxBeasts > 3)
             {
                 photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 1);
+                photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
                 if (maxBeasts > 4)
                 {
+                    photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 0);
                     photonView.RPC("CreateBeastImage", RpcTarget.AllBuffered, 1);
                 }
 
             }
+            turn = true;
         }
     }
 
     [PunRPC]
     public void CreateBeastImage(int mirrored)
     {
-        if (mirrored == 0) 
+        if (mirrored==0)
         {
             GameObject instance = PhotonNetwork.Instantiate(baseBeastImage.name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
-            instance.transform.parent = contentTeam.transform;
-            beastImages.Add(instance.GetComponent<BeastImage>()); 
+            instance.transform.parent = contentTeam1.transform;
+            beastImages.Add(instance.GetComponent<BeastImage>());
+            turn = true;
         }
         else
         {
             GameObject instance = PhotonNetwork.Instantiate(baseBeastImageMirror.name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
-            instance.transform.parent = contentTeam.transform;
+            instance.transform.parent = contentTeam2.transform;
             beastImages.Add(instance.GetComponent<BeastImage>());
         }
     }
@@ -119,15 +110,20 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
 
     public void SelectBeastCall(Sprite beastImage, Sprite beastIcon, string beastName, GameObject unit)
     {
-        photonView.RPC("SelectBeast", RpcTarget.AllBuffered, beastImage,  beastIcon, beastName, unit);
+        selectedBeastImage = beastImage;
+        selectedBeastIcon = beastIcon;  
+        selectedBeastName = beastName;
+        selectedUnit = unit;
+
+        photonView.RPC("SelectBeast", RpcTarget.AllBuffered);
     }
 
     [PunRPC]
-    void SelectBeast(Sprite beastImage, Sprite beastIcon, string beastName, GameObject unit)
+    void SelectBeast()
     {
         if (turn)
         {
-            beastImages[selectionTurn].ChangeImage(beastImage, beastIcon, beastName, unit);
+            beastImages[selectionTurn].ChangeImage(selectedBeastImage, selectedBeastIcon, selectedBeastName, selectedUnit);
         }
     }
 
