@@ -1,9 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TeamEditorManager : MonoBehaviour
+public class TeamEditorManager : MonoBehaviourPunCallbacks
 {
     public GameObject placeToSpawn;
 
@@ -15,6 +16,9 @@ public class TeamEditorManager : MonoBehaviour
     public List<GameObject> beastsList;
 
     public int maxBeasts;
+
+    GameObject newPlayerGo;
+    Player newPlayer;
     private void Awake()
     {
         maxBeasts = FormatManager.Instance.maxBeasts;
@@ -31,33 +35,28 @@ public class TeamEditorManager : MonoBehaviour
             beast++;
         }
     }
-
+    [PunRPC]
     public void StartCombat()
     {
         DontDestroyOnLoad(gameObject);
         SceneManager.LoadScene(FormatManager.Instance.map);
-        GameObject playerGO = Instantiate(playerPrefab);
-        DontDestroyOnLoad(playerGO);
-        Player player = playerGO.GetComponent<Player>();
+        newPlayerGo = Instantiate(playerPrefab);
+        DontDestroyOnLoad(newPlayerGo);
+        newPlayer = newPlayerGo.GetComponent<Player>();
         int index = 0;
         while (index < FormatManager.Instance.maxBeasts)
         {
-            CreateBeast(index,player);
+            photonView.RPC("CreateBeast",RpcTarget.AllBuffered,index);
             index++;
         }
-
-        GameObject playerGO2 = Instantiate(playerGO);
-        DontDestroyOnLoad(playerGO2);
-        Player player2 = playerGO2.GetComponent<Player>();
-        player2.team = 1;
-
         Destroy(beastSelectorPlayer.gameObject);
         Destroy(gameObject);
     }
 
-    void CreateBeast(int index, Player player)
+    [PunRPC]
+    void CreateBeast(int index)
     {
-        GameObject beast = Instantiate(beastSelectorPlayer.team[index].unitGO, player.transform, false);
+        GameObject beast = Instantiate(beastSelectorPlayer.team[index].unitGO, newPlayer.transform, false);
         Items items = beast.GetComponent<Items>();
         Unit unit = beast.GetComponent<Unit>();
         if (beastSelectorPlayer.team[index].item1Selected != items.items.Count - 1)
@@ -76,6 +75,6 @@ public class TeamEditorManager : MonoBehaviour
         unit.chosenHab3 = beastSelectorPlayer.team[index].hab3Selected;
         unit.chosenHab4 = beastSelectorPlayer.team[index].hab4Selected;
 
-        player.beastsToPlace.Add(beast);
+        newPlayer.beastsToPlace.Add(beast);
     }
 }
