@@ -46,6 +46,11 @@ MonoBehaviour:
   - Lock
   - SelectBeast
   - ChangeImage
+  - CreateBeast
+  - StartCombat
+  - SetReady
+  - StartCombatPhoton
+  - TimeUp
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

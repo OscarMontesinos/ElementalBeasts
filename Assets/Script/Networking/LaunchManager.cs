@@ -49,7 +49,6 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Ta todo bien " + PhotonNetwork.NickName);
         lobbyPanel.SetActive(true);
         connectionStatusPanel.SetActive(false);
     }

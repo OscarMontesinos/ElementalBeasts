@@ -25,7 +25,10 @@ public class FormatManager : MonoBehaviourPunCallbacks
     }
     public void StartGame()
     {
-        photonView.RPC("PunStartGame", RpcTarget.AllBuffered);
+        if (map != "" && maxBeasts != 0)
+        {
+            photonView.RPC("PunStartGame", RpcTarget.AllBuffered);
+        }
     }
 
 

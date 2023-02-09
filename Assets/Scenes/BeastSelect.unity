@@ -624,7 +624,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beastListRaw:
-  - unitGO: {fileID: 3164781253018283080, guid: 6b709b475553293439d7884231be27cb, type: 3}
+  - unitID: 0
+    unitGO: {fileID: 3164781253018283080, guid: 6b709b475553293439d7884231be27cb, type: 3}
     unit: {fileID: 912122944978749269, guid: 6b709b475553293439d7884231be27cb, type: 3}
     name: Diggeye
     icon: {fileID: 21300000, guid: 0b5a18267d60a6248b3ed82050cfb62b, type: 3}
@@ -1411,7 +1412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxBeasts: 0
-  maxTime: 30
+  maxTime: 0.2
   timeText: {fileID: 1059441192}
   playerPrefab: {fileID: 8543429560130934875, guid: ae87c44b41cddcf47baa7a70ebf03699, type: 3}
   player1: {fileID: 0}

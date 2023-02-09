@@ -35,11 +35,17 @@ public class TeamEditorManager : MonoBehaviourPunCallbacks
             beast++;
         }
     }
-    [PunRPC]
+
     public void StartCombat()
     {
+        photonView.RPC("StartCombatPhoton", RpcTarget.AllBuffered);
+    }
+
+    [PunRPC]
+    void StartCombatPhoton()
+    {
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene(FormatManager.Instance.map);
+        PhotonNetwork.LoadLevel(FormatManager.Instance.map);
         newPlayerGo = Instantiate(playerPrefab);
         DontDestroyOnLoad(newPlayerGo);
         newPlayer = newPlayerGo.GetComponent<Player>();
@@ -48,6 +54,10 @@ public class TeamEditorManager : MonoBehaviourPunCallbacks
         {
             photonView.RPC("CreateBeast",RpcTarget.AllBuffered,index);
             index++;
+        }
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            newPlayer.team = 1;
         }
         Destroy(beastSelectorPlayer.gameObject);
         Destroy(gameObject);

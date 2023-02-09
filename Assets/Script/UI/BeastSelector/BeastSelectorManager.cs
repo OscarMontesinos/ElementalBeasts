@@ -51,7 +51,7 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
         timeText.text = actualTime.ToString("F0");
         if(actualTime < 0)
         {
-            TimeUp();
+            photonView.RPC("TimeUp", RpcTarget.AllBuffered);
         }
     }
     void CreateTeams()
@@ -123,9 +123,9 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
 
     public void LockButton()
     {
-        if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
+        if (beastImages[selectionTurn].beastSelected)
         {
-            if (beastImages[selectionTurn].beastSelected)
+            if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
             {
                 UnitData newBeast = new UnitData();
                 newBeast.unitGO = beastImages[selectionTurn].beastGO;
@@ -134,10 +134,8 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
                 newBeast.icon = beastImages[selectionTurn].beastIcon;
                 newBeast.image = beastImages[selectionTurn].beastImage;
                 player1.team.Add(newBeast);
-
-
+                photonView.RPC("Lock", RpcTarget.AllBuffered);
             }
-            photonView.RPC("Lock", RpcTarget.AllBuffered);
         }
     }
     [PunRPC]
@@ -162,7 +160,8 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
         }
 
     }
-    
+
+    [PunRPC]
     public void TimeUp()
     {
         if (beastImages[selectionTurn].beastSelected)
@@ -171,8 +170,7 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            photonView.RPC("SelectBeast", RpcTarget.AllBuffered,0);
-            photonView.RPC("Lock", RpcTarget.AllBuffered);
+            SelectBeastCall(0);
         }
     }
 }
