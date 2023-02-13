@@ -17,6 +17,7 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
     public GameObject playerPrefab;
 
     public BeastSelectorPlayer player1;
+    public BeastSelectorPlayer player2;
 
     public GameObject contentTeam1;
     public GameObject contentTeam2;
@@ -35,18 +36,29 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
         actualTime = maxTime;
         Hashtable turnController = new Hashtable();
         turnController.Add("turn", 0);
-        PhotonNetwork.LocalPlayer.CustomProperties = turnController;
+        PhotonNetwork.LocalPlayer.CustomProperties = turnController; GameObject instance = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+        player1 = instance.GetComponent<BeastSelectorPlayer>();
+        DontDestroyOnLoad(this);
     }
     void Start()
     {
-        GameObject instance = Instantiate(playerPrefab,new Vector3(0,0,0),new Quaternion(0,0,0,0));
-        player1 = instance.GetComponent<BeastSelectorPlayer>();
+        
         CreateTeams();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (player2 == null)
+        {
+            foreach (BeastSelectorPlayer player in FindObjectsOfType<BeastSelectorPlayer>())
+            {
+                if (player != player1)
+                {
+                    player2 = player;
+                }
+            }
+        }
         actualTime -= Time.deltaTime;
         timeText.text = actualTime.ToString("F0");
         if(actualTime < 0)
@@ -123,24 +135,37 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
 
     public void LockButton()
     {
-        if (beastImages[selectionTurn].beastSelected)
+        if (beastImages[selectionTurn].beastSelected && PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
         {
-            if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
-            {
-                UnitData newBeast = new UnitData();
-                newBeast.unitGO = beastImages[selectionTurn].beastGO;
-                newBeast.unit = beastImages[selectionTurn].beast;
-                newBeast.name = beastImages[selectionTurn].beastName;
-                newBeast.icon = beastImages[selectionTurn].beastIcon;
-                newBeast.image = beastImages[selectionTurn].beastImage;
-                player1.team.Add(newBeast);
-                photonView.RPC("Lock", RpcTarget.AllBuffered);
-            }
+            photonView.RPC("Lock", RpcTarget.AllBuffered);
         }
+            
+        
     }
     [PunRPC]
     void Lock()
     {
+        if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
+        {
+            UnitData newBeast = new UnitData();
+            newBeast.unitGO = beastImages[selectionTurn].beastGO;
+            newBeast.unit = beastImages[selectionTurn].beast;
+            newBeast.name = beastImages[selectionTurn].beastName;
+            newBeast.icon = beastImages[selectionTurn].beastIcon;
+            newBeast.image = beastImages[selectionTurn].beastImage;
+            player1.team.Add(newBeast);
+        }
+        else
+        {
+            UnitData newBeast = new UnitData();
+            newBeast.unitGO = beastImages[selectionTurn].beastGO;
+            newBeast.unit = beastImages[selectionTurn].beast;
+            newBeast.name = beastImages[selectionTurn].beastName;
+            newBeast.icon = beastImages[selectionTurn].beastIcon;
+            newBeast.image = beastImages[selectionTurn].beastImage;
+            player2.team.Add(newBeast);
+        }
+
         if (selectionTurn % 2 == 0)
         {
             if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
@@ -164,13 +189,16 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void TimeUp()
     {
-        if (beastImages[selectionTurn].beastSelected)
+        if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
         {
-            photonView.RPC("Lock", RpcTarget.AllBuffered);
-        }
-        else
-        {
-            SelectBeastCall(0);
+            if (beastImages[selectionTurn].beastSelected)
+            {
+                LockButton();
+            }
+            else
+            {
+                SelectBeastCall(0);
+            }
         }
     }
 }

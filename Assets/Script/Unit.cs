@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Unit : MonoBehaviour
+public class Unit : MonoBehaviourPunCallbacks
 {
     [Header("SetUp")]
     public SpawnCell spawnCell;

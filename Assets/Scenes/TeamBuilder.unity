@@ -375,7 +375,7 @@ RectTransform:
   m_Children:
   - {fileID: 707673706}
   m_Father: {fileID: 1876457126}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -521,7 +521,7 @@ RectTransform:
   m_Children:
   - {fileID: 1973729498}
   m_Father: {fileID: 1876457126}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1022,10 +1022,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1950486356}
   - {fileID: 1971624855}
   - {fileID: 959492514}
   - {fileID: 712936774}
-  - {fileID: 1950486356}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1070,7 +1070,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1876457126}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1240,6 +1240,7 @@ MonoBehaviour:
   beastSheet: {fileID: 3511365995217604398, guid: 04f4624e1f99e0640be9fb34db208f17, type: 3}
   playerPrefab: {fileID: 1063243708585058569, guid: e886b2be4cfc88742a1fe87171c861aa, type: 3}
   beastSelectorPlayer: {fileID: 0}
+  beastSelectorPlayer2: {fileID: 0}
   beastsList: []
   maxBeasts: 1
 --- !u!4 &2101974455
@@ -1480,7 +1481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5234359733986774334, guid: c0ee29e841e03be4e96ece94788007cc, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5234359733986774334, guid: c0ee29e841e03be4e96ece94788007cc, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1553,6 +1554,10 @@ PrefabInstance:
     - target: {fileID: 5234359733986774334, guid: c0ee29e841e03be4e96ece94788007cc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5504056589895563119, guid: c0ee29e841e03be4e96ece94788007cc, type: 3}
+      propertyPath: sceneViewId
+      value: 35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0ee29e841e03be4e96ece94788007cc, type: 3}

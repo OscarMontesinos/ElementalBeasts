@@ -1,11 +1,13 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BeastSheet : MonoBehaviour
+public class BeastSheet : MonoBehaviourPunCallbacks
 {
+    int playerManager=2;
     BeastSelectorPlayer player;
     public int beastSlot;
     Items itemList;
@@ -39,6 +41,10 @@ public class BeastSheet : MonoBehaviour
     // Update is called once per frame
     private void Awake()
     {
+        if (photonView.IsMine)
+        {
+            transform.parent = null;
+        }
         player = FindObjectOfType<BeastSelectorPlayer>();
         itemList = FindObjectOfType<Items>();
         editor = FindObjectOfType<BeastEditor>();
@@ -46,7 +52,8 @@ public class BeastSheet : MonoBehaviour
 
     private void Start()
     {
-        editor.gameObject.SetActive(false);
+
+        editor.transform.SetSiblingIndex(0);
         UpdateSheet();
     }
     public void UpdateSheet()
@@ -139,10 +146,29 @@ public class BeastSheet : MonoBehaviour
 
     public void EditBeast()
     {
-        editor.gameObject.SetActive(true);
-        editor.sheet = this;
-        editor.beastSlot = beastSlot;
-        editor.UpdateEditor();
+        playerManager = 1;
+        photonView.RPC("EditBeastPun", RpcTarget.AllBuffered);
+    }
+    [PunRPC]
+    void EditBeastPun()
+    {
+        Debug.Log("hehe");
+        if (playerManager == 1)
+        {
+
+            Debug.Log("hoho");
+            editor.transform.SetSiblingIndex(3);
+            editor.sheet = this;
+            editor.beastSlot = beastSlot;
+            editor.UpdateEditor();
+        }
+        else
+        {
+            Debug.Log("hihi");
+            editor.beastSlot2 = beastSlot;
+        }
+        playerManager = 2;
+
     }
 }
 

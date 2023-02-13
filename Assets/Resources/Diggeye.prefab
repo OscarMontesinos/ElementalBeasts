@@ -120,10 +120,10 @@ MonoBehaviour:
   moving: 0
   habilityCasted: 0
   revealed: 0
-  chosenHab1: 2
-  chosenHab2: 4
-  chosenHab3: 6
-  chosenHab4: 1
+  chosenHab1: 0
+  chosenHab2: 0
+  chosenHab3: 0
+  chosenHab4: 0
   castingHability: 0
   sinergiaElemental: 10
   fuerza: 50

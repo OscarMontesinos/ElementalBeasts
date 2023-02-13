@@ -1478,6 +1478,7 @@ GameObject:
   - component: {fileID: 3511365995217604393}
   - component: {fileID: 3511365995217604392}
   - component: {fileID: 4857161523547031931}
+  - component: {fileID: 1688157354259937416}
   m_Layer: 5
   m_Name: BeastSheet
   m_TagString: Untagged
@@ -1561,6 +1562,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beastSlot: 0
+  editor: {fileID: 0}
+  editorGO: {fileID: 0}
   nameText: {fileID: 6888658765500355158}
   image: {fileID: 1905033444344620288}
   statsText: {fileID: 3511365995638460215}
@@ -1580,6 +1583,28 @@ MonoBehaviour:
   hab4Description: {fileID: 1372017519341371678}
   defaultItem: {fileID: 7482667652216324306, guid: 3010a37501e3f5845b9d4caec1fbc3df, type: 3}
   defaultHability: {fileID: 7482667652216324306, guid: 3010a37501e3f5845b9d4caec1fbc3df, type: 3}
+--- !u!114 &1688157354259937416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3511365995217604398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3511365995334773110
 GameObject:
   m_ObjectHideFlags: 0
@@ -3171,7 +3196,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52caeddd37af94043b7b701ddc121af2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beastGO: {fileID: 0}
   beast: {fileID: 0}
+  beastName: 
   beastIcon: {fileID: 0}
   beastImage: {fileID: 0}
   beastText: {fileID: 6888658765500355158}
