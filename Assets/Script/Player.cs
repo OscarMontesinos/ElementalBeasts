@@ -52,7 +52,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         {
             Ready();
         }
-        if (settingUnitsUp)
+        if (settingUnitsUp && photonView.IsMine)
         {
             List<Unit> discardedUnits = new List<Unit>(manager.unitList);
             List<Unit> allUnits = new List<Unit>();
@@ -184,6 +184,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
+        DontDestroyOnLoad(this);
         object[] instantiationData = info.photonView.InstantiationData;
         team = (int)instantiationData[0];
     }

@@ -50,13 +50,13 @@ public class SpawnCell : MonoBehaviour
     {
         if (player.team == team)
         {
-            GameObject unit = Instantiate(unitToSpawn, transform.position, transform.rotation);
-            unitPlaced = unit.GetComponent<Unit>();
-            unit.GetComponent<Unit>().owner = player;
-            unit.GetComponent<Unit>().spawnCell = this;
-            unit.GetComponent<Unit>().team = player.team;
+            unitToSpawn.GetComponent<Unit>().owner = player;
+            unitToSpawn.GetComponent<Unit>().spawnCell = this;
+            unitToSpawn.GetComponent<Unit>().team = player.team;
+
+            unitToSpawn.GetComponent<Unit>().teamColor.color = unitToSpawn.GetComponent<Unit>().manager.teamColorList[team];
             player.beastsToPlace.Remove(unitToSpawn);
-            player.beasts.Add(unitPlaced.GetComponent<Unit>());
+            player.beasts.Add(unitToSpawn.GetComponent<Unit>());
 
             if (player.beastsToPlace.Count <= 0)
             {
@@ -66,7 +66,9 @@ public class SpawnCell : MonoBehaviour
             {
                 player.indexBeastToPlace--;
             }
-            Destroy(unitToSpawn);
+            unitToSpawn.transform.position = transform.position;
+
+            player.beastSelected.ReplicateTransformCall(player.beastSelected.transform.position.x, player.beastSelected.transform.position.y);
         }
     }
 
@@ -112,6 +114,9 @@ public class SpawnCell : MonoBehaviour
             unitPlaced.transform.position = transform.position;
             unitPlaced.spawnCell = this;
         }
+
+        player.beastSelected.ReplicateTransformCall(player.beastSelected.transform.position.x, player.beastSelected.transform.position.y);
+        unitPlaced.ReplicateTransformCall(unitPlaced.transform.position.x, unitPlaced.transform.position.y);
             player.beastSelected = null;
         
 

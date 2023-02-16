@@ -150,6 +150,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
+        DontDestroyOnLoad(this);
         object[] instantiationData = info.photonView.InstantiationData;
 
         Items items = GetComponent<Items>();
@@ -189,7 +190,6 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     {
         iniciativaTurno = iniciativa + Random.Range(0, 20);
         
-        teamColor.color = manager.teamColorList[team];
 
         hp = mHp;
         
@@ -200,8 +200,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     }
     public virtual void Update()
     {
-        
-            HandleMovement();
+        HandleMovement();
         if (pot<0.1f&& pot>0 || pot> -0.1f && pot < 0)
         {
             pot = 0;
@@ -341,7 +340,23 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         }*/
 
     }
+    #region RPC
 
+    public void ReplicateTransformCall(float x, float y)
+    {
+        photonView.RPC("ReplicateTransform", RpcTarget.All,x,y);
+    }
+
+
+    [PunRPC]
+    public void ReplicateTransform(float x, float y)
+    {
+        transform.position = new Vector2(x, y);
+    }
+
+
+
+    #endregion
     #region Pathfinding
     public Vector3 GetPosition()
     {
