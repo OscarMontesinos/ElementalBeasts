@@ -10,17 +10,20 @@ public class PhotonPlayerManager : MonoBehaviourPunCallbacks
 
     public void SetReadyButton()
     {
-        photonView.RPC("SetReady", RpcTarget.AllBuffered);
+        
+            photonView.RPC("SetReady", RpcTarget.AllBuffered);
     }
 
     [PunRPC]
     void SetReady()
     {
-        playersReady ++;
+
+        playersReady++;
         if (playersReady >= 2)
         {
-            manager.StartCombat();
+                manager.StartCombat();
         }
+
 
     }
 }

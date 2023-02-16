@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviourPunCallbacks
+public class Player : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
+
     bool ready;
     public int team;
     public bool giveTurno;
@@ -37,6 +38,7 @@ public class Player : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        
     }
     
     private void Update()
@@ -178,5 +180,11 @@ public class Player : MonoBehaviourPunCallbacks
     {
         ready = !ready;
         manager.PlayerReady();
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        object[] instantiationData = info.photonView.InstantiationData;
+        team = (int)instantiationData[0];
     }
 }

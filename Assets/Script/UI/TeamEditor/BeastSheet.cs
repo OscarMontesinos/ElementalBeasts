@@ -45,13 +45,13 @@ public class BeastSheet : MonoBehaviourPunCallbacks
         {
             transform.parent = null;
         }
-        player = FindObjectOfType<BeastSelectorPlayer>();
         itemList = FindObjectOfType<Items>();
         editor = FindObjectOfType<BeastEditor>();
     }
 
     private void Start()
     {
+        player = editor.player;
 
         editor.transform.SetSiblingIndex(0);
         UpdateSheet();
@@ -147,28 +147,10 @@ public class BeastSheet : MonoBehaviourPunCallbacks
     public void EditBeast()
     {
         playerManager = 1;
-        photonView.RPC("EditBeastPun", RpcTarget.AllBuffered);
-    }
-    [PunRPC]
-    void EditBeastPun()
-    {
-        Debug.Log("hehe");
-        if (playerManager == 1)
-        {
-
-            Debug.Log("hoho");
-            editor.transform.SetSiblingIndex(3);
-            editor.sheet = this;
-            editor.beastSlot = beastSlot;
-            editor.UpdateEditor();
-        }
-        else
-        {
-            Debug.Log("hihi");
-            editor.beastSlot2 = beastSlot;
-        }
-        playerManager = 2;
-
+        editor.transform.SetSiblingIndex(3);
+        editor.sheet = this;
+        editor.beastSlot = beastSlot;
+        editor.UpdateEditor();
     }
 }
 

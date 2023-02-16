@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class TeamEditorManager : MonoBehaviourPunCallbacks
 {
+    int sorted=1000;
     bool sheets;
     public GameObject placeToSpawn;
 
@@ -13,128 +14,114 @@ public class TeamEditorManager : MonoBehaviourPunCallbacks
 
     public GameObject playerPrefab;
     public BeastSelectorPlayer beastSelectorPlayer;
-    public BeastSelectorPlayer beastSelectorPlayer2;
 
     public List<GameObject> beastsList;
 
     public int maxBeasts;
 
     GameObject newPlayerGo;
-    GameObject newPlayerGo2;
-    Player newPlayer;
-    Player newPlayer2;
     private void Awake()
     {
         maxBeasts = FormatManager.Instance.maxBeasts;
         beastSelectorPlayer = FindObjectOfType<BeastSelectorManager>().player1;
-        beastSelectorPlayer2 = FindObjectOfType<BeastSelectorManager>().player2;
         Destroy(FindObjectOfType<BeastSelectorManager>().gameObject);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("CreateBeastSheets", RpcTarget.AllBuffered);
+        }
     }
 
-    private void Start()
+    private void Update()
     {
-        photonView.RPC("CreateBeastSheets", RpcTarget.AllBuffered);
+        if (sorted > 0)
+        {
+            SortSheets();
+        }
     }
     [PunRPC]
     void CreateBeastSheets()
     {
-            int beast = 0;
-            while (beast < maxBeasts)
+        int beast = 0;
+        while (beast < maxBeasts)
+        {
+            GameObject sheet = PhotonNetwork.Instantiate(beastSheet.name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+            sheet.transform.parent = placeToSpawn.transform;
+            beast++;
+        }
+        sheets = true;
+    }
+
+    void SortSheets()
+    {
+        int count = maxBeasts-1;
+        int count2 = maxBeasts-1;
+        foreach (BeastSheet sheet in FindObjectsOfType<BeastSheet>())
+        {
+            if (sheet.transform.parent!=null)
             {
-                GameObject sheet = PhotonNetwork.Instantiate(beastSheet.name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
-                sheet.transform.parent = placeToSpawn.transform;
-                sheet.GetComponent<BeastSheet>().beastSlot = beast;
-                beast++;
+                sheet.beastSlot = count2;
+                count2--;
+
             }
-            sheets = true;
+            else
+            {
+                sheet.beastSlot = count;
+                count--;
+            }
+        }
+        sorted--;
     }
     public void StartCombat()
     {
-        photonView.RPC("StartCombatPhoton", RpcTarget.AllBuffered);
-    }
-
-
-
-    [PunRPC]
-    void StartCombatPhoton()
-    {
         DontDestroyOnLoad(gameObject);
         PhotonNetwork.LoadLevel(FormatManager.Instance.map);
-        if (photonView.IsMine)
+        object[] instanceData;
+        if (PhotonNetwork.IsMasterClient)
         {
-            newPlayerGo = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
-            DontDestroyOnLoad(newPlayerGo);
-            newPlayer = newPlayerGo.GetComponent<Player>();
-        
-        int index = 0;
-        while (index < FormatManager.Instance.maxBeasts)
-        {
-            photonView.RPC("CreateBeast",RpcTarget.AllBuffered,index);
-            index++;
-        }
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            newPlayer.team = 1;
-        }
-        else if (PhotonNetwork.IsMasterClient)
-        {
-            newPlayer2.team = 1;
-        }
-        Destroy(beastSelectorPlayer.gameObject);
-        Destroy(beastSelectorPlayer2.gameObject);
-        Destroy(gameObject);}
-    }
-
-    [PunRPC]
-    void CreateBeast(int index)
-    {
-        if (photonView.IsMine)
-        {
-            GameObject beast = PhotonNetwork.Instantiate(beastSelectorPlayer.team[index].name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
-            DontDestroyOnLoad(beast);
-            Items items = beast.GetComponent<Items>();
-            Unit unit = beast.GetComponent<Unit>();
-            if (beastSelectorPlayer.team[index].item1Selected != items.items.Count - 1)
-            {
-                items.items[beastSelectorPlayer.team[index].item1Selected].equipado = true;
-                items.items[beastSelectorPlayer.team[index].item1Selected].cantidad++;
-            }
-            if (beastSelectorPlayer.team[index].item2Selected != items.items.Count - 1)
-            {
-                items.items[beastSelectorPlayer.team[index].item2Selected].equipado = true;
-                items.items[beastSelectorPlayer.team[index].item2Selected].cantidad++;
-            }
-
-            unit.chosenHab1 = beastSelectorPlayer.team[index].hab1Selected;
-            unit.chosenHab2 = beastSelectorPlayer.team[index].hab2Selected;
-            unit.chosenHab3 = beastSelectorPlayer.team[index].hab3Selected;
-            unit.chosenHab4 = beastSelectorPlayer.team[index].hab4Selected;
-
-            newPlayer.beastsToPlace.Add(beast);
+            instanceData = new object[] { 0 };
         }
         else
         {
-            GameObject beast = PhotonNetwork.Instantiate(beastSelectorPlayer2.team[index].name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
-            DontDestroyOnLoad(beast);
-            Items items = beast.GetComponent<Items>();
-            Unit unit = beast.GetComponent<Unit>();
-            if (beastSelectorPlayer2.team[index].item1Selected != items.items.Count - 1)
-            {
-                items.items[beastSelectorPlayer2.team[index].item1Selected].equipado = true;
-                items.items[beastSelectorPlayer2.team[index].item1Selected].cantidad++;
-            }
-            if (beastSelectorPlayer2.team[index].item2Selected != items.items.Count - 1)
-            {
-                items.items[beastSelectorPlayer2.team[index].item2Selected].equipado = true;
-                items.items[beastSelectorPlayer2.team[index].item2Selected].cantidad++;
-            }
-
-            unit.chosenHab1 = beastSelectorPlayer2.team[index].hab1Selected;
-            unit.chosenHab2 = beastSelectorPlayer2.team[index].hab2Selected;
-            unit.chosenHab3 = beastSelectorPlayer2.team[index].hab3Selected;
-            unit.chosenHab4 = beastSelectorPlayer2.team[index].hab4Selected;
-
-            newPlayer2.beastsToPlace.Add(beast);
+            instanceData = new object[] { 1 };
         }
+
+        newPlayerGo = PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0), 0, instanceData);
+        DontDestroyOnLoad(newPlayerGo);
+
+
+        int index = 0;
+        while (index < FormatManager.Instance.maxBeasts)
+        {
+            CreateBeast(index);
+            index++;
+        }
+
+        Destroy(beastSelectorPlayer.gameObject);
+        Destroy(gameObject);
+    }
+
+
+    void CreateBeast(int index)
+    {
+            int item1 = beastSelectorPlayer.team[index].item1Selected;
+            int item2 = beastSelectorPlayer.team[index].item1Selected;
+            int hab1 = beastSelectorPlayer.team[index].hab1Selected;
+            int hab2 = beastSelectorPlayer.team[index].hab2Selected;
+            int hab3 = beastSelectorPlayer.team[index].hab3Selected;
+            int hab4 = beastSelectorPlayer.team[index].hab4Selected;
+            int team;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                team = 0;
+            }
+            else
+            {
+                team = 1;
+            }
+            object[] instanceData = new object[] { item1, item2, hab1, hab2, hab3, hab4, team };
+
+            GameObject beast = PhotonNetwork.Instantiate(beastSelectorPlayer.team[index].name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0),0,instanceData);
+            DontDestroyOnLoad(beast);
     }
 }

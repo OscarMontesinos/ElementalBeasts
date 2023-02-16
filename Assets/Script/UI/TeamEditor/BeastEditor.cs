@@ -7,12 +7,9 @@ using UnityEngine.UI;
 
 public class BeastEditor : MonoBehaviourPunCallbacks
 {
-    int playerManager = 2;
     public BeastSelectorPlayer player;
-    public BeastSelectorPlayer player2;
     public BeastSheet sheet;
     public int beastSlot;
-    public int beastSlot2;
     public GameObject itemSelector;
     public int itemSlot;
     public Color32 selectedColor;
@@ -56,20 +53,19 @@ public class BeastEditor : MonoBehaviourPunCallbacks
     private void Start()
     {
         player = FindObjectOfType<TeamEditorManager>().beastSelectorPlayer;
-        player2 = FindObjectOfType<TeamEditorManager>().beastSelectorPlayer2;
     }
     public void UpdateEditor()
     {
         image.sprite = player.team[beastSlot].icon;
-        float hp =  player.team[beastSlot].unit.mHp +   
-                    itemList.items[player.team[beastSlot].item1Selected].hp + 
+        float hp = player.team[beastSlot].unit.mHp +
+                    itemList.items[player.team[beastSlot].item1Selected].hp +
                     itemList.items[player.team[beastSlot].item2Selected].hp;
 
-        float sinergiaElemental =   player.team[beastSlot].unit.sinergiaElemental +
+        float sinergiaElemental = player.team[beastSlot].unit.sinergiaElemental +
                                     itemList.items[player.team[beastSlot].item1Selected].sinergia +
                                     itemList.items[player.team[beastSlot].item2Selected].sinergia;
 
-        float fuerza =  player.team[beastSlot].unit.fuerza +
+        float fuerza = player.team[beastSlot].unit.fuerza +
                         itemList.items[player.team[beastSlot].item1Selected].fuerza +
                         itemList.items[player.team[beastSlot].item2Selected].fuerza;
 
@@ -77,22 +73,22 @@ public class BeastEditor : MonoBehaviourPunCallbacks
                         itemList.items[player.team[beastSlot].item1Selected].control +
                         itemList.items[player.team[beastSlot].item2Selected].control;
 
-        float resistenciaFisica =   player.team[beastSlot].unit.resistenciaFisica +
+        float resistenciaFisica = player.team[beastSlot].unit.resistenciaFisica +
                                     itemList.items[player.team[beastSlot].item1Selected].rFisica +
                                     itemList.items[player.team[beastSlot].item2Selected].rFisica;
 
-        float resistenciaMagica =   player.team[beastSlot].unit.resistenciaMagica +
+        float resistenciaMagica = player.team[beastSlot].unit.resistenciaMagica +
                                     itemList.items[player.team[beastSlot].item1Selected].rMagica +
                                     itemList.items[player.team[beastSlot].item2Selected].rMagica;
 
-        float movementPoints =  player.team[beastSlot].unit.maxMovementPoints +
+        float movementPoints = player.team[beastSlot].unit.maxMovementPoints +
                                 itemList.items[player.team[beastSlot].item1Selected].movimiento +
                                 itemList.items[player.team[beastSlot].item2Selected].movimiento;
 
 
 
 
-        statsText.text =    hp + "\n" +
+        statsText.text = hp + "\n" +
                             sinergiaElemental + "\n" +
                             fuerza + "\n" +
                             control + "\n" +
@@ -168,50 +164,31 @@ public class BeastEditor : MonoBehaviourPunCallbacks
     private void UpdateHabImages()
     {
         int index = 1;
-        while(index <= 8)
+        while (index <= 8)
         {
             UnselectHabImage(index);
             index++;
         }
         index = 1;
-        if(player.team[beastSlot].hab1Selected != 0)
+        if (player.team[beastSlot].hab1Selected != 0)
         {
             SelectHabImage(player.team[beastSlot].hab1Selected);
         }
-        if(player.team[beastSlot].hab2Selected != 0)
+        if (player.team[beastSlot].hab2Selected != 0)
         {
             SelectHabImage(player.team[beastSlot].hab2Selected);
         }
-        if(player.team[beastSlot].hab3Selected != 0)
+        if (player.team[beastSlot].hab3Selected != 0)
         {
             SelectHabImage(player.team[beastSlot].hab3Selected);
         }
-        if(player.team[beastSlot].hab4Selected != 0)
+        if (player.team[beastSlot].hab4Selected != 0)
         {
             SelectHabImage(player.team[beastSlot].hab4Selected);
         }
     }
     public void ChangeHability(int hability)
     {
-        playerManager = 1;
-        photonView.RPC("RPCChangeHability", RpcTarget.AllBuffered, hability);
-    }
-    [PunRPC]
-    public void RPCChangeHability(int hability)
-    {
-        BeastSelectorPlayer player;
-        int beastSlot;
-        if (playerManager == 1)
-        {
-            player = this.player;
-            beastSlot = this.beastSlot;
-        }
-        else
-        {
-            player = player2;
-            beastSlot = beastSlot2;
-        }
-
         if (player.team[beastSlot].hab1Selected != hability && player.team[beastSlot].hab2Selected != hability && player.team[beastSlot].hab3Selected != hability && player.team[beastSlot].hab4Selected != hability)
         {
             if (player.team[beastSlot].hab1Selected == 0)
@@ -219,10 +196,7 @@ public class BeastEditor : MonoBehaviourPunCallbacks
                 if (player.team[beastSlot].hab1Selected != hability)
                 {
                     player.team[beastSlot].hab1Selected = hability;
-                    if (player == this.player)
-                    {
-                        SelectHabImage(hability);
-                    }
+                    SelectHabImage(hability);
                 }
             }
             else if (player.team[beastSlot].hab2Selected == 0)
@@ -230,10 +204,7 @@ public class BeastEditor : MonoBehaviourPunCallbacks
                 if (player.team[beastSlot].hab2Selected != hability)
                 {
                     player.team[beastSlot].hab2Selected = hability;
-                    if (player == this.player)
-                    {
-                        SelectHabImage(hability);
-                    }
+                    SelectHabImage(hability);
                 }
             }
             else if (player.team[beastSlot].hab3Selected == 0)
@@ -241,10 +212,7 @@ public class BeastEditor : MonoBehaviourPunCallbacks
                 if (player.team[beastSlot].hab3Selected != hability)
                 {
                     player.team[beastSlot].hab3Selected = hability;
-                    if (player == this.player)
-                    {
-                        SelectHabImage(hability);
-                    }
+                    SelectHabImage(hability);
                 }
             }
             else if (player.team[beastSlot].hab4Selected == 0)
@@ -252,10 +220,7 @@ public class BeastEditor : MonoBehaviourPunCallbacks
                 if (player.team[beastSlot].hab4Selected != hability)
                 {
                     player.team[beastSlot].hab4Selected = hability;
-                    if (player == this.player)
-                    {
-                        SelectHabImage(hability);
-                    }
+                    SelectHabImage(hability);
                 }
             }
         }
@@ -264,41 +229,25 @@ public class BeastEditor : MonoBehaviourPunCallbacks
             if (player.team[beastSlot].hab1Selected == hability)
             {
                 player.team[beastSlot].hab1Selected = 0;
-                if (player == this.player)
-                {
-                    SelectHabImage(hability);
-                }
+                SelectHabImage(hability);
             }
             else if (player.team[beastSlot].hab2Selected == hability)
             {
                 player.team[beastSlot].hab2Selected = 0;
-                if (player == this.player)
-                {
-                    SelectHabImage(hability);
-                }
+                SelectHabImage(hability);
             }
-            else if(player.team[beastSlot].hab3Selected == hability)
+            else if (player.team[beastSlot].hab3Selected == hability)
             {
                 player.team[beastSlot].hab3Selected = 0;
-                if (player == this.player)
-                {
-                    SelectHabImage(hability);
-                }
+                SelectHabImage(hability);
             }
-            else if(player.team[beastSlot].hab4Selected == hability)
+            else if (player.team[beastSlot].hab4Selected == hability)
             {
                 player.team[beastSlot].hab4Selected = 0;
-                if (player == this.player)
-                {
-                    SelectHabImage(hability);
-                }
+                SelectHabImage(hability);
             }
         }
-        if (playerManager == 1)
-        {
-            UpdateEditor();
-        }
-        playerManager = 2;
+        UpdateEditor();
     }
 
     private void SelectHabImage(int hability)
@@ -371,24 +320,6 @@ public class BeastEditor : MonoBehaviourPunCallbacks
 
     public void ChangeItem(int itemToChange)
     {
-        playerManager = 1;
-        photonView.RPC("RPCChangeItem", RpcTarget.AllBuffered, itemToChange);
-    }
-    [PunRPC]
-    void RPCChangeItem(int itemToChange)
-    {
-        int beastSlot;
-        BeastSelectorPlayer player;
-        if (playerManager == 1)
-        {
-            player = this.player;
-            beastSlot = this.beastSlot;
-        }
-        else
-        {
-            player = player2;
-            beastSlot = beastSlot2;
-        }
 
         if (itemSlot == 1)
         {
@@ -405,11 +336,7 @@ public class BeastEditor : MonoBehaviourPunCallbacks
         itemList.items[itemToChange].cantidad++;
 
         itemSelector.SetActive(false);
-        if (playerManager == 1)
-        {
-            UpdateEditor();
-        }
-        playerManager = 2;
+        UpdateEditor();
     }
 
     public void CloseBeastEditor()

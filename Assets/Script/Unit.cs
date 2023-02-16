@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Unit : MonoBehaviourPunCallbacks
+public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
     [Header("SetUp")]
     public SpawnCell spawnCell;
@@ -146,6 +146,38 @@ public class Unit : MonoBehaviourPunCallbacks
         elegibleMarcador = transform.GetChild(9).gameObject;
 
 
+    }
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        object[] instantiationData = info.photonView.InstantiationData;
+
+        Items items = GetComponent<Items>();
+
+        if ((int)instantiationData[0] != items.items.Count - 1)
+        {
+            items.items[(int)instantiationData[0]].equipado = true;
+            items.items[(int)instantiationData[0]].cantidad++;
+        }
+        if ((int)instantiationData[0] != items.items.Count - 1)
+        {
+            items.items[(int)instantiationData[1]].equipado = true;
+            items.items[(int)instantiationData[1]].cantidad++;
+        }
+
+        chosenHab1 = (int)instantiationData[2];
+        chosenHab2 = (int)instantiationData[3];
+        chosenHab3 = (int)instantiationData[4];
+        chosenHab4 = (int)instantiationData[5];
+
+        team = (int)instantiationData[6];
+        foreach (Player player in FindObjectsOfType<Player>())
+        {
+            if (player.team == team)
+            {
+                player.beastsToPlace.Add(gameObject);
+            }
+        }
     }
 
     public void SetElegibleMarcador(bool value)
@@ -393,7 +425,6 @@ public class Unit : MonoBehaviourPunCallbacks
 
     public void StopMoving()
     {
-
         moving = false;
         UpdateCell(false);
         manager.ShowNodesInRange();
@@ -1275,4 +1306,5 @@ public class Unit : MonoBehaviourPunCallbacks
         
     }
 
+   
 }
