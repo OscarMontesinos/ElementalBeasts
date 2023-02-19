@@ -119,7 +119,6 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         collider2D =GetComponent<BoxCollider2D>();
         mapPathfinder = FindObjectOfType<MapPathfinder>();
         cam = Object.FindObjectOfType<Camera>();
-        manager = Object.FindObjectOfType<CombatManager>();
         /*hab1CDText = Object.FindObjectOfType<Hab1T>().GetComponent<Text>(); 
         hab2CDText = Object.FindObjectOfType<Hab2T>().GetComponent<Text>();
         hab3CDText= Object.FindObjectOfType<Hab3T>().GetComponent<Text>();
@@ -147,7 +146,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 
 
     }
-
+    
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         DontDestroyOnLoad(this);
@@ -172,11 +171,14 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         chosenHab4 = (int)instantiationData[5];
 
         team = (int)instantiationData[6];
+
         foreach (Player player in FindObjectsOfType<Player>())
         {
             if (player.team == team)
             {
                 player.beastsToPlace.Add(gameObject);
+
+                owner = player;
             }
         }
     }
@@ -188,8 +190,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 
     private void Start()
     {
-        iniciativaTurno = iniciativa + Random.Range(0, 20);
-        
+
 
         hp = mHp;
         
@@ -200,6 +201,16 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     }
     public virtual void Update()
     {
+        if (manager==null)
+        {
+
+            manager = Object.FindObjectOfType<CombatManager>();
+        }
+        else
+        {
+            
+            teamColor.color = manager.teamColorList[team];
+        }
         HandleMovement();
         if (pot<0.1f&& pot>0 || pot> -0.1f && pot < 0)
         {
@@ -342,6 +353,19 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     }
     #region RPC
 
+    void IniciativaCalc()
+    {
+
+        iniciativaTurno = iniciativa + Random.Range(0, 20);
+        photonView.RPC("ReplicateIniciativaCalc", RpcTarget.All,iniciativaTurno);
+    }
+
+    [PunRPC]
+    public void ReplicateIniciativaCalc(int iniciativa)
+    {
+        iniciativaTurno = iniciativa;
+    }
+
     public void ReplicateTransformCall(float x, float y)
     {
         photonView.RPC("ReplicateTransform", RpcTarget.All,x,y);
@@ -353,10 +377,25 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     {
         transform.position = new Vector2(x, y);
     }
+    public void UpdateHP()
+    {
+        photonView.RPC("ReplicateHP", RpcTarget.All,hp);
+    }
 
+
+    [PunRPC]
+    public void ReplicateHP(float newHp)
+    {
+        if(newHp != hp)
+        {
+            hp = newHp;
+            StartCoroutine(SetHpBar());
+        }
+    }
 
 
     #endregion
+
     #region Pathfinding
     public Vector3 GetPosition()
     {
@@ -449,7 +488,10 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     public void UpdateCell(bool value)
     {
         mapPathfinder.GetPathfinding().GetGrid().GetXY(transform.position, out int x, out int y);
-        mapPathfinder.GetPathfinding().GetNode(x, y).SetIsWalkable(value);
+        if (x != 1000 && y != 1000)
+        {
+            mapPathfinder.GetPathfinding().GetNode(x, y).SetIsWalkable(value);
+        }
     }
 
     #endregion
@@ -700,6 +742,11 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
             }
             escudoText.text = "(" + escudo.ToString("F0") + ")";
         }
+
+        hp -= value;
+
+        StartCoroutine(SetHpBar());
+        UpdateHP();
 
     }
 
@@ -1051,7 +1098,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         unit.transform.position = new Vector3(newPos.x, newPos.y, transform.position.z);
         UpdateCell(false);
         manager.Position(gameObject);
-
+        photonView.RPC("ReplicateTransformCall", RpcTarget.All, transform.position.x, transform.position.y);
     }
     public virtual void DashBehindTarget(Unit unit, Unit targetUnit)
     {
@@ -1110,6 +1157,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         unit.transform.position = new Vector3(tx, ty, transform.position.z);
         UpdateCell(false);
         manager.Position(gameObject);
+        photonView.RPC("ReplicateTransformCall", RpcTarget.All, transform.position.x, transform.position.y);
 
     }
     #endregion
@@ -1150,52 +1198,59 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 
     private void OnMouseDown()
     {
-        if (owner.giveTurno && !pasar)
+        if (owner.giveTurno && !pasar &&photonView.IsMine)
         {
             PrepararTurno();
         }
     }
-
     public virtual void OnMouseOver()
     {
-        if (!manager.casteando && !freelook || !manager.casteando && freelook || manager.casteando && freelook)
+        if (!owner.settingUnitsUp && photonView.IsMine)
         {
-            selected = true;
-        } 
-        else
-        {
-            selected = false;
-        }
+            if (!manager.casteando && !freelook || !manager.casteando && freelook || manager.casteando && freelook)
+            {
+                selected = true;
+            }
+            else
+            {
+                selected = false;
+            }
 
-        if(manager.casteando)
-        {
-            
-            if (manager.aliado && team == manager.singleTeam && manager.habSingle)
+            if (manager.casteando)
             {
-                hSelected = true;
+
+                if (manager.aliado && team == manager.singleTeam && manager.habSingle)
+                {
+                    hSelected = true;
+                }
+                if (manager.enemigo && team != manager.singleTeam && manager.habSingle)
+                {
+
+                    hSelected = true;
+                }
             }
-            if (manager.enemigo && team != manager.singleTeam && manager.habSingle)
+            else
             {
-                
-                hSelected = true;
+                hSelected = false;
             }
-        }
-        else
-        {
-            hSelected = false;
         }
     }
     public virtual void OnMouseExit()
     {
-        if (owner.giveTurno)
+
+        Debug.Log("out");
+        if (!owner.settingUnitsUp && photonView.IsMine)
         {
-            pSelected = false;
+            if (owner.giveTurno)
+            {
+                pSelected = false;
+            }
+            if (manager.casteando && manager.habSingle)
+            {
+                hSelected = false;
+            }
+            selected = false;
         }
-        if (manager.casteando && manager.habSingle)
-        {
-            hSelected = false;
-        }
-        selected = false;
     }
 
    

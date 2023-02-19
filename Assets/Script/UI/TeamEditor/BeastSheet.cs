@@ -52,8 +52,12 @@ public class BeastSheet : MonoBehaviourPunCallbacks
     private void Start()
     {
         player = editor.player;
-
         editor.transform.SetSiblingIndex(0);
+    }
+
+    private void Update()
+    {
+
         UpdateSheet();
     }
     public void UpdateSheet()

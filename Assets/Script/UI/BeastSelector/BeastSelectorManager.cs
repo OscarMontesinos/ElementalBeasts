@@ -61,7 +61,7 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
         }
         actualTime -= Time.deltaTime;
         timeText.text = actualTime.ToString("F0");
-        if(actualTime < 0)
+        if(actualTime < 0 && PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("TimeUp", RpcTarget.AllBuffered);
         }
@@ -148,6 +148,7 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
         {
             UnitData newBeast = new UnitData();
+            newBeast.unitID = beastImages[selectionTurn].id;
             newBeast.unitGO = beastImages[selectionTurn].beastGO;
             newBeast.unit = beastImages[selectionTurn].beast;
             newBeast.name = beastImages[selectionTurn].beastName;
@@ -189,15 +190,16 @@ public class BeastSelectorManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void TimeUp()
     {
-        if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1))
+        if (PhotonNetwork.LocalPlayer.CustomProperties["turn"].Equals(1) && actualTime <=0)
         {
             if (beastImages[selectionTurn].beastSelected)
             {
+                actualTime = maxTime;
                 LockButton();
             }
             else
             {
-                SelectBeastCall(0);
+                SelectBeastCall(Random.Range(0,4));
             }
         }
     }

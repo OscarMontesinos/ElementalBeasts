@@ -1,0 +1,313 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5130517897521801054
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2096748162242083946, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 53bca6df26b35bf45831b0ebcd35f75b, type: 3}
+    - target: {fileID: 2096748162242083946, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2096748162242083946, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2096748162242083946, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.7678
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.7678
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.7678
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14.484719
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5234822506698824081, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_Name
+      value: Marasect
+      objectReference: {fileID: 0}
+    - target: {fileID: 5612327325469400742, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5612327325469400742, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356455084603236494, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.1402824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356455084603236494, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.1402824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356455084603236494, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2690964
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954325249169426033, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 83bdc8a36d5747743a9e8fce474a3704, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+--- !u!1 &1123245196106202831 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5234822506698824081, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+  m_PrefabInstance: {fileID: 5130517897521801054}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-4637384515848676121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123245196106202831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99555cceeedacd64eb4da73c310221a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnCell: {fileID: 0}
+  color:
+    serializedVersion: 2
+    rgba: 0
+  selected: 0
+  hSelected: 0
+  pSelected: 0
+  freelook: 0
+  team: 0
+  turno: 0
+  pasar: 0
+  planeoInvocacion: 0
+  marcadorHabilidad: {fileID: 0}
+  rotadorHabilidad: {fileID: 0}
+  conoHabilidad: {fileID: 0}
+  extensionMesher: {fileID: 0}
+  rangoMarcador: {fileID: 0}
+  manager: {fileID: 0}
+  escondido: 0
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  voidLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  unitLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  imparable: 0
+  desorientarValue: 0
+  slow: 0
+  moving: 0
+  habilityCasted: 0
+  revealed: 0
+  chosenHab1: 0
+  chosenHab2: 0
+  chosenHab3: 0
+  chosenHab4: 0
+  castingHability: 0
+  sinergiaElemental: 40
+  fuerza: 65
+  control: 10
+  mHp: 40
+  resistenciaFisica: 30
+  resistenciaMagica: 20
+  iniciativa: 0
+  maxMovementPoints: 6
+  movementPoints: 0
+  hp: 0
+  escudo: 0
+  iniciativaTurno: 0
+  turnoRestante: 5
+  stun: 0
+  justStun: 0
+  root: 0
+  prot: 0
+  pot: 0
+  contadorEsc: []
+  owner: {fileID: 0}
+  teamColor: {fileID: 0}
+  sheet: {fileID: 0}
+  speed: 0
+  defaultHabSprite: {fileID: 0}
+  hab1:
+    icon: {fileID: 21300000, guid: f8b50a2731f22064a8af92c5d9e77323, type: 3}
+    name: Punzada
+    habilityType: 0
+    habilityEffects: 01000000
+    habilityRange: 2
+    habilityTargetType: 1
+    habilityMovement: 0
+  hab1Turn: 2
+  hab1Rmax: 5
+  hab1Range: 3
+  hab1Dmg: 25
+  hab2:
+    icon: {fileID: 21300000, guid: eec0e175c0191d64a880f5bafc04ec00, type: 3}
+    name: Revoloteo desconcertante
+    habilityType: 2
+    habilityEffects: 
+    habilityRange: 0
+    habilityTargetType: 0
+    habilityMovement: 1
+  hab2Range: 2
+  hab3:
+    icon: {fileID: 21300000, guid: ec833e056613e2a40978fce60238b74e, type: 3}
+    name: "Inyecci\xF3n estimulante"
+    habilityType: 1
+    habilityEffects: 02000000
+    habilityRange: 2
+    habilityTargetType: 1
+    habilityMovement: 0
+  hab3Turn: 2
+  hab3CdTotal: 2
+  hab3Cd: 0
+  hab3Range: 3
+  hab3Rnd: 2
+  hab3Dmg: 10
+  hab3Pot: 25
+  hab3Spd: 1
+  hab4:
+    icon: {fileID: 21300000, guid: 5a6cddf4448d3d644afc34f32f35abd9, type: 3}
+    name: "Inyecci\xF3n reconstituyente"
+    habilityType: 1
+    habilityEffects: 02000000
+    habilityRange: 2
+    habilityTargetType: 1
+    habilityMovement: 0
+  hab4Turn: 2
+  hab4CdTotal: 2
+  hab4Cd: 0
+  hab4Rnd: 3
+  hab4Range: 3
+  hab4Dmg: 10
+  hab4Regen: 30
+  hab5:
+    icon: {fileID: 21300000, guid: a5140ad0d14592a4bb38037bad6bc61e, type: 3}
+    name: Penetrar
+    habilityType: 1
+    habilityEffects: 01000000
+    habilityRange: 2
+    habilityTargetType: 1
+    habilityMovement: 0
+  hab5Turn: 3
+  hab5CdTotal: 1
+  hab5Cd: 0
+  hab5Range: 5
+  hab5Dmg: 25
+  hab6:
+    icon: {fileID: 21300000, guid: a3dde908b4d8f28468decda5ff085d74, type: 3}
+    name: "Artima\xF1a letal"
+    habilityType: 1
+    habilityEffects: 01000000
+    habilityRange: 2
+    habilityTargetType: 1
+    habilityMovement: 0
+  hab6Turn: 2
+  hab6CdTotal: 1
+  hab6Cd: 0
+  hab6Range: 5
+  hab6Dmg: 10
+  hab7:
+    icon: {fileID: 21300000, guid: 2c2a7c11ebc95dd488b01164648de69c, type: 3}
+    name: Punzada veloz
+    habilityType: 1
+    habilityEffects: 01000000
+    habilityRange: 2
+    habilityTargetType: 1
+    habilityMovement: 0
+  hab7Turn: 1
+  hab7Rmax: 2
+  hab7Range: 7
+  hab7Dmg: 10
+  hab8:
+    icon: {fileID: 0}
+    name: "Aguij\xF3n envenenado"
+    habilityType: 2
+    habilityEffects: 
+    habilityRange: 0
+    habilityTargetType: 0
+    habilityMovement: 0
+  hab8Rnd: 2
+  hab8Dmg: 10
+--- !u!114 &2976764445235630346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123245196106202831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

@@ -179,7 +179,14 @@ public class Player : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     public void Ready()
     {
         ready = !ready;
-        manager.PlayerReady();
+        if (ready)
+        {
+            manager.PlayerReady(1);
+        }
+        else
+        {
+            manager.PlayerReady(-1);
+        }
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)

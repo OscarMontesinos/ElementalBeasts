@@ -119,7 +119,8 @@ public class TeamEditorManager : MonoBehaviourPunCallbacks
             {
                 team = 1;
             }
-            object[] instanceData = new object[] { item1, item2, hab1, hab2, hab3, hab4, team };
+
+        object[] instanceData = new object[] { item1, item2, hab1, hab2, hab3, hab4, team };
 
             GameObject beast = PhotonNetwork.Instantiate(beastSelectorPlayer.team[index].name, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0),0,instanceData);
             DontDestroyOnLoad(beast);

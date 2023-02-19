@@ -5,74 +5,71 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Diggeye : Unit
+public class Obe : Unit
 {
 
     [Header("Hab1")]
     public Hability hab1;
     public int hab1Turn;
-    public int hab1Rmax;
-    int repetitions1;
     public int hab1Range;
     public float hab1Dmg;
+    public int hab1Rnd;
     [Header("Hab2")]
     public Hability hab2;
-    public int hab2Turn;
-    public int hab2Rmax;
-    int repetitions2;
     public int hab2Range;
-    public float hab2Dmg;
+    public int hab2CdTotal;
+    public int hab2Cd;
+    public float hab2Shld;
+    public float hab2ShldMod;
     [Header("Hab3")]
     public Hability hab3;
     public int hab3Turn;
-    public int hab3Rmax;
-    int repetitions3;
+    public int hab3CdTotal;
+    public int hab3Cd;
     public int hab3Range;
-    public int hab3Max;
-    public GameObject hab3Searcher;
-    public List<MinerSearcher> searcherList = new List<MinerSearcher>();
+    public float hab3Prot;
     [Header("Hab4")]
     public Hability hab4;
     public int hab4Turn;
     public int hab4CdTotal;
     public int hab4Cd;
-    public int hab4Range;
+    public float hab4Area;
+    public float hab4Dmg;
+    public float hab4Desorientar;
     [Header("Hab5")]
     public Hability hab5;
     public int hab5Turn;
     public int hab5CdTotal;
     public int hab5Cd;
-    public int hab5Range;
     public float hab5Dmg;
     [Header("Hab6")]
     public Hability hab6;
     public int hab6Turn;
     public int hab6CdTotal;
     public int hab6Cd;
-    public int hab6Range;
-    public float hab6Dmg;
-    public bool hab6Stage2;
+    public int hab6hability;
     [Header("Hab7")]
     public Hability hab7;
-    public int hab7ExtraTurn;
+    public int hab7Turn;
+    public int hab7Range;
+    public int hab7Rnd;
+    public float hab7Deb;
     [Header("Hab8")]
     public Hability hab8;
     public int hab8Turn;
     public int hab8CdTotal;
     public int hab8Cd;
     public int hab8Range;
-    public int hab8Duration;
     public float hab8Dmg;
-    public GameObject hab8Trap;
-    public DiggeyeTrap hab8CurrentTrap;
     public override void Awake()
     {
         base.Awake();
-        repetitions1 = hab1Rmax;
-        repetitions2 = hab2Rmax;
-        repetitions3 = hab3Rmax;
+        hab2CdTotal++;
+        hab3CdTotal++;
         hab4CdTotal++;
         hab5CdTotal++;
+        hab6CdTotal++;
+        hab8CdTotal++;
     }
 
     // Update is called once per frame
@@ -87,7 +84,7 @@ public class Diggeye : Unit
                 bool impacto = false;
                 switch (castingHability)
                 {
-                    case 1:
+                    /*case 1:
                         foreach (Unit unit in manager.unitList)
                         {
                             if (unit != null)
@@ -283,12 +280,12 @@ public class Diggeye : Unit
                             turnoRestante -= hab8Turn;
                             MarcarHabilidad(4, 0, 0);
                         }
-                        break;
+                        break;*/
 
                 }
             }
         }
-        
+
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && turno && !moving)
         {
@@ -313,22 +310,18 @@ public class Diggeye : Unit
         }
         if (Input.GetKeyDown(KeyCode.Alpha4) && turno && !moving)
         {
-            if (!habilityCasted &&( movementPoints >= 2 || slow >= 3 && movementPoints >= 1 || slow > 5) || habilityCasted)
+            if (!habilityCasted && (movementPoints >= 2 || slow >= 3 && movementPoints >= 1 || slow > 5) || habilityCasted)
             {
                 ShowHability(chosenHab4);
             }
         }
 
-        if (hab6Stage2)
-        {
-            ShowHability(6);
-        }
 
     }
 
     public override void ShowHability(int hability)
     {
-        switch (hability)
+        /*switch (hability)
         {
             case 1:
                 if (repetitions1 > 0 && turnoRestante >= hab1Turn)
@@ -341,7 +334,7 @@ public class Diggeye : Unit
                 }
                 break;
             case 2:
-                if (repetitions2 > 0 &&  turnoRestante >= hab2Turn)
+                if (repetitions2 > 0 && turnoRestante >= hab2Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
@@ -351,7 +344,7 @@ public class Diggeye : Unit
                 }
                 break;
             case 3:
-                if(repetitions3 > 0 && turnoRestante >= hab3Turn)
+                if (repetitions3 > 0 && turnoRestante >= hab3Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
@@ -361,7 +354,7 @@ public class Diggeye : Unit
                 }
                 break;
             case 4:
-                if(hab4Cd<= 0 && turnoRestante >= hab4Turn)
+                if (hab4Cd <= 0 && turnoRestante >= hab4Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
@@ -372,7 +365,7 @@ public class Diggeye : Unit
                 }
                 break;
             case 5:
-                if(hab5Cd<= 0 && turnoRestante >= hab5Turn)
+                if (hab5Cd <= 0 && turnoRestante >= hab5Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
@@ -382,7 +375,7 @@ public class Diggeye : Unit
                 }
                 break;
             case 6:
-                if(hab6Cd<= 0 && turnoRestante >= hab6Turn)
+                if (hab6Cd <= 0 && turnoRestante >= hab6Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
@@ -401,15 +394,19 @@ public class Diggeye : Unit
                     MarcarHabilidad(6, hab8Range, 0);
                 }
                 break;
-        }
+        }*/
     }
 
     public override void AcabarTurno()
     {
-
-        repetitions1 = hab1Rmax;
-        repetitions2 = hab2Rmax;
-        repetitions3 = hab3Rmax;
+        if (hab2Cd != 0)
+        {
+            hab2Cd--;
+        }
+        if (hab3Cd != 0)
+        {
+            hab3Cd--;
+        }
         if (hab4Cd != 0)
         {
             hab4Cd--;
@@ -418,27 +415,19 @@ public class Diggeye : Unit
         {
             hab5Cd--;
         }
+        if (hab6Cd != 0)
+        {
+            hab6Cd--;
+        }
+        if (hab8Cd != 0)
+        {
+            hab8Cd--;
+        }
         castingHability = 0;
         base.AcabarTurno();
 
     }
 
-    public override void MarcarHabilidad(int forma, int rango, int ancho)
-    {
-        base.MarcarHabilidad(forma, rango, ancho);
-        if (forma == 6)
-        {
-            planeoInvocacion = true;
-            manager.habSingle = false;
-            rangoMarcador.SetActive(true);
-            conoHabilidad.SetActive(false);
-            marcadorHabilidad.SetActive(false);
-            extensionMesher.SetActive(false);
-            rangoMarcador.transform.localScale = new Vector3((rango + 1) * 2 - 1, (rango + 1) * 2 - 1, rangoMarcador.transform.localScale.z);
-            GameObject trap = Instantiate(hab8Trap);
-            hab8CurrentTrap= trap.GetComponent<DiggeyeTrap>();
-        }
-    }
 
     public override Sprite GetHabIcon(int hability)
     {
@@ -501,21 +490,21 @@ public class Diggeye : Unit
             case 0:
                 return " ";
             case 1:
-                return "Lanza una cuchillada cuerpo cuerpo que inflige " + CalcularDanoFisico(hab1Dmg) + " (F) de daño al objetivo.";
+                return "Coloca un dron flotante en una zona que dura " + hab1Rnd + " rondas. Cuando un enemigo entra en su rango explota inflingiendo " + CalcularDanoMagico(hab1Dmg) + " (S) de daño al objetivo.";
             case 2:
-                return "Lanza un clavo a un objetivo haciendo " + CalcularDanoFisico(hab2Dmg) + " (F) de daño. Revela.";
+                return "Protege a un aliado con una pantalla protectora que otorga " + CalcularControl(hab2Shld) + " (C) de escudo. El aliado vinculado obtiene un escudo adicional de " + CalcularControl(hab2Shld) * hab2ShldMod / 100 + "(C)";
             case 3:
-                return "Lanza un buscador una corta distancia, otorga visión en el área que guarda, si impacta contra una pared excava atravesándola y quedándose en la casilla por la que salga.";
+                return "Vincula a un aliado, alguans habilidades interactuan con este vinculo, además, otorga una bonificación de protecciones de  " + CalcularControl(hab3Prot) + " (C)";
             case 4:
-                return "Excava una corta distancia para reposicionarse, también puede viajar a la posición de cualquier buscador subterráneo";
+                return "Lanza un pulso energético su alrededor que inflige " + CalcularDanoMagico(hab4Dmg) + " (S) de daño. Desorienta " + hab4Desorientar + " al impactar";
             case 5:
-                return "Se abalanza a la bestia objetivo haciendo " + CalcularDanoFisico(hab5Dmg) + " (F) de daño y se coloca en su espalda";
+                return "LAnza un pulso energético a una zona que daña " + CalcularDanoMagico(hab5Dmg) + " (s) de daño y aturde";
             case 6:
-                return "Salta a la bestia objetivo e inflige" + CalcularDanoFisico(hab6Dmg) + " (F) de daño. Después salta a una posicion cercana";
+                return "Repite la anterior habilidad usada";
             case 7:
-                return "Cada vez que ataques recupera 1 de turno al finalizar la habilidad";
+                return "Marca a un enemigo que aplicando una debilitación de " + CalcularControl(hab7Deb) + " (C) durante " + hab7Rnd + " rondas";
             case 8:
-                return "Coloca una trampa en tus pies. Cuando un objetivo la pise le inflige, " + CalcularDanoFisico(hab8Dmg) + " (F) de daño, lo ancla y finaliza su turno";
+                return "Lanza un laser que inflije " + CalcularDanoMagico(hab8Dmg) + " (S) de daño si hay un aliado vinculado hace el doble de daño ";
             default:
                 return null;
         }
@@ -527,24 +516,23 @@ public class Diggeye : Unit
             case 0:
                 return " ";
             case 1:
-                return "Lanza una cuchillada cuerpo cuerpo que inflige " + CalcularDanoFisico(hab1Dmg,fuerza) + " (F) de daño al objetivo.";
+                return "Coloca un dron flotante en una zona que dura " + hab1Rnd + " rondas. Cuando un enemigo entra en su rango explota inflingiendo " + CalcularDanoMagico(hab1Dmg,sinergia) + " (S) de daño al objetivo.";
             case 2:
-                return "Lanza un clavo a un objetivo haciendo " + CalcularDanoFisico(hab2Dmg, fuerza) + " (F) de daño. Revela.";
+                return "Protege a un aliado con una pantalla protectora que otorga " + CalcularControl(hab2Shld,control) + " (C) de escudo. El aliado vinculado obtiene un escudo adicional de " + CalcularControl(hab2Shld,control) * hab2ShldMod / 100 + "(C)";
             case 3:
-                return "Lanza un buscador una corta distancia, otorga visión en el área que guarda, si impacta contra una pared excava atravesándola y quedándose en la casilla por la que salga.";
+                return "Vincula a un aliado, alguans habilidades interactuan con este vinculo, además, otorga una bonificación de protecciones de  " + CalcularControl(hab3Prot,control) + " (C)";
             case 4:
-                return "Excava una corta distancia para reposicionarse, también puede viajar a la posición de cualquier buscador subterráneo";
+                return "Lanza un pulso energético su alrededor que inflige " + CalcularDanoMagico(hab4Dmg, sinergia) + " (S) de daño. Desorienta " + hab4Desorientar + " al impactar";
             case 5:
-                return "Se abalanza a la bestia objetivo haciendo " + CalcularDanoFisico(hab5Dmg, fuerza) + " (F) de daño y se coloca en su espalda";
+                return "LAnza un pulso energético a una zona que daña " + CalcularDanoMagico(hab5Dmg, sinergia) + " (s) de daño y aturde";
             case 6:
-                return "Salta a la bestia objetivo e inflige" + CalcularDanoFisico(hab6Dmg, fuerza) + " (F) de daño. Después salta a una posicion cercana";
+                return "Repite la anterior habilidad usada";
             case 7:
-                return "Cada vez que ataques recupera 1 de turno al finalizar la habilidad";
+                return "Marca a un enemigo que aplicando una debilitación de " + CalcularControl(hab7Deb,control) + " (C) durante " + hab7Rnd + " rondas";
             case 8:
-                return "Coloca una trampa en tus pies. Cuando un objetivo la pise le inflige, " + CalcularDanoFisico(hab8Dmg, fuerza) + " (F) de daño, lo ancla y finaliza su turno";
+                return "Lanza un laser que inflije " + CalcularDanoMagico(hab8Dmg, sinergia) + " (S) de daño si hay un aliado vinculado hace el doble de daño ";
             default:
                 return null;
         }
     }
 }
-    

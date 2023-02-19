@@ -25,7 +25,6 @@ public class SpawnCell : MonoBehaviour
     }
     public void Interact(Player player)
     {
-
         if (unitPlaced != null)
         {
             ReplaceOrSelectBeast(player);
@@ -41,7 +40,7 @@ public class SpawnCell : MonoBehaviour
             }
             else
             {
-                SpawnUnit(player.beastsToPlace[player.GetIndex()], player);
+                SpawnUnit(player.beastsToPlace[player.indexBeastToPlace], player);
             }
         }
     }
@@ -50,11 +49,8 @@ public class SpawnCell : MonoBehaviour
     {
         if (player.team == team)
         {
-            unitToSpawn.GetComponent<Unit>().owner = player;
             unitToSpawn.GetComponent<Unit>().spawnCell = this;
-            unitToSpawn.GetComponent<Unit>().team = player.team;
 
-            unitToSpawn.GetComponent<Unit>().teamColor.color = unitToSpawn.GetComponent<Unit>().manager.teamColorList[team];
             player.beastsToPlace.Remove(unitToSpawn);
             player.beasts.Add(unitToSpawn.GetComponent<Unit>());
 
@@ -66,15 +62,15 @@ public class SpawnCell : MonoBehaviour
             {
                 player.indexBeastToPlace--;
             }
+            unitPlaced = unitToSpawn.GetComponent<Unit>();
             unitToSpawn.transform.position = transform.position;
-
-            player.beastSelected.ReplicateTransformCall(player.beastSelected.transform.position.x, player.beastSelected.transform.position.y);
+            unitToSpawn.GetComponent<Unit>().ReplicateTransformCall(unitToSpawn.transform.position.x, unitToSpawn.transform.position.y);
         }
     }
 
     public void ReplaceOrSelectBeast(Player player)
     {
-        if(player.beastSelected == null)
+        if (player.beastSelected == null)
         {
             SelectBeast(player);
         }
@@ -98,6 +94,8 @@ public class SpawnCell : MonoBehaviour
             //Intercambio transform
             unitPlaced.transform.position = player.beastSelected.transform.position;
             player.beastSelected.transform.position = unitPlaced.spawnCell.transform.position;
+            unitPlaced.ReplicateTransformCall(unitPlaced.transform.position.x, unitPlaced.transform.position.y);
+            player.beastSelected.ReplicateTransformCall(player.beastSelected.transform.position.x, player.beastSelected.transform.position.y);
             //Intercambio spawnCells
             unitPlaced.spawnCell = player.beastSelected.spawnCell;
             player.beastSelected.spawnCell = this;
@@ -113,10 +111,9 @@ public class SpawnCell : MonoBehaviour
             unitPlaced = player.beastSelected;
             unitPlaced.transform.position = transform.position;
             unitPlaced.spawnCell = this;
+            unitPlaced.ReplicateTransformCall(unitPlaced.transform.position.x, unitPlaced.transform.position.y);
         }
 
-        player.beastSelected.ReplicateTransformCall(player.beastSelected.transform.position.x, player.beastSelected.transform.position.y);
-        unitPlaced.ReplicateTransformCall(unitPlaced.transform.position.x, unitPlaced.transform.position.y);
             player.beastSelected = null;
         
 

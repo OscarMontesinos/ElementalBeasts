@@ -2,8 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
-public class CombatManager : MonoBehaviour
+public class CombatManager : MonoBehaviourPunCallbacks
 {
     public CombatUIManager uiManager;
     public bool settingUp;
@@ -27,6 +28,7 @@ public class CombatManager : MonoBehaviour
     public int muertos;
     public bool centrarCamara;
     public bool giveTurn;
+    int playersReady;
 
     public TextMeshProUGUI rondaText;
 
@@ -53,25 +55,6 @@ public class CombatManager : MonoBehaviour
         }
     }
 
-    public void PlayerReady()
-    {
-        bool ready = true;
-        foreach (Player player in playerList)
-        {
-            if (!player.GetReady())
-            {
-                ready = false;
-            } 
-        }
-        if (ready)
-        {
-            foreach (Player player in playerList)
-            {
-                player.EndSetUpStage();
-            }
-            StartMatch();
-        }
-    }
 
 
     // Update is called once per frame
@@ -105,26 +88,70 @@ public class CombatManager : MonoBehaviour
             }
         }
     }
+
+
+
+    public void PlayerReady(int value)
+    {
+        photonView.RPC("ReplicatePlayerReady", RpcTarget.All, value);
+    }
+    [PunRPC]
+    void ReplicatePlayerReady(int value) 
+    {
+        playersReady += value;
+        if (playersReady ==2)
+        {
+            foreach (Player player in playerList)
+            {
+                player.EndSetUpStage();
+            }
+            StartMatch();
+        }
+    }
+
     void StartMatch()
     {
-        bool mirror = false;
-        foreach(Player player in playerList)
+        foreach (Player player in playerList)
         {
-            foreach (Unit unit in player.beasts)
+            if (player.photonView.IsMine)
             {
-                uiManager.CreateBeastSheet(unit,mirror);
+                foreach (Unit unit in player.beasts)
+                {
+
+                    uiManager.CreateBeastSheet(unit, false);
+
+                }
             }
-            mirror=true;
+            else
+            {
+                foreach (GameObject unit in player.beastsToPlace)
+                {
+                    player.beasts.Add(unit.GetComponent<Unit>());
+                }
+                player.beastsToPlace.Clear();
+
+            }
         }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("StartMatchRPC", RpcTarget.All);
+        }
+
+    }
+
+    [PunRPC]
+    void StartMatchRPC()
+    {
         Destroy(spawnCells);
         settingUp = false;
         unitList = new List<Unit>(FindObjectsOfType<Unit>());
-
         foreach (Unit unit in unitList)
         {
             unit.UpdateCell(false);
         }
         IniciativaCalc();
+
+
     }
     void IniciativaCalc()
     {

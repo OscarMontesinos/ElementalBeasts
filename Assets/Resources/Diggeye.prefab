@@ -19,9 +19,65 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1192585756461418570, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.1057003
+      objectReference: {fileID: 0}
+    - target: {fileID: 1192585756461418570, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.1057003
+      objectReference: {fileID: 0}
+    - target: {fileID: 1192585756461418570, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.26613298
+      objectReference: {fileID: 0}
     - target: {fileID: 2314915021448607137, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 502
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898340834658528949, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8ef1d0783b600954b9aabbbb24dc2904, type: 3}
+    - target: {fileID: 2951854960527683849, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0051987176
+      objectReference: {fileID: 0}
+    - target: {fileID: 2951854960527683849, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0051987176
+      objectReference: {fileID: 0}
+    - target: {fileID: 2951854960527683849, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0052308855
+      objectReference: {fileID: 0}
+    - target: {fileID: 4882099621796362164, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0052029025
+      objectReference: {fileID: 0}
+    - target: {fileID: 4882099621796362164, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0052029025
+      objectReference: {fileID: 0}
+    - target: {fileID: 4882099621796362164, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0052029025
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170887024417363118, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 62bd018188ceb0745b736ac289ebbfb9, type: 3}
+    - target: {fileID: 6170887024417363118, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170887024417363118, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170887024417363118, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
       propertyPath: m_RootOrder
@@ -29,11 +85,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.500395
+      value: 12.530208
       objectReference: {fileID: 0}
     - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.3994961
+      value: 11.462628
       objectReference: {fileID: 0}
     - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -150,7 +206,7 @@ MonoBehaviour:
   speed: 10
   defaultHabSprite: {fileID: 7482667652216324306, guid: 3010a37501e3f5845b9d4caec1fbc3df, type: 3}
   hab1:
-    icon: {fileID: 21300000, guid: c0e641dce08f9ec47b450698de5e9370, type: 3}
+    icon: {fileID: 21300000, guid: e73fd2e941664844da37a582c6cfd06f, type: 3}
     name: Cuchillada
     habilityType: 0
     habilityEffects: 01000000
@@ -162,7 +218,7 @@ MonoBehaviour:
   hab1Range: 1
   hab1Dmg: 30
   hab2:
-    icon: {fileID: 21300000, guid: 8b205190ee2412845b13d41769dd48e5, type: 3}
+    icon: {fileID: 21300000, guid: ae214944c57b7b546895fac34af14c4f, type: 3}
     name: Clavo resonante
     habilityType: 0
     habilityEffects: 0100000003000000
@@ -174,7 +230,7 @@ MonoBehaviour:
   hab2Range: 3
   hab2Dmg: 20
   hab3:
-    icon: {fileID: 21300000, guid: 57745847fdb17024785e7c54cbcdf15e, type: 3}
+    icon: {fileID: 21300000, guid: 9dfac2101a6097f49b3fef57dc73f169, type: 3}
     name: "Buscador subterr\xE1neo"
     habilityType: 1
     habilityEffects: 09000000
@@ -188,7 +244,7 @@ MonoBehaviour:
   hab3Searcher: {fileID: 1431365282241751697, guid: eb68fc1b63ccedc43b7d86c4c75a3f66, type: 3}
   searcherList: []
   hab4:
-    icon: {fileID: 21300000, guid: 56e9dd2a558b7d248bcdc17ed3823ec1, type: 3}
+    icon: {fileID: 21300000, guid: 03836ab3915ea334bb7f04aeb1ccc963, type: 3}
     name: "Incursi\xF3n"
     habilityType: 1
     habilityEffects: 00000000
@@ -200,7 +256,7 @@ MonoBehaviour:
   hab4Cd: 0
   hab4Range: 3
   hab5:
-    icon: {fileID: 21300000, guid: b8e4d40a1dc69784989346aacdca04d9, type: 3}
+    icon: {fileID: 21300000, guid: 20d963930b883fa44a9d727044d64ddb, type: 3}
     name: Asalto
     habilityType: 1
     habilityEffects: 01000000
@@ -213,7 +269,7 @@ MonoBehaviour:
   hab5Range: 3
   hab5Dmg: 20
   hab6:
-    icon: {fileID: 21300000, guid: 4a24a46972cc27849aa5b51aaa2c9ba5, type: 3}
+    icon: {fileID: 21300000, guid: b5a1ae0cbef55294c9f83654b71c4f2b, type: 3}
     name: Agilidad
     habilityType: 1
     habilityEffects: 01000000
@@ -227,7 +283,7 @@ MonoBehaviour:
   hab6Dmg: 30
   hab6Stage2: 0
   hab7:
-    icon: {fileID: 21300000, guid: 675d10cd92826fe4baa074ee2984f014, type: 3}
+    icon: {fileID: 21300000, guid: dd788fb13eb87b5419435f1f9f831fdb, type: 3}
     name: Garra Veloz
     habilityType: 2
     habilityEffects: 02000000
@@ -236,7 +292,7 @@ MonoBehaviour:
     habilityMovement: 0
   hab7ExtraTurn: 1
   hab8:
-    icon: {fileID: 21300000, guid: d7743f67209fb0b4ba98e0d796381342, type: 3}
+    icon: {fileID: 21300000, guid: 56e1b0f6ab61d2543a6f35fc476e8923, type: 3}
     name: Trampa de Subsuelo
     habilityType: 1
     habilityEffects: 080000000100000007000000
