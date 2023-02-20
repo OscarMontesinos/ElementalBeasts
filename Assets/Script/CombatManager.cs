@@ -60,6 +60,10 @@ public class CombatManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        if(playerList.Count != 2)
+        {
+           playerList = new List<Player>(FindObjectsOfType<Player>());
+        }
         if (casteando || giveTurn)
         {
             foreach (ObjetoInvocado habilidad in invocaciones)
@@ -111,15 +115,49 @@ public class CombatManager : MonoBehaviourPunCallbacks
 
     void StartMatch()
     {
+        /*List<Player> newPlayerList = playerList;
+        playerList.Clear();
+        foreach (Player player in newPlayerList)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (player.photonView.IsMine)
+                {
+                    playerList.Add(player);
+                }
+            }
+            else
+            {
+                if (!player.photonView.IsMine)
+                {
+                    playerList.Add(player);
+                }
+            }
+        }
+        foreach (Player player in newPlayerList)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (!player.photonView.IsMine)
+                {
+                    playerList.Add(player);
+                }
+            }
+            else
+            {
+                if (player.photonView.IsMine)
+                {
+                    playerList.Add(player);
+                }
+            }
+        }*/
         foreach (Player player in playerList)
         {
             if (player.photonView.IsMine)
             {
                 foreach (Unit unit in player.beasts)
                 {
-
                     uiManager.CreateBeastSheet(unit, false);
-
                 }
             }
             else
@@ -132,10 +170,7 @@ public class CombatManager : MonoBehaviourPunCallbacks
 
             }
         }
-        if (PhotonNetwork.IsMasterClient)
-        {
-            photonView.RPC("StartMatchRPC", RpcTarget.All);
-        }
+            photonView.RPC("StartMatchRPC", RpcTarget.AllBuffered);
 
     }
 
@@ -156,21 +191,11 @@ public class CombatManager : MonoBehaviourPunCallbacks
     void IniciativaCalc()
     {
         turnos.Clear();
-        foreach (Unit unitC in unitList)
-        {
-            if (unitC.team == playerList[0].team)
-            {
-                playerList[0].iniciative += unitC.iniciativaTurno;
-            }
-            else
-            {
-                playerList[1].iniciative += unitC.iniciativaTurno;
-            }
-        }
+        
 
         bool playerArrow;
 
-        if (playerList[0].iniciative > playerList[1].iniciative)
+        if (PhotonNetwork.IsMasterClient)
         {
             playerArrow = false;
         }
@@ -181,24 +206,43 @@ public class CombatManager : MonoBehaviourPunCallbacks
 
         foreach (Unit unitC in unitList)
         {
-            if (!playerArrow)
+            if (PhotonNetwork.IsMasterClient)
             {
-                turnOrderList.Add(playerList[0]);
+                if (!playerArrow)
+                {
+                    turnOrderList.Add(playerList[0]);
+                }
+                else
+                {
+                    turnOrderList.Add(playerList[1]);
+                }
             }
             else
             {
-                turnOrderList.Add(playerList[1]);
+                if (playerArrow)
+                {
+                    turnOrderList.Add(playerList[0]);
+                }
+                else
+                {
+                    turnOrderList.Add(playerList[1]);
+                }
             }
             playerArrow = !playerArrow;
         }
-
         SiguienteTurno();
 
     }
 
     public void SiguienteTurno()
     {
-        foreach(ObjetoInvocado invoc in invocaciones)
+        photonView.RPC("RpcSiguienteTurno", RpcTarget.AllBuffered);
+    }
+
+    [PunRPC]
+    void RpcSiguienteTurno()
+    {
+        foreach (ObjetoInvocado invoc in invocaciones)
         {
             if (invoc != null)
             {
@@ -211,7 +255,7 @@ public class CombatManager : MonoBehaviourPunCallbacks
             turnoActual = 0;
             NuevaRonda();
         }
-        turnOrderList[turnoActual].GiveTurnStage(); 
+        turnOrderList[turnoActual].GiveTurnStage();
     }
 
     public void NuevaRonda()

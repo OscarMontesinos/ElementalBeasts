@@ -34,7 +34,7 @@ public class Marasect : Unit
     public int hab4CdTotal;
     public int hab4Cd;
     public int hab4Rnd;
-    public float hab4Range;
+    public int hab4Range;
     public float hab4Dmg;
     public int hab4Regen;
     [Header("Hab5")]
@@ -85,7 +85,7 @@ public class Marasect : Unit
                 bool impacto = false;
                 switch (castingHability)
                 {
-                    /*case 1:
+                    case 1:
                         foreach (Unit unit in manager.unitList)
                         {
                             if (unit != null)
@@ -93,10 +93,14 @@ public class Marasect : Unit
                                 if (unit.hSelected && CheckAll(unit, unit.transform.position, hab1Range))
                                 {
                                     CastHability(hab1.habilityType, hab1.habilityEffects[0], hab1.habilityRange, hab1.habilityTargetType, hab1.habilityMovement);
-                                    if (chosenHab1 == 7 || chosenHab2 == 7 || chosenHab3 == 7 || chosenHab4 == 7)
+                                    if (chosenHab1 == 8 || chosenHab2 == 8 || chosenHab3 == 8 || chosenHab4 == 8)
                                     {
-                                        turnoRestante += hab7ExtraTurn;
-                                        CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab1.habilityMovement);
+                                        CastHability(hab8.habilityType, Hability.HabilityEffect.None, hab8.habilityRange, hab8.habilityTargetType, hab8.habilityMovement);
+                                        unit.RecibirDanoMagico(CalcularDanoMagico(hab8Dmg));
+                                    }
+                                    if(chosenHab1 == 2 || chosenHab2 == 2 || chosenHab3 == 2 || chosenHab4 == 2)
+                                    {
+                                        movementPoints += 2;
                                     }
                                     unit.RecibirDanoFisico(CalcularDanoFisico(hab1Dmg));
                                     impacto = true;
@@ -110,97 +114,54 @@ public class Marasect : Unit
                         }
                         MarcarHabilidad(4, 0, 0);
                         break;
-                    case 2:
-
+                    case 3:
                         foreach (Unit unit in manager.unitList)
                         {
                             if (unit != null)
                             {
-                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab2Range))
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab1Range))
                                 {
-                                    CastHability(hab2.habilityType, hab2.habilityEffects[0], hab2.habilityEffects[1], hab2.habilityRange, hab2.habilityTargetType, hab2.habilityMovement);
-                                    unit.RecibirDanoFisico(CalcularDanoFisico(hab2Dmg));
-                                    impacto = true;
+                                    CastHability(hab3.habilityType, hab3.habilityEffects[0], hab3.habilityRange, hab3.habilityTargetType, hab3.habilityMovement);
+                                    if (chosenHab1 == 2 || chosenHab2 == 2 || chosenHab3 == 2 || chosenHab4 == 2)
+                                    {
+                                        movementPoints += 2;
+                                    }
+                                    unit.RecibirDanoFisico(CalcularDanoFisico(hab3Dmg));
+                                    unit.pot = 0;
+                                    unit.pot = CalcularDanoMagico(hab3Pot);
                                 }
                             }
                         }
                         if (impacto)
                         {
-                            repetitions2--;
-                            turnoRestante -= hab2Turn;
+                            hab3Cd = hab3CdTotal;
+                            turnoRestante -= hab3Turn;
                         }
-                        MarcarHabilidad(4, 0, 0);
-                        break;
-                    case 3:
-                        CastHability(hab3.habilityType, hab3.habilityEffects[0], hab3.habilityRange, hab3.habilityTargetType, hab3.habilityMovement);
-                        GameObject minerSearcher = Instantiate(hab3Searcher, transform.position, transform.rotation);
-                        minerSearcher.GetComponent<MinerSearcher>().SetUp(team, UtilsClass.GetMouseWorldPosition(), hab3Range, this);
-                        searcherList.Add(minerSearcher.GetComponent<MinerSearcher>());
-                        if (searcherList.Count > hab3Max)
-                        {
-                            Destroy(searcherList[0].gameObject);
-                            searcherList.RemoveAt(0);
-                        }
-
-                        repetitions3--;
-                        turnoRestante -= hab3Turn;
                         MarcarHabilidad(4, 0, 0);
                         break;
                     case 4:
-                        if (searcherList.Count > 0)
+                        foreach (Unit unit in manager.unitList)
                         {
-                            foreach (MinerSearcher unit in searcherList)
+                            if (unit != null)
                             {
-                                if (unit != null)
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab1Range))
                                 {
-                                    if (unit.avaliable)
+                                    CastHability(hab3.habilityType, hab3.habilityEffects[0], hab3.habilityRange, hab3.habilityTargetType, hab3.habilityMovement);
+                                    if (chosenHab1 == 2 || chosenHab2 == 2 || chosenHab3 == 2 || chosenHab4 == 2)
                                     {
-                                        if (CheckVoid(unit.transform.position))
-                                        {
-                                            CastHability(hab4.habilityType, hab4.habilityEffects[0], hab4.habilityRange, hab4.habilityTargetType, hab4.habilityMovement);
-
-                                            Dash(this, new Vector3(unit.transform.position.x, unit.transform.position.y, transform.position.z));
-                                            impacto = true;
-                                        }
+                                        movementPoints += 2;
                                     }
+                                    unit.RecibirDanoFisico(CalcularDanoFisico(hab4Dmg));
+                                    unit.Heal(CalcularDanoMagico(hab4Regen));
                                 }
                             }
-                            if (impacto)
+                        }
+                        if (impacto)
                             {
                                 hab4Cd = hab4CdTotal;
                                 turnoRestante -= hab4Turn;
                             }
-                            else
-                            {
-                                int x;
-                                int y;
-                                Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(), out x, out y);
-                                if (CheckVoid(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab4Range) && Pathfinding.Instance.GetNode(x, y).isWalkable)
-                                {
-                                    CastHability(hab4.habilityType, hab4.habilityEffects[0], hab4.habilityRange, hab4.habilityTargetType, hab4.habilityMovement);
-                                    Dash(this, UtilsClass.GetMouseWorldPosition());
-
-                                    hab4Cd = hab4CdTotal;
-                                    turnoRestante -= hab4Turn;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            int x;
-                            int y;
-                            Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(), out x, out y);
-                            if (CheckVoid(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab4Range) && Pathfinding.Instance.GetNode(x, y).isWalkable)
-                            {
-                                CastHability(hab4.habilityType, hab4.habilityEffects[0], hab4.habilityRange, hab4.habilityTargetType, hab4.habilityMovement);
-                                Dash(this, UtilsClass.GetMouseWorldPosition());
-
-                                hab4Cd = hab4CdTotal;
-                                turnoRestante -= hab4Turn;
-                            }
-                        }
                         MarcarHabilidad(4, 0, 0);
-                        manager.diggeyeSearcherCasting = false;
                         break;
                     case 5:
                         foreach (Unit unit in manager.unitList)
@@ -209,15 +170,22 @@ public class Marasect : Unit
                             {
                                 if (unit.hSelected && CheckAll(unit, unit.transform.position, hab2Range))
                                 {
-                                    CastHability(hab5.habilityType, hab5.habilityEffects[0], hab5.habilityRange, hab5.habilityTargetType, hab5.habilityMovement);
-                                    if (chosenHab1 == 7 || chosenHab2 == 7 || chosenHab3 == 7 || chosenHab4 == 7)
+                                    CastHability(hab1.habilityType, hab1.habilityEffects[0], hab1.habilityRange, hab1.habilityTargetType, hab1.habilityMovement);
+                                    if (chosenHab1 == 8 || chosenHab2 == 8 || chosenHab3 == 8 || chosenHab4 == 8)
                                     {
-                                        turnoRestante += hab7ExtraTurn;
-                                        CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab1.habilityMovement);
+                                        CastHability(hab8.habilityType, Hability.HabilityEffect.None, hab8.habilityRange, hab8.habilityTargetType, hab8.habilityMovement);
+                                        unit.RecibirDanoMagico(CalcularDanoMagico(hab8Dmg));
+                                    }
+                                    if (chosenHab1 == 2 || chosenHab2 == 2 || chosenHab3 == 2 || chosenHab4 == 2)
+                                    {
+                                        movementPoints += 2;
                                     }
                                     unit.RecibirDanoFisico(CalcularDanoFisico(hab5Dmg));
+                                    if(unit.escudo > 0 || unit.prot>0)
+                                    {
+                                        unit.RecibirDanoFisico(CalcularDanoFisico(hab5Dmg));
+                                    }
                                     impacto = true;
-                                    DashBehindTarget(this, unit);
                                 }
                             }
                         }
@@ -229,59 +197,78 @@ public class Marasect : Unit
                         MarcarHabilidad(4, 0, 0);
                         break;
                     case 6:
-                        if (!hab6Stage2)
-                        {
+                       
                             foreach (Unit unit in manager.unitList)
                             {
                                 if (unit != null)
                                 {
                                     if (unit.hSelected && CheckAll(unit, unit.transform.position, hab6Range))
                                     {
-                                        CastHability(hab6.habilityType, hab6.habilityEffects[0], hab6.habilityRange, hab6.habilityTargetType, hab6.habilityMovement);
-                                        if (chosenHab1 == 7 || chosenHab2 == 7 || chosenHab3 == 7 || chosenHab4 == 7)
-                                        {
-                                            turnoRestante += hab7ExtraTurn;
-                                            CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab1.habilityMovement);
-                                        }
+                                    CastHability(hab1.habilityType, hab1.habilityEffects[0], hab1.habilityRange, hab1.habilityTargetType, hab1.habilityMovement);
+                                    if (chosenHab1 == 8 || chosenHab2 == 8 || chosenHab3 == 8 || chosenHab4 == 8)
+                                    {
+                                        CastHability(hab8.habilityType, Hability.HabilityEffect.None, hab8.habilityRange, hab8.habilityTargetType, hab8.habilityMovement);
+                                        unit.RecibirDanoMagico(CalcularDanoMagico(hab8Dmg));
+                                    } 
+                                    if (chosenHab1 == 8 || chosenHab2 == 8 || chosenHab3 == 8 || chosenHab4 == 8)
+                                    {
+                                        CastHability(hab8.habilityType, Hability.HabilityEffect.None, hab8.habilityRange, hab8.habilityTargetType, hab8.habilityMovement);
+                                        unit.RecibirDanoMagico(CalcularDanoMagico(hab8Dmg));
+                                    }
+                                    if (chosenHab1 == 2 || chosenHab2 == 2 || chosenHab3 == 2 || chosenHab4 == 2)
+                                    {
+                                        movementPoints += 2;
+                                    }
+                                    unit.RecibirDanoFisico(CalcularDanoFisico(hab6Dmg));
+                                    if(unit.hp > unit.mHp / 2)
+                                    {
                                         unit.RecibirDanoFisico(CalcularDanoFisico(hab6Dmg));
-                                        UpdateCell(true);
-                                        transform.position = unit.transform.position;
-                                        impacto = true;
+                                    }
+                                    unit.RecibirDanoFisico(CalcularDanoFisico(hab6Dmg));
+                                    if (unit.hp < unit.mHp / 2)
+                                    {
+                                        unit.RecibirDanoFisico(CalcularDanoFisico(hab6Dmg));
+                                    }
+                                    impacto = true;
                                     }
                                 }
                             }
                             if (impacto)
-                            {
-                                hab6Stage2 = true;
-                                manager.enemigo = false;
-                            }
-                        }
-                        else
                         {
-                            int x;
-                            int y;
-                            Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(), out x, out y);
-                            if (CheckWalls(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab6Range) && Pathfinding.Instance.GetNode(x, y).isWalkable)
-                            {
-                                Dash(this, UtilsClass.GetMouseWorldPosition());
-
-                                hab6Cd = hab6CdTotal;
-                                turnoRestante -= hab6Turn;
-                                MarcarHabilidad(4, 0, 0);
-                                hab6Stage2 = false;
-                            }
+                            hab6Cd = hab6CdTotal;
+                            turnoRestante -= hab6Turn;
                         }
+                       
                         break;
-                    case 8:
-                        if (CheckRange(UtilsClass.GetMouseWorldPosition(), hab8Range))
+                    case 7:
+                        foreach (Unit unit in manager.unitList)
                         {
-
-                            hab8CurrentTrap.SetUp();
-                            hab8Cd = hab8Duration + hab8CdTotal;
-                            turnoRestante -= hab8Turn;
-                            MarcarHabilidad(4, 0, 0);
+                            if (unit != null)
+                            {
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab1Range))
+                                {
+                                    CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab7.habilityMovement);
+                                    if (chosenHab1 == 8 || chosenHab2 == 8 || chosenHab3 == 8 || chosenHab4 == 8)
+                                    {
+                                        CastHability(hab8.habilityType, Hability.HabilityEffect.None, hab8.habilityRange, hab8.habilityTargetType, hab8.habilityMovement);
+                                        unit.RecibirDanoMagico(CalcularDanoMagico(hab8Dmg));
+                                    }
+                                    if (chosenHab1 == 2 || chosenHab2 == 2 || chosenHab3 == 2 || chosenHab4 == 2)
+                                    {
+                                        movementPoints += 2;
+                                    }
+                                    unit.RecibirDanoFisico(CalcularDanoFisico(hab7Dmg));
+                                    impacto = true;
+                                }
+                            }
                         }
-                        break;*/
+                        if (impacto)
+                        {
+                            repetitions7--;
+                            turnoRestante -= hab7Turn;
+                        }
+                        MarcarHabilidad(4, 0, 0);
+                        break;
 
                 }
             }
@@ -322,7 +309,7 @@ public class Marasect : Unit
 
     public override void ShowHability(int hability)
     {
-        /*switch (hability)
+        switch (hability)
         {
             case 1:
                 if (repetitions1 > 0 && turnoRestante >= hab1Turn)
@@ -334,23 +321,13 @@ public class Marasect : Unit
                     MarcarHabilidad(0, hab1Range, 0);
                 }
                 break;
-            case 2:
-                if (repetitions2 > 0 && turnoRestante >= hab2Turn)
+            case 3:
+                if (hab3Cd <= 0 && turnoRestante >= hab3Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
                     manager.aliado = false;
                     manager.enemigo = true;
-                    MarcarHabilidad(0, hab2Range, 0);
-                }
-                break;
-            case 3:
-                if (repetitions3 > 0 && turnoRestante >= hab3Turn)
-                {
-                    manager.DestroyShowNodes();
-                    castingHability = hability;
-                    manager.aliado = false;
-                    manager.enemigo = false;
                     MarcarHabilidad(0, hab3Range, 0);
                 }
                 break;
@@ -359,9 +336,8 @@ public class Marasect : Unit
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
-                    manager.diggeyeSearcherCasting = true;
                     manager.aliado = false;
-                    manager.enemigo = false;
+                    manager.enemigo = true;
                     MarcarHabilidad(0, hab4Range, 0);
                 }
                 break;
@@ -385,17 +361,17 @@ public class Marasect : Unit
                     MarcarHabilidad(0, hab6Range, 0);
                 }
                 break;
-            case 8:
-                if (hab8Cd <= 0 && turnoRestante >= hab8Turn)
+            case 7:
+                if (repetitions7 > 0 && turnoRestante >= hab7Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
                     manager.aliado = false;
-                    manager.enemigo = false;
-                    MarcarHabilidad(6, hab8Range, 0);
+                    manager.enemigo = true;
+                    MarcarHabilidad(0, hab7Range, 0);
                 }
                 break;
-        }*/
+        }
     }
 
     public override void AcabarTurno()
@@ -490,9 +466,9 @@ public class Marasect : Unit
             case 2:
                 return "Cada vez que Marasect usa una habilidad se puede mover " + hab2Range + " casillas";
             case 3:
-                return "Dispara un dardo estimulante que otorga un potenciador de " + CalcularDanoMagico(hab3Pot) + " y " + hab3Spd + " de movimiento al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab3Dmg) + " (F) de daño, dura " + hab3Rnd + " rondas";
+                return "Dispara un dardo estimulante que otorga un potenciador de " + CalcularDanoMagico(hab3Pot) + " (S) al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab3Dmg) + " (F) de daño";
             case 4:
-                return "Dispara un dardo estimulante que otorga " + CalcularDanoMagico(hab4Regen) + " de regeneración al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab4Dmg) + "(F) de daño, dura " + hab4Rnd + " rondas";
+                return "Dispara un dardo estimulante que otorga " + CalcularDanoMagico(hab4Regen) + " (S) de curación al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab4Dmg) + "(F) de daño";
             case 5:
                 return "Lanza un aguijón con fueraz que penetra la armaduara haciendo " + CalcularDanoFisico(hab5Dmg) + " (F) de daño. Si el objetivo tiene un escudo o un aumento en sus resistencias hace el doble de daño";
             case 6:
@@ -500,7 +476,7 @@ public class Marasect : Unit
             case 7:
                 return "Lanza rápidamente un aguijón pequeño que hace " + CalcularDanoFisico(hab7Dmg) + " (F) y llega más lejos que el resto de sus aguijones.";
             case 8:
-                return "Los ataques envenenan al objetivo por " + CalcularDanoMagico(hab8Dmg) + " (S) de daño durante" + hab8Rnd + " rondas";
+                return "Los ataques envenenan al objetivo por " + CalcularDanoMagico(hab8Dmg) + " (S) de daño extra por imacto";
             default:
                 return null;
         }
@@ -516,9 +492,9 @@ public class Marasect : Unit
             case 2:
                 return "Cada vez que Marasect usa una habilidad se puede mover " + hab2Range + " casillas";
             case 3:
-                return "Dispara un dardo estimulante que otorga un potenciador de " + CalcularDanoMagico(hab3Pot,sinergia) + " (S) y" + hab3Spd + " de movimiento al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab3Dmg,fuerza) + " (F) de daño, dura " + hab3Rnd + " rondas";
+                return "Dispara un dardo estimulante que otorga un potenciador de " + CalcularDanoMagico(hab3Pot,sinergia) + " (S) al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab3Dmg,fuerza) + " (F) de daño";
             case 4:
-                return "Dispara un dardo estimulante que otorga " + CalcularDanoMagico(hab4Regen, sinergia) + " (S) de regeneración al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab4Dmg,fuerza) + "(F) de daño, dura " + hab4Rnd + " rondas";
+                return "Dispara un dardo estimulante que otorga " + CalcularDanoMagico(hab4Regen,sinergia) + " (S) de curación al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab4Dmg,fuerza) + "(F) de daño";
             case 5:
                 return "Lanza un aguijón con fueraz que penetra la armaduara haciendo " + CalcularDanoFisico(hab5Dmg,fuerza) + " (F) de daño. Si el objetivo tiene un escudo o un aumento en sus resistencias hace el doble de daño";
             case 6:
@@ -526,7 +502,7 @@ public class Marasect : Unit
             case 7:
                 return "Lanza rápidamente un aguijón pequeño que hace " + CalcularDanoFisico(hab7Dmg,fuerza) + " (F) y llega más lejos que el resto de sus aguijones.";
             case 8:
-                return "Los ataques envenenan al objetivo por " + CalcularDanoMagico(hab8Dmg, sinergia) + " (S) de daño durante" + hab8Rnd + " rondas";
+                return "Los ataques envenenan al objetivo por " + CalcularDanoMagico(hab8Dmg,sinergia) + " (S) de daño extra por imacto";
             default:
                 return null;
         }

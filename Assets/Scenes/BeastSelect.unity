@@ -299,7 +299,7 @@ MonoBehaviour:
     item2Selected: 0
   - unitID: 3
     unitGO: {fileID: 1123245196106202831, guid: faf33a413fe53c74caf268638fa61d83, type: 3}
-    unit: {fileID: -4637384515848676121, guid: 5ebb41aff63de56448d233644309faaf, type: 3}
+    unit: {fileID: 7228274191374985815, guid: faf33a413fe53c74caf268638fa61d83, type: 3}
     name: Storminn
     icon: {fileID: 21300000, guid: 6ddcf73f93822374aaaa4645f404efcc, type: 3}
     image: {fileID: 21300000, guid: 6ddcf73f93822374aaaa4645f404efcc, type: 3}
@@ -891,7 +891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxBeasts: 0
-  maxTime: 5
+  maxTime: 0.3
   timeText: {fileID: 1059441192}
   playerPrefab: {fileID: 8543429560130934875, guid: ae87c44b41cddcf47baa7a70ebf03699, type: 3}
   player1: {fileID: 0}

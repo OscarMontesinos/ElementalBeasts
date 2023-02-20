@@ -99,7 +99,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     public float speed;
     int currentPathIndex;
     List<Vector3> pathVectorList;
-    MapPathfinder mapPathfinder;
+    public MapPathfinder mapPathfinder;
 
     [Header("HabilitiesData")]
     public Sprite defaultHabSprite;
@@ -117,8 +117,6 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     public virtual void Awake()
     {
         collider2D =GetComponent<BoxCollider2D>();
-        mapPathfinder = FindObjectOfType<MapPathfinder>();
-        cam = Object.FindObjectOfType<Camera>();
         /*hab1CDText = Object.FindObjectOfType<Hab1T>().GetComponent<Text>(); 
         hab2CDText = Object.FindObjectOfType<Hab2T>().GetComponent<Text>();
         hab3CDText= Object.FindObjectOfType<Hab3T>().GetComponent<Text>();
@@ -190,7 +188,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 
     private void Start()
     {
-
+        IniciativaCalc();
 
         hp = mHp;
         
@@ -201,9 +199,11 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     }
     public virtual void Update()
     {
-        if (manager==null)
+        if (manager==null || mapPathfinder == null || cam == null)
         {
 
+            cam = Object.FindObjectOfType<Camera>();
+            mapPathfinder = FindObjectOfType<MapPathfinder>();
             manager = Object.FindObjectOfType<CombatManager>();
         }
         else
@@ -459,11 +459,14 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         {
             moving = true;
             Vector3 targetPosition = pathVectorList[currentPathIndex];
-            if (Vector3.Distance(transform.position, targetPosition) > 0.01f)
+            if (Vector3.Distance(transform.position, targetPosition) > 0.5f)
             {
+                Debug.Log(Vector3.Distance(transform.position, targetPosition));
                 Vector3 moveDir = (targetPosition - transform.position).normalized;
 
                 transform.position = transform.position + moveDir * speed * Time.deltaTime;
+
+                photonView.RPC("ReplicateTransform", RpcTarget.All, transform.position.x, transform.position.y);
             }
             else
             {
@@ -1098,7 +1101,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         unit.transform.position = new Vector3(newPos.x, newPos.y, transform.position.z);
         UpdateCell(false);
         manager.Position(gameObject);
-        photonView.RPC("ReplicateTransformCall", RpcTarget.All, transform.position.x, transform.position.y);
+        photonView.RPC("ReplicateTransform", RpcTarget.All, transform.position.x, transform.position.y);
     }
     public virtual void DashBehindTarget(Unit unit, Unit targetUnit)
     {
@@ -1157,7 +1160,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         unit.transform.position = new Vector3(tx, ty, transform.position.z);
         UpdateCell(false);
         manager.Position(gameObject);
-        photonView.RPC("ReplicateTransformCall", RpcTarget.All, transform.position.x, transform.position.y);
+        photonView.RPC("ReplicateTransform", RpcTarget.All, transform.position.x, transform.position.y);
 
     }
     #endregion
@@ -1237,8 +1240,6 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     }
     public virtual void OnMouseExit()
     {
-
-        Debug.Log("out");
         if (!owner.settingUnitsUp && photonView.IsMine)
         {
             if (owner.giveTurno)

@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1792096392819775057, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2096748162242083946, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -29,15 +33,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.7678
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.7678
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.7678
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3625613581582211527, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -79,6 +83,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3847741106312486662, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.28406
+      objectReference: {fileID: 0}
+    - target: {fileID: 3847741106312486662, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.28406
+      objectReference: {fileID: 0}
+    - target: {fileID: 3847741106312486662, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.28406
+      objectReference: {fileID: 0}
     - target: {fileID: 5234822506698824081, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
       propertyPath: m_Name
       value: Marasect
@@ -90,6 +106,14 @@ PrefabInstance:
     - target: {fileID: 5612327325469400742, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5738596560172497422, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 281
+      objectReference: {fileID: 0}
+    - target: {fileID: 5738596560172497422, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -243
       objectReference: {fileID: 0}
     - target: {fileID: 6356455084603236494, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
       propertyPath: m_LocalScale.x
@@ -147,13 +171,13 @@ MonoBehaviour:
   escondido: 0
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   voidLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   unitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   imparable: 0
   desorientarValue: 0
   slow: 0
@@ -171,7 +195,7 @@ MonoBehaviour:
   mHp: 40
   resistenciaFisica: 30
   resistenciaMagica: 20
-  iniciativa: 0
+  iniciativa: 3
   maxMovementPoints: 6
   movementPoints: 0
   hp: 0
@@ -187,7 +211,8 @@ MonoBehaviour:
   owner: {fileID: 0}
   teamColor: {fileID: 0}
   sheet: {fileID: 0}
-  speed: 0
+  speed: 10
+  mapPathfinder: {fileID: 0}
   defaultHabSprite: {fileID: 0}
   hab1:
     icon: {fileID: 21300000, guid: f8b50a2731f22064a8af92c5d9e77323, type: 3}
