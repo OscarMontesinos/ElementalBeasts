@@ -152,15 +152,35 @@ public class Player : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     
     public void GiveTurnStage()
     {
-        manager.giveTurn = true;
-        giveTurno = true;
-        panelTurn.SetActive(true);
-        foreach (Unit unit in beasts)
+        int count=0;
+        foreach(Unit beast in beasts)
         {
-            if (!unit.pasar)
+            if (beast != null)
             {
-                unit.SetElegibleMarcador(true);
+                if (!beast.pasar)
+                {
+                    count++;
+                }
             }
+        }
+        if (count > 0) 
+        {
+            giveTurno = true;
+            panelTurn.SetActive(true);
+            foreach (Unit unit in beasts)
+            {
+                if (unit != null)
+                {
+                    if (!unit.pasar)
+                    {
+                        unit.SetElegibleMarcador(true);
+                    }
+                }
+            } 
+        }
+        else
+        {
+            manager.SiguienteTurno();
         }
     }
 
@@ -168,7 +188,10 @@ public class Player : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     {
         foreach (Unit beast in beasts)
         {
-            beast.SetElegibleMarcador(false);
+            if (beast != null)
+            {
+                beast.SetElegibleMarcador(false);
+            }
         }
         beastSelected = unit;
         giveTurno = false;

@@ -11,6 +11,11 @@ public class NotWalkableWall : MonoBehaviour
     }
     private void Start()
     {
+        SetWall();
+    }
+    public void SetWall()
+    {
         cManager.Position(gameObject);
+
     }
 }

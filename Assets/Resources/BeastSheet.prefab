@@ -1581,8 +1581,8 @@ MonoBehaviour:
   hab4Image: {fileID: 1596715908596137281}
   hab4Name: {fileID: 691308416194107228}
   hab4Description: {fileID: 1372017519341371678}
-  defaultItem: {fileID: 7482667652216324306, guid: 3010a37501e3f5845b9d4caec1fbc3df, type: 3}
-  defaultHability: {fileID: 7482667652216324306, guid: 3010a37501e3f5845b9d4caec1fbc3df, type: 3}
+  defaultItem: {fileID: 21300000, guid: 89b9c0b00b4ad1f4e8acbcfb51ddff08, type: 3}
+  defaultHability: {fileID: 21300000, guid: 89b9c0b00b4ad1f4e8acbcfb51ddff08, type: 3}
 --- !u!114 &1688157354259937416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1673,7 +1673,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: e74fe937aa3943649827db57ac5297dd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

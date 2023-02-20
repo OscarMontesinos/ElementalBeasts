@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 845320581428892888, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 7228274191374985815}
+    - target: {fileID: 2073345715185102458, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 7228274191374985815}
     - target: {fileID: 2096748162242083946, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -127,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 89f56f1fbba811a4e949597f1e34cc9f, type: 3}
+    - target: {fileID: 7530654314394839104, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 7228274191374985815}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
 --- !u!1 &1123245196106202831 stripped
@@ -223,9 +235,9 @@ MonoBehaviour:
   stun: 0
   justStun: 0
   root: 0
+  vinculo: 0
   prot: 0
   pot: 0
-  contadorEsc: []
   owner: {fileID: 0}
   teamColor: {fileID: 0}
   sheet: {fileID: 0}
@@ -256,7 +268,7 @@ MonoBehaviour:
   hab2CdTotal: 1
   hab2Cd: 0
   hab2Range: 6
-  hab2Area: 3
+  hab2Area: 1
   hab2Dmg: 20
   hab3:
     icon: {fileID: 21300000, guid: 9e52d1465944ddb439152063f73e6f9e, type: 3}
@@ -297,7 +309,7 @@ MonoBehaviour:
   hab5CdTotal: 2
   hab5Cd: 0
   hab5Range: 6
-  hab5Area: 4
+  hab5Area: 5
   hab5Exh: 20
   hab6:
     icon: {fileID: 21300000, guid: fd17ecc733bd9734b8d9019b97143f5a, type: 3}
@@ -307,7 +319,7 @@ MonoBehaviour:
     habilityRange: 0
     habilityTargetType: 2
     habilityMovement: 0
-  hab6Area: 4
+  hab6Area: 5
   hab6Heal: 15
   hab7:
     icon: {fileID: 21300000, guid: c7fd1cda84c4c9d4b89b08e49af3e6a7, type: 3}

@@ -72,10 +72,10 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     public bool stun;
     public bool justStun;
     public bool root;
+    public bool vinculo;
     [Header("Bufos o debufos")]
     public float prot = 0;
     public float pot = 0;
-    public float[] contadorEsc;
     [Header("Owner")]
     public Player owner;
     [Header("UI")]
@@ -199,6 +199,9 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     }
     public virtual void Update()
     {
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.00001f);
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.00001f);
         if (manager==null || mapPathfinder == null || cam == null)
         {
 
@@ -394,6 +397,56 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     }
 
 
+    [PunRPC]
+    protected virtual void StunnRPC(bool value)
+    {
+        stun = value;
+        if (!value)
+        {
+            justStun = true;
+        }
+
+    }
+    public void UpdateCell(bool value)
+    {
+        photonView.RPC("ReplicateUpdateCell", RpcTarget.All, value);
+    }
+    [PunRPC]
+    protected virtual void ReplicateUpdateCell(bool value)
+    {
+
+        UpdateCellEnd(value);
+
+    }
+
+    public void UpdateStats()
+    {
+        photonView.RPC("UpdateEscudoRPC", RpcTarget.All, escudo);
+        photonView.RPC("UpdateProtRPC", RpcTarget.All, prot);
+        photonView.RPC("UpdatePotRPC", RpcTarget.All, pot);
+    }
+
+
+    [PunRPC]
+    public void UpdateEscudoRPC(float newEscudo)
+    {
+        escudo = newEscudo;
+        if (escudo > 0)
+        {
+            escudoText.text = "(" + escudo.ToString("F0") + ")";
+        }
+    }
+    [PunRPC]
+    public void UpdateProtRPC(float newProt)
+    {
+        prot = newProt;
+    }
+    [PunRPC]
+    public void UpdatePotRPC(float newPot)
+    {
+        pot = newPot;
+    }
+
     #endregion
 
     #region Pathfinding
@@ -455,13 +508,15 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 
     void HandleMovement()
     {
+        int x;
+        int y;
+        mapPathfinder.GetPathfinding().GetGrid().GetXY(transform.position, out x, out y);
         if (pathVectorList != null && pathVectorList.Count!=0)
         {
             moving = true;
             Vector3 targetPosition = pathVectorList[currentPathIndex];
-            if (Vector3.Distance(transform.position, targetPosition) > 0.5f)
+            if (Vector3.Distance(transform.position, targetPosition) > 0.502f)
             {
-                Debug.Log(Vector3.Distance(transform.position, targetPosition));
                 Vector3 moveDir = (targetPosition - transform.position).normalized;
 
                 transform.position = transform.position + moveDir * speed * Time.deltaTime;
@@ -488,7 +543,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         pathVectorList = null;
 
     }
-    public void UpdateCell(bool value)
+    public void UpdateCellEnd(bool value)
     {
         mapPathfinder.GetPathfinding().GetGrid().GetXY(transform.position, out int x, out int y);
         if (x != 1000 && y != 1000)
@@ -497,6 +552,10 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         }
     }
 
+   
+
+
+    
     #endregion
 
     #region TurnManagment
@@ -529,6 +588,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
             justStun = true;
             pasar = true;
             stun = false;
+            photonView.RPC("StunnRPC", RpcTarget.AllBuffered, false);
             manager.SiguienteTurno();
         }
         if (desorientarValue > 0)
@@ -560,7 +620,10 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     }
     public void NuevaRonda()
     {
-        sheet.UpdateSheet();
+        if (sheet != null)
+        {
+            sheet.UpdateSheet();
+        }
         turnoRestante = 5;
         pasar = false;
         
@@ -609,63 +672,32 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         value *= calculo / 100;
         return value;
     }
-    public virtual void Escudo(float value, int rondas)
+    public virtual void Escudo(float value)
     {
         escudo = 0;
-        int buscador = 0;
-        while (contadorEsc[buscador] > 0)
-        {
-            buscador += 2;
-        }
-        contadorEsc[buscador] = rondas;
-        contadorEsc[buscador + 1] = value;
-        buscador = 0;
-        while (buscador < contadorEsc.Length)
-        {
-            escudo += contadorEsc[buscador + 1];
-            buscador += 2;
-        }
-        if (escudo <= 0)
-        {
-            escudo = 0;
-            escudoText.text = "";
-        }
-        else
-        {
+        escudo = value;
             escudoText.text = "(" + escudo.ToString("F0") + ")";
-        }
-    }
-    void CalcEscudo()
-    {
-        int buscador = 0;
-        escudo = 0;
-        while (buscador < contadorEsc.Length)
-        {
-            escudo += contadorEsc[buscador + 1];
-            buscador += 2;
-        }
-        if (escudo <= 0)
-        {
-            escudo = 0;
-            escudoText.text = "";
-        }
-        else
-        {
-            escudoText.text = "(" + escudo.ToString("F0") + ")";
-        }
+        UpdateStats();
     }
     public void EliminarEscudo()
     {
-        int buscador = 0;
-        while (buscador < contadorEsc.Length)
-        {
-            contadorEsc[buscador] = 0;
-            contadorEsc[buscador + 1] = 0;
-            buscador += 2;
-        }
-        CalcEscudo();
+        escudo = 0;
+        UpdateStats();
+        escudoText.text = "";
 
 
+    }
+    public void AddPot(float value)
+    {
+        pot = 0;
+        pot = value;
+        UpdateStats();
+    }
+    public void AddProt(float value)
+    {
+        prot = 0;
+        prot = value;
+        UpdateStats();
     }
     public virtual void RecibirDanoFisico(float value)
     {
@@ -707,42 +739,10 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         {
             value -= escudo;
             escudo = 0;
-            int buscador = 0;
-            while (buscador < contadorEsc.Length)
-            {
-                contadorEsc[buscador] = 0;
-                buscador += 1;
-            }
         }
         else
         {
             escudo -= value;
-            int buscador = 0;
-            while (buscador < contadorEsc.Length)
-            {
-                contadorEsc[buscador + 1] -= value;
-                if (contadorEsc[buscador] > 0)
-                {
-                    if (contadorEsc[buscador + 1] < 0)
-                    {
-                        value += contadorEsc[buscador + 1];
-                        contadorEsc[buscador] = 0;
-                        contadorEsc[buscador + 1] = 0;
-                    }
-                    else if (contadorEsc[buscador + 1] > 0)
-                    {
-                        contadorEsc[buscador + 1] -= value;
-                        value = 0;
-                    }
-                    else
-                    {
-                        value = 0;
-                        contadorEsc[buscador + 1] = 0;
-                        contadorEsc[buscador] = 0;
-                    }
-                }
-                buscador += 2;
-            }
             escudoText.text = "(" + escudo.ToString("F0") + ")";
         }
 
@@ -761,13 +761,14 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
             hp = mHp;
         }
         StartCoroutine(SetHpBar());
+        UpdateHP();
     }
 
     public virtual void Stunn()
     {
         if (!justStun)
         {
-            stun = true;
+            photonView.RPC("StunnRPC", RpcTarget.AllBuffered, true);
         }
     }
 
@@ -1195,8 +1196,10 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
         {
             Die();
         }
-
-        sheet.UpdateSheet();
+        if (sheet != null)
+        {
+            sheet.UpdateSheet();
+        }
     }
 
     private void OnMouseDown()
@@ -1208,9 +1211,9 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     }
     public virtual void OnMouseOver()
     {
-        if (!owner.settingUnitsUp && photonView.IsMine)
+        if (!owner.settingUnitsUp)
         {
-            if (!manager.casteando && !freelook || !manager.casteando && freelook || manager.casteando && freelook)
+            if (!manager.casteando && photonView.IsMine && !freelook || !manager.casteando && photonView.IsMine && freelook || manager.casteando && photonView.IsMine && freelook)
             {
                 selected = true;
             }
@@ -1240,9 +1243,9 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
     }
     public virtual void OnMouseExit()
     {
-        if (!owner.settingUnitsUp && photonView.IsMine)
+        if (!owner.settingUnitsUp )
         {
-            if (owner.giveTurno)
+            if (owner.giveTurno && photonView.IsMine)
             {
                 pSelected = false;
             }
@@ -1373,6 +1376,7 @@ public class Unit : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 
     public virtual void Die()
     {
+        UpdateCell(true);
             Destroy(gameObject);
         
     }

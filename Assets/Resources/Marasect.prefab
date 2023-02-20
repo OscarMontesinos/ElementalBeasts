@@ -205,9 +205,9 @@ MonoBehaviour:
   stun: 0
   justStun: 0
   root: 0
+  vinculo: 0
   prot: 0
   pot: 0
-  contadorEsc: []
   owner: {fileID: 0}
   teamColor: {fileID: 0}
   sheet: {fileID: 0}
@@ -224,7 +224,7 @@ MonoBehaviour:
     habilityMovement: 0
   hab1Turn: 2
   hab1Rmax: 5
-  hab1Range: 3
+  hab1Range: 5
   hab1Dmg: 25
   hab2:
     icon: {fileID: 21300000, guid: eec0e175c0191d64a880f5bafc04ec00, type: 3}
@@ -305,7 +305,7 @@ MonoBehaviour:
   hab7Range: 7
   hab7Dmg: 10
   hab8:
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 395879572d1857a4280f1f93b7345903, type: 3}
     name: "Aguij\xF3n envenenado"
     habilityType: 2
     habilityEffects: 

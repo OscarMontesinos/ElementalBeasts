@@ -43,52 +43,55 @@ public class CombatBeastSheet : MonoBehaviour
     }
     public void UpdateSheet()
     {
-        hpBar.value = unit.hp;
-        hpText.text = unit.hp.ToString("F0");
-
-        nameText.text = unit.name;
-
-        float hp = unit.mHp;
-        float sinergiaElemental = unit.sinergiaElemental;
-        float fuerza = unit.fuerza;
-        float control = unit.control;
-        float resistenciaFisica = unit.resistenciaFisica;
-        float resistenciaMagica = unit.resistenciaMagica;
-        float movementPoints = unit.maxMovementPoints;
-
-        statsText.text = hp + "\n" +
-                            sinergiaElemental + "\n" +
-                            fuerza + "\n" +
-                            control + "\n" +
-                            resistenciaFisica + "\n" +
-                            resistenciaMagica + "\n" +
-                            movementPoints;
-
-
-        ChangeHabilitiesInfo();
-
-        if (unit.pasar)
+        if (unit != null)
         {
-            turnUpIndicator.color = turnDownColor;
-        }
-        else
-        {
-            turnUpIndicator.color = turnUpColor;
-        }
-        if (turnObjects != null)
-        {
-            foreach (GameObject turnObject in turnObjects)
+            hpBar.value = unit.hp;
+            hpText.text = unit.hp.ToString("F0");
+
+            nameText.text = unit.name;
+
+            float hp = unit.mHp;
+            float sinergiaElemental = unit.sinergiaElemental;
+            float fuerza = unit.fuerza;
+            float control = unit.control;
+            float resistenciaFisica = unit.resistenciaFisica;
+            float resistenciaMagica = unit.resistenciaMagica;
+            float movementPoints = unit.maxMovementPoints;
+
+            statsText.text = hp + "\n" +
+                                sinergiaElemental + "\n" +
+                                fuerza + "\n" +
+                                control + "\n" +
+                                resistenciaFisica + "\n" +
+                                resistenciaMagica + "\n" +
+                                movementPoints;
+
+
+            ChangeHabilitiesInfo();
+
+            if (unit.pasar)
             {
-                Destroy(turnObject);
+                turnUpIndicator.color = turnDownColor;
             }
-            turnObjects.Clear();
-        }
-        int index = 0;
-        while (index < unit.turnoRestante)
-        {
-            GameObject turnImageGO = Instantiate(turnImage, turnContent.transform);
-            turnObjects.Add(turnImageGO);
-            index++;
+            else
+            {
+                turnUpIndicator.color = turnUpColor;
+            }
+            if (turnObjects != null)
+            {
+                foreach (GameObject turnObject in turnObjects)
+                {
+                    Destroy(turnObject);
+                }
+                turnObjects.Clear();
+            }
+            int index = 0;
+            while (index < unit.turnoRestante)
+            {
+                GameObject turnImageGO = Instantiate(turnImage, turnContent.transform);
+                turnObjects.Add(turnImageGO);
+                index++;
+            }
         }
     }
 

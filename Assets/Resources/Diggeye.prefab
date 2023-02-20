@@ -35,6 +35,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 502
       objectReference: {fileID: 0}
+    - target: {fileID: 2321608248665751684, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 912122944978749269}
     - target: {fileID: 2898340834658528949, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -51,6 +55,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.0052308855
       objectReference: {fileID: 0}
+    - target: {fileID: 4828262059046599708, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 912122944978749269}
     - target: {fileID: 4882099621796362164, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.0052029025
@@ -67,6 +75,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6087811872046515902, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 912122944978749269}
     - target: {fileID: 6170887024417363118, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -209,9 +221,9 @@ MonoBehaviour:
   stun: 0
   justStun: 0
   root: 0
+  vinculo: 0
   prot: 0
   pot: 0
-  contadorEsc: []
   owner: {fileID: 0}
   teamColor: {fileID: 0}
   sheet: {fileID: 0}
@@ -308,7 +320,7 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 56e1b0f6ab61d2543a6f35fc476e8923, type: 3}
     name: Trampa de Subsuelo
     habilityType: 1
-    habilityEffects: 080000000100000007000000
+    habilityEffects: 0100000007000000
     habilityRange: 0
     habilityTargetType: 1
     habilityMovement: 0
@@ -316,10 +328,8 @@ MonoBehaviour:
   hab8CdTotal: 2
   hab8Cd: 0
   hab8Range: 1
-  hab8Duration: 4
+  hab8Area: 1
   hab8Dmg: 10
-  hab8Trap: {fileID: 7856540793155916339, guid: 1070db7651ea0984aa04fc236eeb2e19, type: 3}
-  hab8CurrentTrap: {fileID: 0}
 --- !u!114 &1253741213775207735
 MonoBehaviour:
   m_ObjectHideFlags: 0

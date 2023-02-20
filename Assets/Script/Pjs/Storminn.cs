@@ -139,7 +139,7 @@ public class Storminn : Unit
                                         {
                                             if (unit2 != null)
                                             {
-                                                if (unit2.hSelected && CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
+                                                if ( CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
                                                 {
                                                     CastHability(hab6.habilityType, hab6.habilityEffects[0], hab6.habilityRange, hab6.habilityTargetType, hab6.habilityMovement);
                                                     unit2.Heal(CalcularControl(hab6Heal));
@@ -165,7 +165,7 @@ public class Storminn : Unit
                         {
                             if (unit != null)
                             {
-                                if (unit.hSelected && hab3HabilitiesUsed>=3 && CheckWalls(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z - Camera.main.transform.position.z))))
+                                if (unit.hSelected  && CheckWalls(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z - Camera.main.transform.position.z))))
                                 {
                                     CastHability(hab3.habilityType, hab3.habilityEffects[0], hab3.habilityRange, hab3.habilityTargetType, hab3.habilityMovement);
                                     if (chosenHab1 == 6 || chosenHab2 == 6 || chosenHab3 == 6 || chosenHab4 == 6)
@@ -174,7 +174,7 @@ public class Storminn : Unit
                                         {
                                             if (unit2 != null)
                                             {
-                                                if (unit2.hSelected && CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
+                                                if ( CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
                                                 {
                                                     CastHability(hab6.habilityType, hab6.habilityEffects[0], hab6.habilityRange, hab6.habilityTargetType, hab6.habilityMovement);
                                                     unit2.Heal(CalcularControl(hab6Heal));
@@ -184,6 +184,7 @@ public class Storminn : Unit
                                     }
                                     unit.RecibirDanoMagico(CalcularDanoMagico(hab3Dmg));
                                     hab3HabilitiesUsed = 0;
+                                    impacto = true;
                                 }
                             }
                         }
@@ -208,7 +209,7 @@ public class Storminn : Unit
                                         {
                                             if (unit2 != null)
                                             {
-                                                if (unit2.hSelected && CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
+                                                if ( CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
                                                 {
                                                     CastHability(hab6.habilityType, hab6.habilityEffects[0], hab6.habilityRange, hab6.habilityTargetType, hab6.habilityMovement);
                                                     unit2.Heal(CalcularControl(hab6Heal/2));
@@ -217,6 +218,7 @@ public class Storminn : Unit
                                         }
                                     }
                                     unit.RecibirDanoMagico(CalcularDanoMagico(hab4Dmg));
+                                    impacto = true;
                                 }
                             }
                         }
@@ -242,7 +244,7 @@ public class Storminn : Unit
                                         {
                                             if (unit2 != null)
                                             {
-                                                if (unit2.hSelected && CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
+                                                if (CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
                                                 {
                                                     CastHability(hab6.habilityType, hab6.habilityEffects[0], hab6.habilityRange, hab6.habilityTargetType, hab6.habilityMovement);
                                                     unit2.Heal(CalcularControl(hab6Heal));
@@ -250,8 +252,8 @@ public class Storminn : Unit
                                             }
                                         }
                                     }
-                                    unit.pot = 0;
-                                    unit.pot = -CalcularControl(hab5Exh);
+
+                                    unit.AddPot(-CalcularControl(hab5Exh));
                                     impacto = true;
                                 }
                             }
@@ -278,7 +280,7 @@ public class Storminn : Unit
                                         {
                                             if (unit2 != null)
                                             {
-                                                if (unit2.hSelected && CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
+                                                if (CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
                                                 {
                                                     CastHability(hab6.habilityType, hab6.habilityEffects[0], hab6.habilityRange, hab6.habilityTargetType, hab6.habilityMovement);
                                                     unit2.Heal(CalcularControl(hab6Heal));
@@ -287,8 +289,7 @@ public class Storminn : Unit
                                         }
                                     }
                                     unit.RecibirDanoMagico(CalcularDanoMagico(hab7Dmg));
-                                    unit.prot = 0;
-                                    unit.prot = -CalcularControl(hab7Deb);
+                                    unit.AddProt(-CalcularControl(hab7Deb));
                                     impacto = true;
                                 }
                             }
@@ -313,7 +314,7 @@ public class Storminn : Unit
                                 {
                                     if (unit2 != null)
                                     {
-                                        if (unit2.hSelected && CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
+                                        if (CheckAll(unit2, unit2.transform.position, hab6Area) && unit2.team == team)
                                         {
                                             CastHability(hab6.habilityType, hab6.habilityEffects[0], hab6.habilityRange, hab6.habilityTargetType, hab6.habilityMovement);
                                             unit2.Heal(CalcularControl(hab6Heal));
@@ -366,7 +367,22 @@ public class Storminn : Unit
             }
         }
 
-
+        if (castingHability == 2 && manager.casteando == true && turno)
+        {
+            ShowHability(2);
+        }
+        if (castingHability == 3 && manager.casteando == true && turno)
+        {
+            ShowHability(3);
+        }
+        if (castingHability == 5 && manager.casteando == true && turno)
+        {
+            ShowHability(5);
+        }
+        if (castingHability == 7 && manager.casteando == true && turno)
+        {
+            ShowHability(7);
+        }
     }
 
     public override void ShowHability(int hability)
@@ -394,7 +410,7 @@ public class Storminn : Unit
                 }
                 break;
             case 3:
-                if (hab3Cd <= 0 && turnoRestante >= hab3Turn)
+                if (hab3Cd <= 0 && turnoRestante >= hab3Turn && hab3HabilitiesUsed >= 3)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
@@ -538,21 +554,21 @@ public class Storminn : Unit
             case 0:
                 return " ";
             case 1:
-                return "Lanza un pulso de arena a un objetivo realizando " + CalcularDanoMagico(hab1Dmg) + " (s) de daño al objetivo.";
+                return "Turno: " + hab1Turn + "Repeticiones: " + hab1Rmax + "\nLanza un pulso de arena a un objetivo realizando " + CalcularDanoMagico(hab1Dmg) + " (s) de daño al objetivo.";
             case 2:
-                return "Conjura una bomba de arena de arena a un objetivo realizando " + CalcularDanoMagico(hab2Dmg) + " (s) de daño en área";
+                return "Turno: " + hab2Turn + "Recarga: " + hab2Cd + "\nConjura una bomba de arena de arena a un objetivo realizando " + CalcularDanoMagico(hab2Dmg) + " (s) de daño en área";
             case 3:
-                return "Desata una ráfaga de poder que hace " + CalcularDanoMagico(hab3Dmg) + " (S) en área, solo puede usarse tras haber usado 3 habilidades";
+                return "Turno: " + hab3Turn + "Recarga: " + hab3Cd + "\nDesata una ráfaga de poder que hace " + CalcularDanoMagico(hab3Dmg) + " (S) en área, solo puede usarse tras haber usado 3 habilidades";
             case 4:
-                return "Dispara pequeños proyectiles de arena rápidamente a un objetivo, realiza " + CalcularDanoMagico(hab4Dmg) + " (S) de daño por cada golpe. Benevolencia cura " + CalcularControl(hab6Heal/2) + " (C) usando esta habilidad";
+                return "Turno: " + hab4Turn + "Repeticiones: " + hab4Rmax + "\nDispara pequeños proyectiles de arena rápidamente a un objetivo, realiza " + CalcularDanoMagico(hab4Dmg) + " (S) de daño por cada golpe. Benevolencia cura " + CalcularControl(hab6Heal/2) + " (C) usando esta habilidad";
             case 5:
-                return "Conjura unos vientos malditos que extenúan " + CalcularControl(hab5Exh) + " (C) a los objetivos alcanzados";
+                return "Turno: " + hab5Turn + "Recarga: " + hab5Cd + "\nConjura unos vientos malditos que extenúan " + CalcularControl(hab5Exh) + " (C) a los objetivos alcanzados";
             case 6:
                 return "Cada vez que se usa una habilidad cura " + CalcularControl(hab6Heal) + " (C) en área a tus aliados";
             case 7:
-                return "Hace caer un cúmulo de arena en una zona dañando por " + CalcularDanoMagico(hab7Dmg) + " (s) y debilitando por "+ CalcularControl(hab7Deb) +" (C) a los enemigos";
+                return "Turno: " + hab7Turn + "Recarga: " + hab7Cd + "\nHace caer un cúmulo de arena en una zona dañando por " + CalcularDanoMagico(hab7Dmg) + " (s) y debilitando por "+ CalcularControl(hab7Deb) +" (C) a los enemigos";
             case 8:
-                return "Desaparece y aparece en la posición seleccionada";
+                return "Turno: " + hab8Turn + "Recarga: " + hab8Cd + "\nDesaparece y aparece en la posición seleccionada";
             default:
                 return null;
         }
@@ -564,21 +580,21 @@ public class Storminn : Unit
             case 0:
                 return " ";
             case 1:
-                return "Lanza un pulso de arena a un objetivo realizando " + CalcularDanoMagico(hab1Dmg,sinergia) + " (s) de daño al objetivo.";
+                return "Turno: " + hab1Turn + " Repeticiones: " + hab1Rmax + "\nLanza un pulso de arena a un objetivo realizando " + CalcularDanoMagico(hab1Dmg,sinergia) + " (s) de daño al objetivo.";
             case 2:
-                return "Conjura una bomba de arena de arena a un objetivo realizando " + CalcularDanoMagico(hab2Dmg, sinergia) + " (s) de daño en área";
+                return "Turno: " + hab2Turn + " Recarga: " + hab2Cd + "\nConjura una bomba de arena de arena a un objetivo realizando " + CalcularDanoMagico(hab2Dmg, sinergia) + " (s) de daño en área";
             case 3:
-                return "Desata una ráfaga de poder que hace " + CalcularDanoMagico(hab3Dmg, sinergia) + " (S) en área, solo puede usarse tras haber usado 3 habilidades";
+                return "Turno: " + hab3Turn + " Recarga: " + hab3Cd + "\nDesata una ráfaga de poder que hace " + CalcularDanoMagico(hab3Dmg, sinergia) + " (S) en área, solo puede usarse tras haber usado 3 habilidades";
             case 4:
-                return "Dispara pequeños proyectiles de arena rápidamente a un objetivo, realiza " + CalcularDanoMagico(hab4Dmg, sinergia) + " (S) de daño por cada golpe. Benevolencia cura " + CalcularControl(hab6Heal / 2,control) + " (C) usando esta habilidad";
+                return "Turno: " + hab4Turn + " Repeticiones: " + hab4Rmax + "\nDispara pequeños proyectiles de arena rápidamente a un objetivo, realiza " + CalcularDanoMagico(hab4Dmg, sinergia) + " (S) de daño por cada golpe. Benevolencia cura " + CalcularControl(hab6Heal / 2,control) + " (C) usando esta habilidad";
             case 5:
-                return "Conjura unos vientos malditos que extenúan " + CalcularControl(hab5Exh,control) + " (C) a los objetivos alcanzados";
+                return "Turno: " + hab5Turn + " Recarga: " + hab5Cd + "\nConjura unos vientos malditos que extenúan " + CalcularControl(hab5Exh,control) + " (C) a los objetivos alcanzados";
             case 6:
                 return "Cada vez que se usa una habilidad cura " + CalcularControl(hab6Heal, control) + " (C) en área a tus aliados";
             case 7:
-                return "Hace caer un cúmulo de arena en una zona dañando por " + CalcularDanoMagico(hab7Dmg, sinergia) + " (s) y debilitando por " + CalcularControl(hab7Deb, control) + " (C) a los enemigos";
+                return "Turno: " + hab7Turn + " Recarga: " + hab7Cd + "\nHace caer un cúmulo de arena en una zona dañando por " + CalcularDanoMagico(hab7Dmg, sinergia) + " (s) y debilitando por " + CalcularControl(hab7Deb, control) + " (C) a los enemigos";
             case 8:
-                return "Desaparece y aparece en la posición seleccionada";
+                return "Turno: " + hab8Turn + " Recarga: " + hab8Cd + "\nDesaparece y aparece en la posición seleccionada";
             default:
                 return null;
         }

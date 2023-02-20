@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class CombatManager : MonoBehaviourPunCallbacks
 {
@@ -170,8 +171,10 @@ public class CombatManager : MonoBehaviourPunCallbacks
 
             }
         }
+        if (PhotonNetwork.IsMasterClient)
+        {
             photonView.RPC("StartMatchRPC", RpcTarget.AllBuffered);
-
+        }
     }
 
     [PunRPC]
@@ -206,31 +209,21 @@ public class CombatManager : MonoBehaviourPunCallbacks
 
         foreach (Unit unitC in unitList)
         {
-            if (PhotonNetwork.IsMasterClient)
+            if (!playerArrow)
             {
-                if (!playerArrow)
-                {
-                    turnOrderList.Add(playerList[0]);
-                }
-                else
-                {
-                    turnOrderList.Add(playerList[1]);
-                }
+                turnOrderList.Add(playerList[0]);
             }
             else
             {
-                if (playerArrow)
-                {
-                    turnOrderList.Add(playerList[0]);
-                }
-                else
-                {
-                    turnOrderList.Add(playerList[1]);
-                }
+                turnOrderList.Add(playerList[1]);
             }
+
             playerArrow = !playerArrow;
         }
-        SiguienteTurno();
+        if (PhotonNetwork.IsMasterClient&&photonView.IsMine)
+        {
+            SiguienteTurno();
+        }
 
     }
 
@@ -242,6 +235,21 @@ public class CombatManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void RpcSiguienteTurno()
     {
+        bool end = true;
+        foreach(Player player in playerList)
+        {
+            foreach(Unit unit in player.beasts)
+            {
+                if (unit != null)
+                {
+                    end = false;
+                }
+            }
+            if (end)
+            {
+                SceneManager.LoadScene("GameLauncher");
+            }
+        }
         foreach (ObjetoInvocado invoc in invocaciones)
         {
             if (invoc != null)
@@ -255,17 +263,34 @@ public class CombatManager : MonoBehaviourPunCallbacks
             turnoActual = 0;
             NuevaRonda();
         }
-        turnOrderList[turnoActual].GiveTurnStage();
+        else if (turnOrderList[turnoActual].photonView.IsMine)
+        {
+        giveTurn = true;
+            turnOrderList[turnoActual].GiveTurnStage();
+        }
     }
 
     public void NuevaRonda()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("RPCRonda", RpcTarget.AllBuffered);
+        }
+    }
+    [PunRPC]
+    void RPCRonda()
     {
         foreach (Unit unit in unitList)
         {
             unit.NuevaRonda();
         }
         ronda++;
-        rondaText.text = "Ronda: " + ronda;
+        rondaText.text = "Ronda: " + ronda; 
+        if (turnOrderList[turnoActual].photonView.IsMine)
+        {
+            giveTurn = true;
+            turnOrderList[turnoActual].GiveTurnStage();
+        }
     }
 
     public void ShowNodesInRange()

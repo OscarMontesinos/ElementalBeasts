@@ -11,11 +11,14 @@ public class Obe : Unit
     [Header("Hab1")]
     public Hability hab1;
     public int hab1Turn;
+    public int hab1CdTotal;
+    public int hab1Cd;
     public int hab1Range;
+    public int hab1Area;
     public float hab1Dmg;
-    public int hab1Rnd;
     [Header("Hab2")]
     public Hability hab2;
+    public int hab2Turn;
     public int hab2Range;
     public int hab2CdTotal;
     public int hab2Cd;
@@ -33,24 +36,28 @@ public class Obe : Unit
     public int hab4Turn;
     public int hab4CdTotal;
     public int hab4Cd;
-    public float hab4Area;
+    public int hab4Area;
     public float hab4Dmg;
-    public float hab4Desorientar;
     [Header("Hab5")]
     public Hability hab5;
     public int hab5Turn;
     public int hab5CdTotal;
     public int hab5Cd;
+    public int hab5Range;
+    public int hab5Area;
     public float hab5Dmg;
     [Header("Hab6")]
     public Hability hab6;
     public int hab6Turn;
     public int hab6CdTotal;
     public int hab6Cd;
-    public int hab6hability;
+    public int hab6LastHability;
+    public bool hab6UsingHab;
     [Header("Hab7")]
     public Hability hab7;
     public int hab7Turn;
+    public int hab7CdTotal;
+    public int hab7Cd;
     public int hab7Range;
     public int hab7Rnd;
     public float hab7Deb;
@@ -64,11 +71,13 @@ public class Obe : Unit
     public override void Awake()
     {
         base.Awake();
+        hab1CdTotal++;
         hab2CdTotal++;
         hab3CdTotal++;
         hab4CdTotal++;
         hab5CdTotal++;
         hab6CdTotal++;
+        hab7CdTotal++;
         hab8CdTotal++;
     }
 
@@ -79,33 +88,32 @@ public class Obe : Unit
         // ActualizarCDUI(repetitions1, repetitions2, hab3Cd, hab4Cd);
         if (manager != null)
         {
+            if (Input.GetMouseButtonDown(1))
+            {
+                hab6UsingHab = false;
+            }
             if (Input.GetMouseButtonDown(0) && manager.casteando && turno)
             {
                 bool impacto = false;
                 switch (castingHability)
                 {
-                    /*case 1:
+                    case 1:
                         foreach (Unit unit in manager.unitList)
                         {
                             if (unit != null)
                             {
-                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab1Range))
+                                if (unit.hSelected && CheckWalls(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z - Camera.main.transform.position.z))))
                                 {
-                                    CastHability(hab1.habilityType, hab1.habilityEffects[0], hab1.habilityRange, hab1.habilityTargetType, hab1.habilityMovement);
-                                    if (chosenHab1 == 7 || chosenHab2 == 7 || chosenHab3 == 7 || chosenHab4 == 7)
-                                    {
-                                        turnoRestante += hab7ExtraTurn;
-                                        CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab1.habilityMovement);
-                                    }
-                                    unit.RecibirDanoFisico(CalcularDanoFisico(hab1Dmg));
+                                    unit.RecibirDanoMagico(CalcularDanoMagico(hab1Dmg));
                                     impacto = true;
                                 }
                             }
                         }
                         if (impacto)
                         {
-                            repetitions1--;
+                            hab1Cd = hab1CdTotal;
                             turnoRestante -= hab1Turn;
+                            hab6LastHability = 1;
                         }
                         MarcarHabilidad(4, 0, 0);
                         break;
@@ -117,170 +125,218 @@ public class Obe : Unit
                             {
                                 if (unit.hSelected && CheckAll(unit, unit.transform.position, hab2Range))
                                 {
-                                    CastHability(hab2.habilityType, hab2.habilityEffects[0], hab2.habilityEffects[1], hab2.habilityRange, hab2.habilityTargetType, hab2.habilityMovement);
-                                    unit.RecibirDanoFisico(CalcularDanoFisico(hab2Dmg));
+                                    CastHability(hab2.habilityType, hab2.habilityEffects[0], hab2.habilityRange, hab2.habilityTargetType, hab2.habilityMovement);
+                                    if (unit.vinculo)
+                                    {
+                                        unit.Escudo(CalcularControl(hab2Shld + hab2ShldMod));
+                                    }
+                                    else
+                                    {
+                                        unit.Escudo(CalcularControl(hab2Shld));
+                                        foreach (Unit unit2 in manager.unitList)
+                                        {
+                                            if (unit2.vinculo && unit2.team == team)
+                                            {
+                                                unit.Escudo(CalcularControl(hab2ShldMod));
+                                            }
+                                        }
+                                    }
                                     impacto = true;
                                 }
                             }
                         }
-                        if (impacto)
+                        if (impacto && !hab6UsingHab)
                         {
-                            repetitions2--;
-                            turnoRestante -= hab2Turn;
+                            hab2Cd = hab2CdTotal;
+                            turnoRestante -= hab4Turn;
+                            hab6LastHability = 2;
+                        }
+                        else if (impacto)
+                        {
+                            hab6Cd = hab6CdTotal;
+                            turnoRestante -= hab6Turn;
+                            hab6UsingHab = false;
                         }
                         MarcarHabilidad(4, 0, 0);
                         break;
                     case 3:
-                        CastHability(hab3.habilityType, hab3.habilityEffects[0], hab3.habilityRange, hab3.habilityTargetType, hab3.habilityMovement);
-                        GameObject minerSearcher = Instantiate(hab3Searcher, transform.position, transform.rotation);
-                        minerSearcher.GetComponent<MinerSearcher>().SetUp(team, UtilsClass.GetMouseWorldPosition(), hab3Range, this);
-                        searcherList.Add(minerSearcher.GetComponent<MinerSearcher>());
-                        if (searcherList.Count > hab3Max)
+
+                        foreach (Unit unit in manager.unitList)
                         {
-                            Destroy(searcherList[0].gameObject);
-                            searcherList.RemoveAt(0);
+                            if (unit != null)
+                            {
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab3Range))
+                                {
+                                    CastHability(hab3.habilityType, hab3.habilityEffects[0], hab3.habilityRange, hab3.habilityTargetType, hab3.habilityMovement);
+
+                                    foreach (Unit unit2 in manager.unitList)
+                                    {
+                                        if (unit2.team == team)
+                                        {
+                                            unit2.vinculo = false;
+                                        }
+                                    }
+                                    unit.AddProt(CalcularControl(hab3Prot));
+                                    unit.vinculo = true;
+                                    impacto = true;
+                                }
+                            }
                         }
 
-                        repetitions3--;
-                        turnoRestante -= hab3Turn;
+
+                        if (impacto && !hab6UsingHab)
+                        {
+                            hab3Cd = hab3CdTotal;
+                            turnoRestante -= hab3Turn;
+                            hab6LastHability = 3;
+                        }
+                        else if (impacto)
+                        {
+                            hab6Cd = hab6CdTotal;
+                            turnoRestante -= hab6Turn;
+                            hab6UsingHab = false;
+                        }
                         MarcarHabilidad(4, 0, 0);
                         break;
                     case 4:
-                        if (searcherList.Count > 0)
+                        foreach (Unit unit in manager.unitList)
                         {
-                            foreach (MinerSearcher unit in searcherList)
+                            if (unit != null)
                             {
-                                if (unit != null)
-                                {
-                                    if (unit.avaliable)
-                                    {
-                                        if (CheckVoid(unit.transform.position))
-                                        {
-                                            CastHability(hab4.habilityType, hab4.habilityEffects[0], hab4.habilityRange, hab4.habilityTargetType, hab4.habilityMovement);
-
-                                            Dash(this, new Vector3(unit.transform.position.x, unit.transform.position.y, transform.position.z));
-                                            impacto = true;
-                                        }
-                                    }
-                                }
-                            }
-                            if (impacto)
-                            {
-                                hab4Cd = hab4CdTotal;
-                                turnoRestante -= hab4Turn;
-                            }
-                            else
-                            {
-                                int x;
-                                int y;
-                                Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(), out x, out y);
-                                if (CheckVoid(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab4Range) && Pathfinding.Instance.GetNode(x, y).isWalkable)
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab4Area))
                                 {
                                     CastHability(hab4.habilityType, hab4.habilityEffects[0], hab4.habilityRange, hab4.habilityTargetType, hab4.habilityMovement);
-                                    Dash(this, UtilsClass.GetMouseWorldPosition());
 
-                                    hab4Cd = hab4CdTotal;
-                                    turnoRestante -= hab4Turn;
+                                    unit.RecibirDanoMagico(CalcularDanoMagico(hab4Dmg));
+                                    if (unit.prot > 0)
+                                    {
+                                        unit.AddProt(0);
+                                    }
+                                    if (unit.pot > 0)
+                                    {
+                                        unit.AddPot(0);
+                                    }
+                                    if (unit.escudo > 0)
+                                    {
+                                        unit.Escudo(0);
+                                    }
+                                    impacto = true;
                                 }
                             }
                         }
-                        else
-                        {
-                            int x;
-                            int y;
-                            Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(), out x, out y);
-                            if (CheckVoid(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab4Range) && Pathfinding.Instance.GetNode(x, y).isWalkable)
-                            {
-                                CastHability(hab4.habilityType, hab4.habilityEffects[0], hab4.habilityRange, hab4.habilityTargetType, hab4.habilityMovement);
-                                Dash(this, UtilsClass.GetMouseWorldPosition());
 
-                                hab4Cd = hab4CdTotal;
-                                turnoRestante -= hab4Turn;
-                            }
+                        if (impacto && !hab6UsingHab)
+                        {
+                            hab4Cd = hab4CdTotal;
+                            turnoRestante -= hab4Turn;
+                            hab6LastHability = 4;
+                        }
+                        else if (impacto)
+                        {
+                            hab6Cd = hab6CdTotal;
+                            turnoRestante -= hab6Turn;
+                            hab6UsingHab = false;
                         }
                         MarcarHabilidad(4, 0, 0);
-                        manager.diggeyeSearcherCasting = false;
                         break;
                     case 5:
                         foreach (Unit unit in manager.unitList)
                         {
                             if (unit != null)
                             {
-                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab2Range))
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab5Area))
                                 {
                                     CastHability(hab5.habilityType, hab5.habilityEffects[0], hab5.habilityRange, hab5.habilityTargetType, hab5.habilityMovement);
-                                    if (chosenHab1 == 7 || chosenHab2 == 7 || chosenHab3 == 7 || chosenHab4 == 7)
-                                    {
-                                        turnoRestante += hab7ExtraTurn;
-                                        CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab1.habilityMovement);
-                                    }
-                                    unit.RecibirDanoFisico(CalcularDanoFisico(hab5Dmg));
+
+                                    unit.RecibirDanoMagico(CalcularDanoMagico(hab5Dmg));
+                                    unit.AddProt(0);
+                                    unit.AddPot(0);
+                                    unit.Escudo(0);
                                     impacto = true;
-                                    DashBehindTarget(this, unit);
                                 }
                             }
                         }
-                        if (impacto)
+                        if (impacto && !hab6UsingHab)
                         {
                             hab5Cd = hab5CdTotal;
                             turnoRestante -= hab5Turn;
+                            hab6LastHability = 5;
+                        }
+                        else if (impacto)
+                        {
+                            hab6Cd = hab6CdTotal;
+                            turnoRestante -= hab6Turn;
+                            hab6UsingHab = false;
                         }
                         MarcarHabilidad(4, 0, 0);
                         break;
-                    case 6:
-                        if (!hab6Stage2)
+                    case 7:
+                        foreach (Unit unit in manager.unitList)
                         {
-                            foreach (Unit unit in manager.unitList)
+                            if (unit != null)
                             {
-                                if (unit != null)
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab7Range))
                                 {
-                                    if (unit.hSelected && CheckAll(unit, unit.transform.position, hab6Range))
-                                    {
-                                        CastHability(hab6.habilityType, hab6.habilityEffects[0], hab6.habilityRange, hab6.habilityTargetType, hab6.habilityMovement);
-                                        if (chosenHab1 == 7 || chosenHab2 == 7 || chosenHab3 == 7 || chosenHab4 == 7)
-                                        {
-                                            turnoRestante += hab7ExtraTurn;
-                                            CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab1.habilityMovement);
-                                        }
-                                        unit.RecibirDanoFisico(CalcularDanoFisico(hab6Dmg));
-                                        UpdateCell(true);
-                                        transform.position = unit.transform.position;
-                                        impacto = true;
-                                    }
-                                }
-                            }
-                            if (impacto)
-                            {
-                                hab6Stage2 = true;
-                                manager.enemigo = false;
-                            }
-                        }
-                        else
-                        {
-                            int x;
-                            int y;
-                            Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(), out x, out y);
-                            if (CheckWalls(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab6Range) && Pathfinding.Instance.GetNode(x, y).isWalkable)
-                            {
-                                Dash(this, UtilsClass.GetMouseWorldPosition());
+                                    CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab7.habilityMovement);
 
-                                hab6Cd = hab6CdTotal;
-                                turnoRestante -= hab6Turn;
-                                MarcarHabilidad(4, 0, 0);
-                                hab6Stage2 = false;
+                                    unit.AddProt(hab7Deb);
+                                }
+                                impacto = true;
                             }
                         }
+                        if (impacto && !hab6UsingHab)
+                        {
+                            hab7Cd = hab7CdTotal;
+                            turnoRestante -= hab7Turn;
+                            hab6LastHability = 7;
+                        }
+                        else if (impacto)
+                        {
+                            hab6Cd = hab6CdTotal;
+                            turnoRestante -= hab6Turn;
+                            hab6UsingHab = false;
+                        }
+                        MarcarHabilidad(4, 0, 0);
                         break;
                     case 8:
-                        if (CheckRange(UtilsClass.GetMouseWorldPosition(), hab8Range))
+                        foreach (Unit unit in manager.unitList)
                         {
+                            if (unit != null)
+                            {
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab7Range))
+                                {
+                                    CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab7.habilityMovement);
 
-                            hab8CurrentTrap.SetUp();
-                            hab8Cd = hab8Duration + hab8CdTotal;
-                            turnoRestante -= hab8Turn;
-                            MarcarHabilidad(4, 0, 0);
+                                    foreach (Unit unit2 in manager.unitList)
+                                    {
+                                        if (unit2.team == team && vinculo)
+                                        {
+                                            unit.RecibirDanoMagico(CalcularDanoMagico(hab8Dmg));
+                                            impacto = true;
+                                        }
+                                    }
+                                    if (!impacto)
+                                    {
+                                        unit.RecibirDanoMagico(CalcularDanoMagico(hab8Dmg * 2));
+                                    }
+                                    impacto = true;
+                                }
+                            }
                         }
-                        break;*/
+                        if (impacto && !hab6UsingHab)
+                        {
+                            hab8Cd = hab8CdTotal;
+                            turnoRestante -= hab8Turn;
+                            hab6LastHability = 8;
+                        }
+                        else if (impacto)
+                        {
+                            hab6Cd = hab6CdTotal;
+                            turnoRestante -= hab6Turn;
+                            hab6UsingHab = false;
+                        }
+                        MarcarHabilidad(4, 0, 0);
+                        break;
 
                 }
             }
@@ -291,114 +347,162 @@ public class Obe : Unit
         {
             if (!habilityCasted && (movementPoints >= 2 || slow >= 3 && movementPoints >= 1 || slow > 5) || habilityCasted)
             {
-                ShowHability(chosenHab1);
+                if (chosenHab1 == 6 && hab6Cd <= 0 && turnoRestante >= hab6Turn)
+                {
+                    ShowHability(hab6LastHability);
+                    hab6UsingHab = true;
+                }
+                else
+                {
+                    ShowHability(chosenHab1);
+                }
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && turno && !moving)
         {
             if (!habilityCasted && (movementPoints >= 2 || slow >= 3 && movementPoints >= 1 || slow > 5) || habilityCasted)
             {
-                ShowHability(chosenHab2);
+                if (chosenHab2 == 6 && hab6Cd <= 0 && turnoRestante >= hab6Turn)
+                {
+                    ShowHability(hab6LastHability);
+                    hab6UsingHab = true;
+                }
+                else
+                {
+                    ShowHability(chosenHab2);
+                }
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && turno && !moving)
         {
             if (!habilityCasted && (movementPoints >= 2 || slow >= 3 && movementPoints >= 1 || slow > 5) || habilityCasted)
             {
-                ShowHability(chosenHab3);
+                if (chosenHab3 == 6 && hab6Cd <= 0 && turnoRestante >= hab6Turn)
+                {
+                    ShowHability(hab6LastHability);
+                    hab6UsingHab = true;
+                }
+                else
+                {
+                    ShowHability(chosenHab3);
+                }
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha4) && turno && !moving)
         {
             if (!habilityCasted && (movementPoints >= 2 || slow >= 3 && movementPoints >= 1 || slow > 5) || habilityCasted)
             {
-                ShowHability(chosenHab4);
+                if (chosenHab4 == 6 && hab6Cd <= 0 && turnoRestante >= hab6Turn)
+                {
+                    ShowHability(hab6LastHability);
+                    hab6UsingHab = true;
+                }
+                else
+                {
+                    ShowHability(chosenHab4);
+                }
             }
         }
 
+        if (castingHability == 1 && manager.casteando == true && turno || castingHability == 6 && hab6LastHability == 1 && manager.casteando == true && turno)
+        {
+            ShowHability(1);
+        }
+        if (castingHability == 4 && manager.casteando == true && turno || castingHability == 6 && hab6LastHability == 4 && manager.casteando == true && turno)
+        {
+            ShowHability(4);
+        }
+        if (castingHability == 5 && manager.casteando == true && turno || castingHability==6 && hab6LastHability==5 && manager.casteando == true && turno)
+        {
+            ShowHability(5);
+        }
 
     }
 
     public override void ShowHability(int hability)
     {
-        /*switch (hability)
+        switch (hability)
         {
             case 1:
-                if (repetitions1 > 0 && turnoRestante >= hab1Turn)
+                if (hab1Cd <= 0 && turnoRestante >= hab1Turn || hab6UsingHab && hab6Cd <= 0 && turnoRestante >= hab6Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
                     manager.aliado = false;
                     manager.enemigo = true;
-                    MarcarHabilidad(0, hab1Range, 0);
+                    MarcarHabilidad(1, hab1Range, hab1Area);
                 }
                 break;
             case 2:
-                if (repetitions2 > 0 && turnoRestante >= hab2Turn)
+                if (hab2Cd <= 0 && turnoRestante >= hab2Turn || hab6UsingHab && hab6Cd <= 0 && turnoRestante >= hab6Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
-                    manager.aliado = false;
-                    manager.enemigo = true;
+                    manager.aliado = true;
+                    manager.enemigo = false;
                     MarcarHabilidad(0, hab2Range, 0);
                 }
                 break;
             case 3:
-                if (repetitions3 > 0 && turnoRestante >= hab3Turn)
+                if (hab3Cd <= 0 && turnoRestante >= hab3Turn || hab6UsingHab && hab6Cd <= 0 && turnoRestante >= hab6Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
-                    manager.aliado = false;
+                    manager.aliado = true;
                     manager.enemigo = false;
                     MarcarHabilidad(0, hab3Range, 0);
                 }
                 break;
             case 4:
-                if (hab4Cd <= 0 && turnoRestante >= hab4Turn)
+                if (hab4Cd <= 0 && turnoRestante >= hab4Turn || hab6UsingHab && hab6Cd <= 0 && turnoRestante >= hab6Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
                     manager.diggeyeSearcherCasting = true;
                     manager.aliado = false;
-                    manager.enemigo = false;
-                    MarcarHabilidad(0, hab4Range, 0);
+                    manager.enemigo = true;
+                    MarcarHabilidad(5, hab4Area, 0);
                 }
                 break;
             case 5:
-                if (hab5Cd <= 0 && turnoRestante >= hab5Turn)
+                if (hab5Cd <= 0 && turnoRestante >= hab5Turn || hab6UsingHab && hab6Cd <= 0 && turnoRestante >= hab6Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
                     manager.aliado = false;
                     manager.enemigo = true;
-                    MarcarHabilidad(0, hab5Range, 0);
+                    MarcarHabilidad(1, hab5Range, hab5Area);
                 }
                 break;
-            case 6:
-                if (hab6Cd <= 0 && turnoRestante >= hab6Turn)
+            case 7:
+                if (hab7Cd <= 0 && turnoRestante >= hab7Turn || hab6UsingHab && hab6Cd <= 0 && turnoRestante >= hab6Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
                     manager.aliado = false;
                     manager.enemigo = true;
-                    MarcarHabilidad(0, hab6Range, 0);
+                    MarcarHabilidad(0, hab7Range, 0);
                 }
                 break;
             case 8:
-                if (hab8Cd <= 0 && turnoRestante >= hab8Turn)
+                if (hab8Cd <= 0 && turnoRestante >= hab8Turn || hab6UsingHab && hab6Cd <= 0 && turnoRestante >= hab6Turn)
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
                     manager.aliado = false;
-                    manager.enemigo = false;
-                    MarcarHabilidad(6, hab8Range, 0);
+                    manager.enemigo = true;
+                    MarcarHabilidad(0, hab8Range, 0);
                 }
                 break;
-        }*/
+        }
     }
 
     public override void AcabarTurno()
     {
+        if (hab1Cd != 0)
+        {
+            hab1Cd--;
+        }
         if (hab2Cd != 0)
         {
             hab2Cd--;
@@ -418,6 +522,10 @@ public class Obe : Unit
         if (hab6Cd != 0)
         {
             hab6Cd--;
+        }
+        if (hab7Cd != 0)
+        {
+            hab7Cd--;
         }
         if (hab8Cd != 0)
         {
@@ -490,21 +598,21 @@ public class Obe : Unit
             case 0:
                 return " ";
             case 1:
-                return "Coloca un dron flotante en una zona que dura " + hab1Rnd + " rondas. Cuando un enemigo entra en su rango explota inflingiendo " + CalcularDanoMagico(hab1Dmg) + " (S) de daño al objetivo.";
+                return "Turno: "+ hab1Turn +"Recarga: "+ hab1Cd+"\nLanza una mina que explota inflingiendo " + CalcularDanoMagico(hab1Dmg) + " (S) de daño al objetivo.";
             case 2:
-                return "Protege a un aliado con una pantalla protectora que otorga " + CalcularControl(hab2Shld) + " (C) de escudo. El aliado vinculado obtiene un escudo adicional de " + CalcularControl(hab2Shld) * hab2ShldMod / 100 + "(C)";
+                return "Turno: " + hab2Turn + "Recarga: " + hab2Cd + "\nProtege a un aliado con una pantalla protectora que otorga " + CalcularControl(hab2Shld) + " (C) de escudo. El aliado vinculado obtiene un escudo adicional de " + CalcularControl(hab2Shld) * hab2ShldMod / 100 + "(C)";
             case 3:
-                return "Vincula a un aliado, alguans habilidades interactuan con este vinculo, además, otorga una bonificación de protecciones de  " + CalcularControl(hab3Prot) + " (C)";
+                return "Turno: " + hab3Turn + "Recarga: " + hab3Cd + "\nVincula a un aliado, alguans habilidades interactuan con este vinculo, además, otorga una bonificación de protecciones de  " + CalcularControl(hab3Prot) + " (C)";
             case 4:
-                return "Lanza un pulso energético su alrededor que inflige " + CalcularDanoMagico(hab4Dmg) + " (S) de daño. Desorienta " + hab4Desorientar + " al impactar";
+                return "Turno: " + hab4Turn + "Recarga: " + hab4Cd + "\nLanza un pulso energético su alrededor que inflige " + CalcularDanoMagico(hab4Dmg) + " (S) de daño. Elimina cualquier aumento de estadísticas y escudos";
             case 5:
-                return "LAnza un pulso energético a una zona que daña " + CalcularDanoMagico(hab5Dmg) + " (s) de daño y aturde";
+                return "Turno: " + hab5Turn + "Recarga: " + hab5Cd + "\nLanza un pulso energético a una zona que daña " + CalcularDanoMagico(hab5Dmg) + " (s) de daño y aturde";
             case 6:
-                return "Repite la anterior habilidad usada";
+                return "Turno: " + hab6Turn + "Recarga: " + hab6Cd + "\nRepite la anterior habilidad usada";
             case 7:
-                return "Marca a un enemigo que aplicando una debilitación de " + CalcularControl(hab7Deb) + " (C) durante " + hab7Rnd + " rondas";
+                return "Turno: " + hab7Turn + "Recarga: " + hab7Cd + "\nMarca a un enemigo que aplicando una debilitación de " + CalcularControl(hab7Deb) + " (C) durante " + hab7Rnd + " rondas";
             case 8:
-                return "Lanza un laser que inflije " + CalcularDanoMagico(hab8Dmg) + " (S) de daño si hay un aliado vinculado hace el doble de daño ";
+                return "Turno: " + hab8Turn + "Recarga: " + hab8Cd + "\nLanza un laser que inflije " + CalcularDanoMagico(hab8Dmg) + " (S) de daño si hay un aliado vinculado hace el doble de daño ";
             default:
                 return null;
         }
@@ -516,21 +624,21 @@ public class Obe : Unit
             case 0:
                 return " ";
             case 1:
-                return "Coloca un dron flotante en una zona que dura " + hab1Rnd + " rondas. Cuando un enemigo entra en su rango explota inflingiendo " + CalcularDanoMagico(hab1Dmg,sinergia) + " (S) de daño al objetivo.";
+                return "Turno: "+ hab1Turn +" Recarga: "+ hab1Cd+"\nLanza una mina que explota inflingiendo " + CalcularDanoMagico(hab1Dmg,sinergia) + " (S) de daño al objetivo.";
             case 2:
-                return "Protege a un aliado con una pantalla protectora que otorga " + CalcularControl(hab2Shld,control) + " (C) de escudo. El aliado vinculado obtiene un escudo adicional de " + CalcularControl(hab2Shld,control) * hab2ShldMod / 100 + "(C)";
+                return "Turno: " + hab2Turn + " Recarga: " + hab2Cd + "\nProtege a un aliado con una pantalla protectora que otorga " + CalcularControl(hab2Shld,control) + " (C) de escudo. El aliado vinculado obtiene un escudo adicional de " + CalcularControl(hab2Shld,control) * hab2ShldMod / 100 + "(C)";
             case 3:
-                return "Vincula a un aliado, alguans habilidades interactuan con este vinculo, además, otorga una bonificación de protecciones de  " + CalcularControl(hab3Prot,control) + " (C)";
+                return "Turno: " + hab3Turn + " Recarga: " + hab3Cd + "\nVincula a un aliado, alguans habilidades interactuan con este vinculo, además, otorga una bonificación de protecciones de  " + CalcularControl(hab3Prot,control) + " (C)";
             case 4:
-                return "Lanza un pulso energético su alrededor que inflige " + CalcularDanoMagico(hab4Dmg, sinergia) + " (S) de daño. Desorienta " + hab4Desorientar + " al impactar";
+                return "Turno: " + hab4Turn + " Recarga: " + hab4Cd + "\nLanza un pulso energético su alrededor que inflige " + CalcularDanoMagico(hab4Dmg,sinergia) + " (S) de daño. Elimina cualquier aumento de estadísticas y escudos";
             case 5:
-                return "LAnza un pulso energético a una zona que daña " + CalcularDanoMagico(hab5Dmg, sinergia) + " (s) de daño y aturde";
+                return "Turno: " + hab5Turn + " Recarga: " + hab5Cd + "\nLanza un pulso energético a una zona que daña " + CalcularDanoMagico(hab5Dmg, sinergia) + " (s) de daño y aturde";
             case 6:
-                return "Repite la anterior habilidad usada";
+                return "Turno: " + hab6Turn + " Recarga: " + hab6Cd + "\nRepite la anterior habilidad usada";
             case 7:
-                return "Marca a un enemigo que aplicando una debilitación de " + CalcularControl(hab7Deb,control) + " (C) durante " + hab7Rnd + " rondas";
+                return "Turno: " + hab7Turn + " Recarga: " + hab7Cd + "\nMarca a un enemigo que aplicando una debilitación de " + CalcularControl(hab7Deb,control) + " (C) durante " + hab7Rnd + " rondas";
             case 8:
-                return "Lanza un laser que inflije " + CalcularDanoMagico(hab8Dmg, sinergia) + " (S) de daño si hay un aliado vinculado hace el doble de daño ";
+                return "Turno: " + hab8Turn + " Recarga: " + hab8Cd + "\nLanza un laser que inflije " + CalcularDanoMagico(hab8Dmg, sinergia) + " (S) de daño si no hay un aliado vinculado hace el doble de daño ";
             default:
                 return null;
         }

@@ -119,7 +119,7 @@ public class Marasect : Unit
                         {
                             if (unit != null)
                             {
-                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab1Range))
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab3Range))
                                 {
                                     CastHability(hab3.habilityType, hab3.habilityEffects[0], hab3.habilityRange, hab3.habilityTargetType, hab3.habilityMovement);
                                     if (chosenHab1 == 2 || chosenHab2 == 2 || chosenHab3 == 2 || chosenHab4 == 2)
@@ -127,8 +127,8 @@ public class Marasect : Unit
                                         movementPoints += 2;
                                     }
                                     unit.RecibirDanoFisico(CalcularDanoFisico(hab3Dmg));
-                                    unit.pot = 0;
-                                    unit.pot = CalcularDanoMagico(hab3Pot);
+                                    unit.AddPot( CalcularDanoMagico(hab3Pot));
+                                    impacto = true;
                                 }
                             }
                         }
@@ -144,7 +144,7 @@ public class Marasect : Unit
                         {
                             if (unit != null)
                             {
-                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab1Range))
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab4Range))
                                 {
                                     CastHability(hab3.habilityType, hab3.habilityEffects[0], hab3.habilityRange, hab3.habilityTargetType, hab3.habilityMovement);
                                     if (chosenHab1 == 2 || chosenHab2 == 2 || chosenHab3 == 2 || chosenHab4 == 2)
@@ -153,6 +153,7 @@ public class Marasect : Unit
                                     }
                                     unit.RecibirDanoFisico(CalcularDanoFisico(hab4Dmg));
                                     unit.Heal(CalcularDanoMagico(hab4Regen));
+                                    impacto = true;
                                 }
                             }
                         }
@@ -168,7 +169,7 @@ public class Marasect : Unit
                         {
                             if (unit != null)
                             {
-                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab2Range))
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab5Range))
                                 {
                                     CastHability(hab1.habilityType, hab1.habilityEffects[0], hab1.habilityRange, hab1.habilityTargetType, hab1.habilityMovement);
                                     if (chosenHab1 == 8 || chosenHab2 == 8 || chosenHab3 == 8 || chosenHab4 == 8)
@@ -238,14 +239,15 @@ public class Marasect : Unit
                             hab6Cd = hab6CdTotal;
                             turnoRestante -= hab6Turn;
                         }
-                       
+                        MarcarHabilidad(4, 0, 0);
+
                         break;
                     case 7:
                         foreach (Unit unit in manager.unitList)
                         {
                             if (unit != null)
                             {
-                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab1Range))
+                                if (unit.hSelected && CheckAll(unit, unit.transform.position, hab7Range))
                                 {
                                     CastHability(hab7.habilityType, hab7.habilityEffects[0], hab7.habilityRange, hab7.habilityTargetType, hab7.habilityMovement);
                                     if (chosenHab1 == 8 || chosenHab2 == 8 || chosenHab3 == 8 || chosenHab4 == 8)
@@ -326,8 +328,8 @@ public class Marasect : Unit
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
-                    manager.aliado = false;
-                    manager.enemigo = true;
+                    manager.aliado = true;
+                    manager.enemigo = false;
                     MarcarHabilidad(0, hab3Range, 0);
                 }
                 break;
@@ -336,8 +338,8 @@ public class Marasect : Unit
                 {
                     manager.DestroyShowNodes();
                     castingHability = hability;
-                    manager.aliado = false;
-                    manager.enemigo = true;
+                    manager.aliado = true;
+                    manager.enemigo = false;
                     MarcarHabilidad(0, hab4Range, 0);
                 }
                 break;
@@ -462,19 +464,19 @@ public class Marasect : Unit
             case 0:
                 return " ";
             case 1:
-                return "Dispara un aguijón puntiagudo que inflige " + CalcularDanoFisico(hab1Dmg) + " (F) de daño al objetivo.";
+                return "Turno: " + hab1Turn + "Repeticiones: " + hab1Rmax + "\nDispara un aguijón puntiagudo que inflige " + CalcularDanoFisico(hab1Dmg) + " (F) de daño al objetivo.";
             case 2:
                 return "Cada vez que Marasect usa una habilidad se puede mover " + hab2Range + " casillas";
             case 3:
-                return "Dispara un dardo estimulante que otorga un potenciador de " + CalcularDanoMagico(hab3Pot) + " (S) al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab3Dmg) + " (F) de daño";
+                return "Turno: " + hab3Turn + "Recarga: " + hab3Cd + "\nDispara un dardo estimulante que otorga un potenciador de " + CalcularDanoMagico(hab3Pot) + " (S) al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab3Dmg) + " (F) de daño";
             case 4:
-                return "Dispara un dardo estimulante que otorga " + CalcularDanoMagico(hab4Regen) + " (S) de curación al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab4Dmg) + "(F) de daño";
+                return "Turno: " + hab4Turn + "Recarga: " + hab4Cd + "\nDispara un dardo estimulante que otorga " + CalcularDanoMagico(hab4Regen) + " (S) de curación al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab4Dmg) + "(F) de daño";
             case 5:
-                return "Lanza un aguijón con fueraz que penetra la armaduara haciendo " + CalcularDanoFisico(hab5Dmg) + " (F) de daño. Si el objetivo tiene un escudo o un aumento en sus resistencias hace el doble de daño";
+                return "Turno: " + hab5Turn + "Recarga: " + hab5Cd + "\nLanza un aguijón con fueraz que penetra la armaduara haciendo " + CalcularDanoFisico(hab5Dmg) + " (F) de daño. Si el objetivo tiene un escudo o un aumento en sus resistencias hace el doble de daño";
             case 6:
-                return "Lanza dos aguijones consecuentes que hacen " + CalcularDanoFisico(hab6Dmg) + " (F) de daño cada uno.  El primero duplica el daño si el rival supera la media vida máxima, el segundo si no la supera";
+                return "Turno: " + hab6Turn + "Recarga: " + hab6Cd + "\nLanza dos aguijones consecuentes que hacen " + CalcularDanoFisico(hab6Dmg) + " (F) de daño cada uno.  El primero duplica el daño si el rival supera la media vida máxima, el segundo si no la supera";
             case 7:
-                return "Lanza rápidamente un aguijón pequeño que hace " + CalcularDanoFisico(hab7Dmg) + " (F) y llega más lejos que el resto de sus aguijones.";
+                return "Turno: " + hab7Turn + "Repeticiones: " + hab7Rmax + "\nLanza rápidamente un aguijón pequeño que hace " + CalcularDanoFisico(hab7Dmg) + " (F) y llega más lejos que el resto de sus aguijones.";
             case 8:
                 return "Los ataques envenenan al objetivo por " + CalcularDanoMagico(hab8Dmg) + " (S) de daño extra por imacto";
             default:
@@ -488,19 +490,19 @@ public class Marasect : Unit
             case 0:
                 return " ";
             case 1:
-                return "Dispara un aguijón puntiagudo que inflige " + CalcularDanoFisico(hab1Dmg, fuerza) + " (F) de daño al objetivo.";
+                return "Turno: " + hab1Turn + " Repeticiones: " + hab1Rmax + "\nDispara un aguijón puntiagudo que inflige " + CalcularDanoFisico(hab1Dmg, fuerza) + " (F) de daño al objetivo.";
             case 2:
                 return "Cada vez que Marasect usa una habilidad se puede mover " + hab2Range + " casillas";
             case 3:
-                return "Dispara un dardo estimulante que otorga un potenciador de " + CalcularDanoMagico(hab3Pot,sinergia) + " (S) al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab3Dmg,fuerza) + " (F) de daño";
+                return "Turno: " + hab3Turn + " Recarga: " + hab3Cd + "\nDispara un dardo estimulante que otorga un potenciador de " + CalcularDanoMagico(hab3Pot,sinergia) + " (S) al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab3Dmg,fuerza) + " (F) de daño";
             case 4:
-                return "Dispara un dardo estimulante que otorga " + CalcularDanoMagico(hab4Regen,sinergia) + " (S) de curación al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab4Dmg,fuerza) + "(F) de daño";
+                return "Turno: " + hab4Turn + " Recarga: " + hab4Cd + "\nDispara un dardo estimulante que otorga " + CalcularDanoMagico(hab4Regen,sinergia) + " (S) de curación al aliado objetivo, sin embargo le causa " + CalcularDanoFisico(hab4Dmg,fuerza) + "(F) de daño";
             case 5:
-                return "Lanza un aguijón con fueraz que penetra la armaduara haciendo " + CalcularDanoFisico(hab5Dmg,fuerza) + " (F) de daño. Si el objetivo tiene un escudo o un aumento en sus resistencias hace el doble de daño";
+                return "Turno: " + hab5Turn + " Recarga: " + hab5Cd + "\nLanza un aguijón con fueraz que penetra la armaduara haciendo " + CalcularDanoFisico(hab5Dmg,fuerza) + " (F) de daño. Si el objetivo tiene un escudo o un aumento en sus resistencias hace el doble de daño";
             case 6:
-                return "Lanza dos aguijones consecuentes que hacen " + CalcularDanoFisico(hab6Dmg,fuerza) + " (F) de daño cada uno.  El primero duplica el daño si el rival supera la media vida máxima, el segundo si no la supera";
+                return "Turno: " + hab6Turn + " Recarga: " + hab6Cd + "\nLanza dos aguijones consecuentes que hacen " + CalcularDanoFisico(hab6Dmg,fuerza) + " (F) de daño cada uno.  El primero duplica el daño si el rival supera la media vida máxima, el segundo si no la supera";
             case 7:
-                return "Lanza rápidamente un aguijón pequeño que hace " + CalcularDanoFisico(hab7Dmg,fuerza) + " (F) y llega más lejos que el resto de sus aguijones.";
+                return "Turno: " + hab7Turn + " Repeticiones: " + hab7Rmax + "\nLanza rápidamente un aguijón pequeño que hace " + CalcularDanoFisico(hab7Dmg,fuerza) + " (F) y llega más lejos que el resto de sus aguijones.";
             case 8:
                 return "Los ataques envenenan al objetivo por " + CalcularDanoMagico(hab8Dmg,sinergia) + " (S) de daño extra por imacto";
             default:

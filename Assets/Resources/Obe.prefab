@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 379973886105615119, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 845320581428892888, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 6260842735595474086}
+    - target: {fileID: 2073345715185102458, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 6260842735595474086}
     - target: {fileID: 2096748162242083946, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -127,6 +139,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 5955c57073d20a040bd771b564872ee5, type: 3}
+    - target: {fileID: 7530654314394839104, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 6260842735595474086}
+    - target: {fileID: 7587726589868979333, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e673d300d3a8c694db310eee4ad2cdbf, type: 3}
 --- !u!1 &1123245196106202831 stripped
@@ -223,9 +243,9 @@ MonoBehaviour:
   stun: 0
   justStun: 0
   root: 0
+  vinculo: 0
   prot: 0
   pot: 0
-  contadorEsc: []
   owner: {fileID: 0}
   teamColor: {fileID: 0}
   sheet: {fileID: 0}
@@ -241,9 +261,11 @@ MonoBehaviour:
     habilityTargetType: 1
     habilityMovement: 0
   hab1Turn: 2
-  hab1Range: 4
-  hab1Dmg: 20
-  hab1Rnd: 3
+  hab1CdTotal: 1
+  hab1Cd: 0
+  hab1Range: 3
+  hab1Area: 1
+  hab1Dmg: 35
   hab2:
     icon: {fileID: 21300000, guid: c9707a4d6be870e489d4b1a3cbc285b9, type: 3}
     name: Pantalla de seguridad
@@ -252,6 +274,7 @@ MonoBehaviour:
     habilityRange: 2
     habilityTargetType: 1
     habilityMovement: 0
+  hab2Turn: 2
   hab2Range: 4
   hab2CdTotal: 2
   hab2Cd: 0
@@ -265,7 +288,7 @@ MonoBehaviour:
     habilityRange: 2
     habilityTargetType: 1
     habilityMovement: 0
-  hab3Turn: 3
+  hab3Turn: 2
   hab3CdTotal: 1
   hab3Cd: 0
   hab3Range: 4
@@ -283,7 +306,6 @@ MonoBehaviour:
   hab4Cd: 0
   hab4Area: 5
   hab4Dmg: 20
-  hab4Desorientar: 2
   hab5:
     icon: {fileID: 21300000, guid: 467b29fe969ea3f4ebdff69313e0207b, type: 3}
     name: Protocolo antidisturbios
@@ -295,7 +317,9 @@ MonoBehaviour:
   hab5Turn: 2
   hab5CdTotal: 2
   hab5Cd: 0
-  hab5Dmg: 25
+  hab5Range: 3
+  hab5Area: 1
+  hab5Dmg: 15
   hab6:
     icon: {fileID: 21300000, guid: 19510a70a7395984d819339131d39c43, type: 3}
     name: Replica
@@ -307,7 +331,8 @@ MonoBehaviour:
   hab6Turn: 1
   hab6CdTotal: 2
   hab6Cd: 0
-  hab6hability: 0
+  hab6LastHability: 0
+  hab6UsingHab: 0
   hab7:
     icon: {fileID: 21300000, guid: a564c33ddf8191b4b8272b8cf55d0ba8, type: 3}
     name: Seguimiento
@@ -317,6 +342,8 @@ MonoBehaviour:
     habilityTargetType: 1
     habilityMovement: 0
   hab7Turn: 2
+  hab7CdTotal: 1
+  hab7Cd: 0
   hab7Range: 5
   hab7Rnd: 2
   hab7Deb: 20
@@ -329,7 +356,7 @@ MonoBehaviour:
     habilityTargetType: 1
     habilityMovement: 0
   hab8Turn: 3
-  hab8CdTotal: 2
+  hab8CdTotal: 1
   hab8Cd: 0
   hab8Range: 4
   hab8Dmg: 25

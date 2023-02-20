@@ -110,6 +110,22 @@ public class TeamEditorManager : MonoBehaviourPunCallbacks
             int hab2 = beastSelectorPlayer.team[index].hab2Selected;
             int hab3 = beastSelectorPlayer.team[index].hab3Selected;
             int hab4 = beastSelectorPlayer.team[index].hab4Selected;
+        while(hab1 == 0 || hab1==hab2 || hab1 == hab3 || hab1 == hab4 || hab1 > 8)
+        {
+            hab1 = Random.Range(1, 9);
+        }
+        while(hab2 == 0 || hab2 == hab1 || hab2 == hab3 || hab2 == hab4 || hab2 > 8)
+        {
+            hab2 = Random.Range(1, 9);
+        }
+        while(hab3 == 0 || hab3 == hab2 || hab3 == hab1 || hab3 == hab4 || hab3 > 8)
+        {
+            hab3 = Random.Range(1, 9);
+        }
+        while(hab4 == 0 || hab4 == hab2 || hab4 == hab3 || hab4 == hab1 || hab4 > 8)
+        {
+            hab4 = Random.Range(1, 9);
+        }
             int team;
             if (PhotonNetwork.IsMasterClient)
             {

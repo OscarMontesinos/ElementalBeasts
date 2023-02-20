@@ -183,4 +183,16 @@ public class Pathfinding
     {
         return grid.GetGridObject(x, y);
     }
+    public void SetAllWalkableTrue()
+    {
+        int x = 0;
+        int y = 0;
+        while (x < grid.GetWidth())
+        {
+            while (y < grid.GetHeight())
+            {
+                grid.GetGridObject(x, y).SetIsWalkable(true);
+            }
+        }
+    }
 }

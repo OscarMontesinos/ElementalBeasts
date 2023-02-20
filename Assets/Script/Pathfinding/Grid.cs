@@ -90,4 +90,6 @@ public class Grid<TGridObject>
             x = Mathf.FloorToInt(worldposition.x / cellsize);
             y = Mathf.FloorToInt(worldposition.y / cellsize);
     }
+
+    
 }
