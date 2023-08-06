@@ -27,6 +27,9 @@ public class BeastSelectorManager : MonoBehaviour
     public Sprite defaultIcon;
     public string defaultBeastName = "Diggeye";
 
+
+    public GameObject teamBuilder;
+
     private void Awake()
     {
         actualTime = maxTime;
@@ -102,12 +105,27 @@ public class BeastSelectorManager : MonoBehaviour
             selectionTurn++;
             if (selectionTurn>beastImages.Count-1)
             {
-                Destroy(player2.gameObject);
-                SceneManager.LoadScene("TeamBuilder");
+                actualTime = 1000;
+                StartCoroutine(LoadTeamEditor());
             }
         }
     }
-    
+    IEnumerator LoadTeamEditor()
+    {
+        DontDestroyOnLoad(gameObject);
+        SceneManager.LoadScene("TeamBuilder");
+        yield return new WaitForSeconds(0.5f);
+        GameObject builder1 = Instantiate(teamBuilder);
+        builder1.GetComponent<TeamEditorPlayerManager>().beastSelectorPlayer = player1;
+        DontDestroyOnLoad(builder1);
+        GameObject builder2 = Instantiate(teamBuilder);
+        builder2.GetComponent<TeamEditorPlayerManager>().beastSelectorPlayer = player2;
+        TeamEditorManager manager = FindObjectOfType<TeamEditorManager>();
+        manager.player1 = builder1.GetComponent<TeamEditorPlayerManager>();
+        manager.player2 = builder2.GetComponent<TeamEditorPlayerManager>();
+        DontDestroyOnLoad(builder2);
+        Destroy(gameObject);
+    }
     public void TimeUp()
     {
         if (beastImages[selectionTurn].beastSelected)

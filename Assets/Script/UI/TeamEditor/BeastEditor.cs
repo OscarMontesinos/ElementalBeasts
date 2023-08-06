@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class BeastEditor : MonoBehaviour
 {
-    BeastSelectorPlayer player;
+    public BeastSelectorPlayer player;
     public BeastSheet sheet;
     public int beastSlot;
     public GameObject itemSelector;
@@ -47,7 +47,6 @@ public class BeastEditor : MonoBehaviour
 
     private void Awake()
     {
-        player = FindObjectOfType<BeastSelectorPlayer>();
         itemList = FindObjectOfType<Items>();
     }
     // Start is called before the first frame update

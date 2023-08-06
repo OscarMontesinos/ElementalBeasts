@@ -5,77 +5,62 @@ using UnityEngine.SceneManagement;
 
 public class TeamEditorManager : MonoBehaviour
 {
-    public GameObject placeToSpawn;
+    static public TeamEditorManager Instance;
 
-    public GameObject beastSheet;
+    public TeamEditorPlayerManager player1;
+    public TeamEditorPlayerManager player2;
 
-    public GameObject playerPrefab;
-    public BeastSelectorPlayer beastSelectorPlayer;
+    int playersReady;
 
-    public List<GameObject> beastsList;
-
-    public int maxBeasts;
     private void Awake()
     {
-        maxBeasts = FormatManager.Instance.maxBeasts;
-        beastSelectorPlayer = FindObjectOfType<BeastSelectorPlayer>();
-    }
-
-    private void Start()
-    {
-        int beast = 0;
-        while (beast < maxBeasts)
+        if (Instance == null)
         {
-            GameObject sheet = Instantiate(beastSheet, placeToSpawn.transform);
-            sheet.GetComponent<BeastSheet>().beastSlot = beast;
-            beast++;
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    public void StartCombat()
+    void Start()
     {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void PlayerReady()
+    {
+        playersReady++;
+        if (playersReady == 2)
+        {
+            playersReady = 0;
+            player1.StartCombat();
+            player2.StartCombat();
+        }
+    }
+    public void PlayerReadyForCombat()
+    {
+        playersReady++;
+        if (playersReady == 2)
+        {
+            LoadCombat();
+        }
+    }
+    void LoadCombat()
+    {
+
         DontDestroyOnLoad(gameObject);
         SceneManager.LoadScene("SampleScene");
-        GameObject playerGO = Instantiate(playerPrefab);
-        DontDestroyOnLoad(playerGO);
-        Player player = playerGO.GetComponent<Player>();
-        int index = 0;
-        while (index < FormatManager.Instance.maxBeasts)
-        {
-            CreateBeast(index,player);
-            index++;
-        }
 
-        GameObject playerGO2 = Instantiate(playerGO);
-        DontDestroyOnLoad(playerGO2);
-        Player player2 = playerGO2.GetComponent<Player>();
-        player2.team = 1;
-
-        Destroy(beastSelectorPlayer.gameObject);
+        Destroy(player1.gameObject);
+        Destroy(player2.gameObject);
         Destroy(gameObject);
-    }
-
-    void CreateBeast(int index, Player player)
-    {
-        GameObject beast = Instantiate(beastSelectorPlayer.team[index].unitGO, player.transform, false);
-        Items items = beast.GetComponent<Items>();
-        Unit unit = beast.GetComponent<Unit>();
-        if (beastSelectorPlayer.team[index].item1Selected != items.items.Count - 1)
-        {
-            items.items[beastSelectorPlayer.team[index].item1Selected].equipado = true;
-            items.items[beastSelectorPlayer.team[index].item1Selected].cantidad++;
-        }
-        if (beastSelectorPlayer.team[index].item2Selected != items.items.Count - 1)
-        {
-            items.items[beastSelectorPlayer.team[index].item2Selected].equipado = true;
-            items.items[beastSelectorPlayer.team[index].item2Selected].cantidad++;
-        }
-
-        unit.chosenHab1 = beastSelectorPlayer.team[index].hab1Selected;
-        unit.chosenHab2 = beastSelectorPlayer.team[index].hab2Selected;
-        unit.chosenHab3 = beastSelectorPlayer.team[index].hab3Selected;
-        unit.chosenHab4 = beastSelectorPlayer.team[index].hab4Selected;
-
-        player.beastsToPlace.Add(beast);
     }
 }

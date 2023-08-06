@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class BeastSheet : MonoBehaviour
 {
-    BeastSelectorPlayer player;
+    public BeastSelectorPlayer player;
     public int beastSlot;
     Items itemList;
     public BeastEditor editor;
@@ -41,12 +41,10 @@ public class BeastSheet : MonoBehaviour
     {
         player = FindObjectOfType<BeastSelectorPlayer>();
         itemList = FindObjectOfType<Items>();
-        editor = FindObjectOfType<BeastEditor>();
     }
 
     private void Start()
     {
-        editor.gameObject.SetActive(false);
         UpdateSheet();
     }
     public void UpdateSheet()
