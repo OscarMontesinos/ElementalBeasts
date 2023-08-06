@@ -15,6 +15,6 @@ public class UnitData
     public int hab2Selected;
     public int hab3Selected;
     public int hab4Selected;
-    public int item1Selected=7;
-    public int item2Selected=7;
+    public int item1Selected;
+    public int item2Selected;
 }

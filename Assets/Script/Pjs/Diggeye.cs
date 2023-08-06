@@ -273,7 +273,6 @@ public class Diggeye : Unit
                 case 8:
                     if(CheckRange(UtilsClass.GetMouseWorldPosition(), hab8Range))
                     {
-                        
                         hab8CurrentTrap.SetUp();
                         hab8Cd = hab8Duration + hab8CdTotal;
                         turnoRestante -= hab8Turn;

@@ -392,7 +392,6 @@ public class Unit : MonoBehaviour
 
     public void StopMoving()
     {
-
         moving = false;
         UpdateCell(false);
         manager.ShowNodesInRange();

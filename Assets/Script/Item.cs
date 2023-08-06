@@ -6,7 +6,6 @@ public class Item
     public Sprite icon;
     public string nombre;
     public bool equipado;
-    public int cantidad = 1;
     public float sinergia;
     public float fuerza;
     public float control;

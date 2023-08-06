@@ -19,13 +19,13 @@ public class Items : MonoBehaviour
             {
                 if (item.equipado)
                 {
-                    unidad.sinergiaElemental += item.sinergia * item.cantidad;
-                    unidad.fuerza += item.fuerza * item.cantidad; ;
-                    unidad.control += item.control * item.cantidad; ;
-                    unidad.mHp += item.hp * item.cantidad;
-                    unidad.resistenciaFisica += item.rFisica * item.cantidad; ;
-                    unidad.resistenciaMagica += item.rMagica * item.cantidad; ;
-                    unidad.maxMovementPoints += item.movimiento * item.cantidad; ;
+                    unidad.sinergiaElemental += item.sinergia;
+                    unidad.fuerza += item.fuerza;
+                    unidad.control += item.control;
+                    unidad.mHp += item.hp;
+                    unidad.resistenciaFisica += item.rFisica;
+                    unidad.resistenciaMagica += item.rMagica;
+                    unidad.maxMovementPoints += item.movimiento;
                 }
             }
         }

@@ -71,12 +71,10 @@ public class TeamEditorPlayerManager : MonoBehaviour
         if (beastSelectorPlayer.team[index].item1Selected != items.items.Count - 1)
         {
             items.items[beastSelectorPlayer.team[index].item1Selected].equipado = true;
-            items.items[beastSelectorPlayer.team[index].item1Selected].cantidad++;
         }
         if (beastSelectorPlayer.team[index].item2Selected != items.items.Count - 1)
         {
             items.items[beastSelectorPlayer.team[index].item2Selected].equipado = true;
-            items.items[beastSelectorPlayer.team[index].item2Selected].cantidad++;
         }
 
 

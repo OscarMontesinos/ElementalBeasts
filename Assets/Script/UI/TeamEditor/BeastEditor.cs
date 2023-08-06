@@ -320,15 +320,20 @@ public class BeastEditor : MonoBehaviour
 
         if (itemSlot == 1)
         {
-            player.team[beastSlot].item1Selected = itemToChange;
+            if (itemToChange != player.team[beastSlot].item2Selected || itemToChange == 0)
+            {
+                player.team[beastSlot].item1Selected = itemToChange;
+            }
         }
         else
         {
-            player.team[beastSlot].item2Selected = itemToChange;
+            if (itemToChange != player.team[beastSlot].item1Selected || itemToChange == 0)
+            {
+                player.team[beastSlot].item2Selected = itemToChange;
+            }
         }
 
         itemList.items[itemToChange].equipado = true;
-        itemList.items[itemToChange].cantidad++;
 
         itemSelector.SetActive(false);
         UpdateEditor();
