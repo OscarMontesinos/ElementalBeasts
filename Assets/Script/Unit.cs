@@ -163,6 +163,8 @@ public class Unit : MonoBehaviour
         hpBar.maxValue = mHp;
         hpBar.value = hpBar.maxValue;
         hpText.text = hp.ToString("F0");
+
+
         //iniText.text = iniciativa.ToString("F0"); 
     }
     public virtual void Update()
@@ -420,7 +422,6 @@ public class Unit : MonoBehaviour
     }
     public virtual void PrepararTurno()
     {
-        sheet.UpdateSheet();
         owner.TurnGived(this);
         if (manager.centrarCamara)
         {
@@ -453,6 +454,8 @@ public class Unit : MonoBehaviour
 
         manager.ShowNodesInRange();
         turno = true;
+
+        sheet.UpdateSheet();
     }
     public virtual void AcabarTurno()
     {
@@ -468,10 +471,10 @@ public class Unit : MonoBehaviour
     }
     public void NuevaRonda()
     {
-        sheet.UpdateSheet();
         turnoRestante = 5;
         pasar = false;
-        
+        sheet.UpdateSheet();
+
     }
     public virtual void Desorientar(int value)
     {
@@ -621,6 +624,7 @@ public class Unit : MonoBehaviour
                 contadorEsc[buscador] = 0;
                 buscador += 1;
             }
+            hp -= value;
         }
         else
         {
@@ -653,6 +657,7 @@ public class Unit : MonoBehaviour
             }
             escudoText.text = "(" + escudo.ToString("F0") + ")";
         }
+        StartCoroutine(SetHpBar());
 
     }
 

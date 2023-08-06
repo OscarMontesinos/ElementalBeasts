@@ -1432,8 +1432,8 @@ MonoBehaviour:
   baseBeastImageMirror: {fileID: 4281430683417908031, guid: f85b130a0f4c02f48bd3a4573e893032, type: 3}
   beastImages: []
   defaultUnit: {fileID: 3164781253018283080, guid: 6b709b475553293439d7884231be27cb, type: 3}
-  defaultBeast: {fileID: 21300000, guid: ec7bca7112818444f838d47d4395901e, type: 3}
-  defaultIcon: {fileID: 21300000, guid: 0b5a18267d60a6248b3ed82050cfb62b, type: 3}
+  defaultBeast: {fileID: 21300000, guid: a32cf3f8185003c41bf64c3ff4c1ba1a, type: 3}
+  defaultIcon: {fileID: 21300000, guid: c264c92ce2901f241a8caec6092518a1, type: 3}
   defaultBeastName: Diggeye
   teamBuilder: {fileID: 8571754499425089975, guid: ac17eb1e6b9aab24f9926370f8b18d9f, type: 3}
 --- !u!4 &530461617
@@ -3226,7 +3226,7 @@ PrefabInstance:
     - target: {fileID: 4897034808382056868, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
       propertyPath: beastIcon
       value: 
-      objectReference: {fileID: 21300000, guid: 0b5a18267d60a6248b3ed82050cfb62b, type: 3}
+      objectReference: {fileID: 21300000, guid: c264c92ce2901f241a8caec6092518a1, type: 3}
     - target: {fileID: 4897034808382056868, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
       propertyPath: beastName
       value: Diggeye
@@ -3234,7 +3234,7 @@ PrefabInstance:
     - target: {fileID: 4897034808382056868, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
       propertyPath: beastImage
       value: 
-      objectReference: {fileID: 21300000, guid: ec7bca7112818444f838d47d4395901e, type: 3}
+      objectReference: {fileID: 21300000, guid: a32cf3f8185003c41bf64c3ff4c1ba1a, type: 3}
     - target: {fileID: 8994433720623655160, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3323,6 +3323,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button
       objectReference: {fileID: 0}
+    - target: {fileID: 8994433720623655162, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c264c92ce2901f241a8caec6092518a1, type: 3}
     - target: {fileID: 8994433720623655163, guid: 50dd84c600c55094dbf7acdfaa60ed90, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1

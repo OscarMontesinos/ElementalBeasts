@@ -33,9 +33,14 @@ public class CombatBeastSheet : MonoBehaviour
     public Color32 turnUpColor;
     public Color32 turnDownColor;
 
+    private void Awake()
+    {
+
+    }
     private void Start()
     {
         hpBar.maxValue = unit.mHp;
+        UpdateSheet();
     }
     private void Update()
     {

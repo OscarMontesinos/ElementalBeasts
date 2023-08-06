@@ -80,7 +80,7 @@ public class Diggeye : Unit
     {
         base.Update();
         // ActualizarCDUI(repetitions1, repetitions2, hab3Cd, hab4Cd);
-        if (Input.GetMouseButtonDown(0) && manager.casteando && turno)
+        if (Input.GetMouseButtonDown(0) && manager.casteando && turno && !CombatManager.Instance.settingUp)
         {
             bool impacto = false;
             switch (castingHability)

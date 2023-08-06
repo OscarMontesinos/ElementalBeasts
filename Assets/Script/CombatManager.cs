@@ -5,6 +5,7 @@ using TMPro;
 
 public class CombatManager : MonoBehaviour
 {
+    public static CombatManager Instance;
     public CombatUIManager uiManager;
     public bool settingUp;
     public List<Color32> teamColorList;
@@ -32,6 +33,14 @@ public class CombatManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         spawnCells = FindObjectOfType<SpawnCells>().gameObject;
     }
     // Start is called before the first frame update

@@ -52,6 +52,7 @@ public class TeamEditorPlayerManager : MonoBehaviour
         GameObject playerGO = Instantiate(playerPrefab);
         DontDestroyOnLoad(playerGO);
         Player player = playerGO.GetComponent<Player>();
+        player.team = team;
         int index = 0;
         while (index < FormatManager.Instance.maxBeasts)
         {
@@ -79,9 +80,13 @@ public class TeamEditorPlayerManager : MonoBehaviour
         }
 
         unit.chosenHab1 = beastSelectorPlayer.team[index].hab1Selected;
-        unit.chosenHab2 = beastSelectorPlayer.team[index].hab2Selected; 
+
+        unit.chosenHab2 = beastSelectorPlayer.team[index].hab2Selected;
+
         unit.chosenHab3 = beastSelectorPlayer.team[index].hab3Selected;
+
         unit.chosenHab4 = beastSelectorPlayer.team[index].hab4Selected;
+
 
         player.beastsToPlace.Add(beast);
     }

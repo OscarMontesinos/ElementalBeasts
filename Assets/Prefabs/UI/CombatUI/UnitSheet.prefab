@@ -1283,6 +1283,7 @@ MonoBehaviour:
   hab3Name: 
   hab4Image: {fileID: 4489157297115263782}
   hab4Name: 
+  debuffsIndicators: []
   turnImage: {fileID: 4691996336510453352, guid: eff823f4aa1496c45b6ce8c230192a9f, type: 3}
   turnUpColor:
     serializedVersion: 2
@@ -1536,7 +1537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.0000019073486, y: 0.00000062584877}
+  m_AnchoredPosition: {x: 0.0000038146973, y: 0.00000062584877}
   m_SizeDelta: {x: 0.0000076294, y: -0.00000011921}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8567348849494701733

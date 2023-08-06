@@ -117,9 +117,11 @@ public class BeastSelectorManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         GameObject builder1 = Instantiate(teamBuilder);
         builder1.GetComponent<TeamEditorPlayerManager>().beastSelectorPlayer = player1;
+        builder1.GetComponent<TeamEditorPlayerManager>().team = 0;
         DontDestroyOnLoad(builder1);
         GameObject builder2 = Instantiate(teamBuilder);
         builder2.GetComponent<TeamEditorPlayerManager>().beastSelectorPlayer = player2;
+        builder1.GetComponent<TeamEditorPlayerManager>().team = 1;
         TeamEditorManager manager = FindObjectOfType<TeamEditorManager>();
         manager.player1 = builder1.GetComponent<TeamEditorPlayerManager>();
         manager.player2 = builder2.GetComponent<TeamEditorPlayerManager>();
