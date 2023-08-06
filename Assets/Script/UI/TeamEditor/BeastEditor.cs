@@ -84,13 +84,13 @@ public class BeastEditor : MonoBehaviour
 
 
 
-        statsText.text =    hp + "\n" +
-                            sinergiaElemental + "\n" +
-                            fuerza + "\n" +
-                            control + "\n" +
-                            resistenciaFisica + "\n" +
-                            resistenciaMagica + "\n" +
-                            movementPoints;
+        statsText.text =    "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].hp + itemList.items[player.team[beastSlot].item2Selected].hp) + " " + "</color>"+ hp + "\n" +
+                            "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].sinergia + itemList.items[player.team[beastSlot].item2Selected].sinergia) + " " + "</color>" + sinergiaElemental + "\n" +
+                            "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].fuerza + itemList.items[player.team[beastSlot].item2Selected].fuerza) + " " + "</color>" + fuerza + "\n" +
+                            "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].control + itemList.items[player.team[beastSlot].item2Selected].control) + " " + "</color>" + control + "\n" +
+                            "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].rFisica + itemList.items[player.team[beastSlot].item2Selected].rFisica) + " " + "</color>" + resistenciaFisica + "\n" +
+                            "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].rMagica + itemList.items[player.team[beastSlot].item2Selected].rMagica) + " " + "</color>" + resistenciaMagica + "\n" +
+                            "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].movimiento + itemList.items[player.team[beastSlot].item2Selected].movimiento) + " " + "</color>" + movementPoints;
 
         ChangeImage(item1Image, player.team[beastSlot].item1Selected);
         ChangeImage(item2Image, player.team[beastSlot].item2Selected);
