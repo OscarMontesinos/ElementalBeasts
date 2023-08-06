@@ -11,30 +11,34 @@ public class CombatSheetHabImage : MonoBehaviour
     public TextMeshProUGUI cdText;
     public TextMeshProUGUI maxRText;
 
+    public enum HabCdType
+    {
+        none, cd, repetitions
+    }
+
     private void OnMouseOver()
     {
         sheet.ChangeHabilitiesInfo();
         sheet.uiManager.ShowHabilitySign(sheet.unit.GetHabDescription(hability), sheet.unit.GetHabIcon(hability));
     }
-    public void SetInfo(int cd, int rMax)
+    public void SetInfo(Unit.HabCd info)
     {
-        if(cd > 0)
+        if (info.type == HabCdType.cd)
         {
-            cdText.gameObject.SetActive(true);
-            cdText.text = cd.ToString();
+            if (info.value > 0)
+            {
+                cdText.transform.parent.gameObject.SetActive(true);
+                cdText.text = info.value.ToString();
+            }
+            else
+            {
+                cdText.transform.parent.gameObject.SetActive(false);
+            }
         }
-        else
+        else if (info.type == HabCdType.repetitions)
         {
-            cdText.gameObject.SetActive(false);
-        }
-        if (rMax > 0)
-        {
-            maxRText.gameObject.SetActive(true);
-            maxRText.text = rMax.ToString();
-        }
-        else
-        {
-            maxRText.gameObject.SetActive(false);
+            maxRText.transform.parent.gameObject.SetActive(true);
+            maxRText.text = info.value.ToString();
         }
     }
 

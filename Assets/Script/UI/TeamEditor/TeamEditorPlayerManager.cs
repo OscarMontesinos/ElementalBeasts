@@ -79,13 +79,37 @@ public class TeamEditorPlayerManager : MonoBehaviour
             items.items[beastSelectorPlayer.team[index].item2Selected].cantidad++;
         }
 
-        unit.chosenHab1 = beastSelectorPlayer.team[index].hab1Selected;
 
-        unit.chosenHab2 = beastSelectorPlayer.team[index].hab2Selected;
 
-        unit.chosenHab3 = beastSelectorPlayer.team[index].hab3Selected;
+        int hab1 = beastSelectorPlayer.team[index].hab1Selected;
+        int hab2 = beastSelectorPlayer.team[index].hab2Selected;
+        int hab3 = beastSelectorPlayer.team[index].hab3Selected;
+        int hab4 = beastSelectorPlayer.team[index].hab4Selected;
 
-        unit.chosenHab4 = beastSelectorPlayer.team[index].hab4Selected;
+        while(hab1==0 ||hab1==hab2 || hab1 == hab3 || hab1 == hab4)
+        {
+            hab1 = Random.Range(1, 9);
+        }
+        unit.chosenHab1 = hab1;
+
+        while (hab2 == 0 || hab2 == hab1 || hab2 == hab3 || hab2 == hab4)
+        {
+            hab2 = Random.Range(1, 9);
+        }
+        unit.chosenHab2 = hab2;
+
+        while (hab3 == 0 || hab3 == hab2 || hab3 == hab1 || hab3 == hab4)
+        {
+            hab3 = Random.Range(1, 9);
+        }
+        unit.chosenHab3 = hab3;
+
+        while (hab4 == 0 || hab4 == hab2 || hab4 == hab3 || hab4 == hab1)
+        {
+            hab4 = Random.Range(1, 9);
+        }
+        unit.chosenHab4 = hab4;
+
 
 
         player.beastsToPlace.Add(beast);

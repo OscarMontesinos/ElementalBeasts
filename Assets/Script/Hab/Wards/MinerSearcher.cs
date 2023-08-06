@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MinerSearcher : ObjetoInvocado
 {
-    public int team;
     public Unit owner;
     public int walls;
     public int range;

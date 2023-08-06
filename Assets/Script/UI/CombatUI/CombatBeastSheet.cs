@@ -19,12 +19,16 @@ public class CombatBeastSheet : MonoBehaviour
     public GameObject selectedIndicator;
     public Image hab1Image;
     public string hab1Name;
+    public CombatSheetHabImage hab1cd;
     public Image hab2Image;
     public string hab2Name;
+    public CombatSheetHabImage hab2cd;
     public Image hab3Image;
     public string hab3Name;
+    public CombatSheetHabImage hab3cd;
     public Image hab4Image;
     public string hab4Name;
+    public CombatSheetHabImage hab4cd;
     public List<DebuffIndicator> debuffsIndicators; 
 
     [Header("Resources")]
@@ -48,6 +52,11 @@ public class CombatBeastSheet : MonoBehaviour
     }
     public void UpdateSheet()
     {
+        if(unit == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
         hpBar.value = unit.hp;
         hpText.text = unit.hp.ToString("F0");
 
@@ -101,16 +110,19 @@ public class CombatBeastSheet : MonoBehaviour
     {
         hab1Image.sprite = unit.GetHabIcon(unit.chosenHab1);
         hab1Name = unit.GetHabName(unit.chosenHab1);
+        hab1cd.SetInfo(unit.GetHabCds(unit.chosenHab1));
 
         hab2Image.sprite = unit.GetHabIcon(unit.chosenHab2);
         hab2Name = unit.GetHabName(unit.chosenHab2);
+        hab2cd.SetInfo(unit.GetHabCds(unit.chosenHab2));
 
         hab3Image.sprite = unit.GetHabIcon(unit.chosenHab3);
         hab3Name = unit.GetHabName(unit.chosenHab3);
+        hab3cd.SetInfo(unit.GetHabCds(unit.chosenHab3));
 
         hab4Image.sprite = unit.GetHabIcon(unit.chosenHab4);
         hab4Name = unit.GetHabName(unit.chosenHab4);
-
+        hab4cd.SetInfo(unit.GetHabCds(unit.chosenHab4));
     }
 
     public void ShowDebuff(int buff, float value)

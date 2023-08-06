@@ -12,7 +12,7 @@ public class Unit : MonoBehaviour
     public Color32 color;
     float rondas;
     GameObject pj;
-    BoxCollider2D collider2D;
+    BoxCollider2D _collider2D;
     public bool selected;
     public bool hSelected;
     public bool pSelected;
@@ -115,10 +115,10 @@ public class Unit : MonoBehaviour
 
     public virtual void Awake()
     {
-        collider2D =GetComponent<BoxCollider2D>();
+        _collider2D =GetComponent<BoxCollider2D>();
         mapPathfinder = FindObjectOfType<MapPathfinder>();
         cam = Object.FindObjectOfType<Camera>();
-        manager = Object.FindObjectOfType<CombatManager>();
+        manager = CombatManager.Instance;
         /*hab1CDText = Object.FindObjectOfType<Hab1T>().GetComponent<Text>(); 
         hab2CDText = Object.FindObjectOfType<Hab2T>().GetComponent<Text>();
         hab3CDText= Object.FindObjectOfType<Hab3T>().GetComponent<Text>();
@@ -155,8 +155,6 @@ public class Unit : MonoBehaviour
     private void Start()
     {
         iniciativaTurno = iniciativa + Random.Range(0, 20);
-        
-        teamColor.color = manager.teamColorList[team];
 
         hp = mHp;
         
@@ -1161,7 +1159,7 @@ public class Unit : MonoBehaviour
     public virtual void MarcarHabilidad(int forma, int rango, int ancho)
     {
         manager.casteando = true;
-        collider2D.enabled = false;
+        _collider2D.enabled = false;
         if (forma == 0)
         {
             manager.habSingle = true;
@@ -1250,12 +1248,31 @@ public class Unit : MonoBehaviour
             rangoMarcador.SetActive(false);
             marcadorHabilidad.SetActive(false);
             extensionMesher.SetActive(false);
-            collider2D.enabled = true;
+            _collider2D.enabled = true;
             if (turno)
             {
                 manager.ShowNodesInRange();
             }
         }
+    }
+
+    public struct HabCd
+    {
+       public int value;
+       public CombatSheetHabImage.HabCdType type;
+
+        public HabCd(int value, CombatSheetHabImage.HabCdType type)
+        {
+            this.value = value;
+            this.type = type;
+        }
+    }
+
+    
+    public virtual HabCd GetHabCds(int hability)
+    {
+        HabCd nullInfo = new HabCd(0, CombatSheetHabImage.HabCdType.none);
+        return nullInfo;
     }
     public virtual Sprite GetHabIcon(int hability)
     {
@@ -1275,7 +1292,10 @@ public class Unit : MonoBehaviour
 
     public virtual void Die()
     {
-            Destroy(gameObject);
+        UpdateCell(true);
+        owner.beasts.Remove(this);
+        Destroy(sheet.gameObject);
+        Destroy(gameObject);
         
     }
 

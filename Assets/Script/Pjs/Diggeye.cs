@@ -71,8 +71,6 @@ public class Diggeye : Unit
         repetitions1 = hab1Rmax;
         repetitions2 = hab2Rmax;
         repetitions3 = hab3Rmax;
-        hab4CdTotal++;
-        hab5CdTotal++;
     }
 
     // Update is called once per frame
@@ -80,7 +78,7 @@ public class Diggeye : Unit
     {
         base.Update();
         // ActualizarCDUI(repetitions1, repetitions2, hab3Cd, hab4Cd);
-        if (Input.GetMouseButtonDown(0) && manager.casteando && turno && !CombatManager.Instance.settingUp)
+        if (!CombatManager.Instance.settingUp && Input.GetMouseButtonDown(0) && manager.casteando && turno)
         {
             bool impacto = false;
             switch (castingHability)
@@ -403,7 +401,6 @@ public class Diggeye : Unit
 
     public override void AcabarTurno()
     {
-
         repetitions1 = hab1Rmax;
         repetitions2 = hab2Rmax;
         repetitions3 = hab3Rmax;
@@ -415,10 +412,19 @@ public class Diggeye : Unit
         {
             hab5Cd--;
         }
+        if (hab6Cd != 0)
+        {
+            hab6Cd--;
+        }
+        if (hab8Cd != 0)
+        {
+            hab8Cd--;
+        }
         castingHability = 0;
         base.AcabarTurno();
 
     }
+
 
     public override void MarcarHabilidad(int forma, int rango, int ancho)
     {
@@ -434,6 +440,42 @@ public class Diggeye : Unit
             rangoMarcador.transform.localScale = new Vector3((rango + 1) * 2 - 1, (rango + 1) * 2 - 1, rangoMarcador.transform.localScale.z);
             GameObject trap = Instantiate(hab8Trap);
             hab8CurrentTrap= trap.GetComponent<DiggeyeTrap>();
+        }
+    }
+    public override HabCd GetHabCds(int hability)
+    {
+        switch (hability)
+        {
+            case 0:
+                HabCd info0 = new HabCd(0, CombatSheetHabImage.HabCdType.none);
+                return info0;
+            case 1:
+                HabCd info1 = new HabCd(repetitions1, CombatSheetHabImage.HabCdType.repetitions);
+                return info1;
+            case 2:
+                HabCd info2 = new HabCd(repetitions2, CombatSheetHabImage.HabCdType.repetitions);
+                return info2;
+            case 3:
+                HabCd info3 = new HabCd(repetitions3, CombatSheetHabImage.HabCdType.repetitions);
+                return info3;
+            case 4:
+                HabCd info4 = new HabCd(hab4Cd, CombatSheetHabImage.HabCdType.cd);
+                return info4;
+            case 5:
+                HabCd info5 = new HabCd(hab5Cd, CombatSheetHabImage.HabCdType.cd);
+                return info5;
+            case 6:
+                HabCd info6 = new HabCd(hab6Cd, CombatSheetHabImage.HabCdType.cd);
+                return info6;
+            case 7:
+                HabCd info7 = new HabCd(0, CombatSheetHabImage.HabCdType.none);
+                return info7;
+            case 8:
+                HabCd info8 = new HabCd(hab8Cd, CombatSheetHabImage.HabCdType.cd);
+                return info8;
+            default:
+                HabCd info = new HabCd(0, CombatSheetHabImage.HabCdType.none);
+                return info;
         }
     }
 
@@ -508,7 +550,7 @@ public class Diggeye : Unit
             case 5:
                 return "Se abalanza a la bestia objetivo haciendo " + CalcularDanoFisico(hab5Dmg) + " (F) de daño y se coloca en su espalda";
             case 6:
-                return "Salta a la bestia objetivo e inflige" + CalcularDanoFisico(hab6Dmg) + " (F) de daño. Después salta a una posicion cercana";
+                return "Salta a la bestia objetivo e inflige " + CalcularDanoFisico(hab6Dmg) + " (F) de daño. Después salta a una posicion cercana";
             case 7:
                 return "Cada vez que ataques recupera 1 de turno al finalizar la habilidad";
             case 8:
@@ -534,7 +576,7 @@ public class Diggeye : Unit
             case 5:
                 return "Se abalanza a la bestia objetivo haciendo " + CalcularDanoFisico(hab5Dmg, fuerza) + " (F) de daño y se coloca en su espalda";
             case 6:
-                return "Salta a la bestia objetivo e inflige" + CalcularDanoFisico(hab6Dmg, fuerza) + " (F) de daño. Después salta a una posicion cercana";
+                return "Salta a la bestia objetivo e inflige " + CalcularDanoFisico(hab6Dmg, fuerza) + " (F) de daño. Después salta a una posicion cercana";
             case 7:
                 return "Cada vez que ataques recupera 1 de turno al finalizar la habilidad";
             case 8:

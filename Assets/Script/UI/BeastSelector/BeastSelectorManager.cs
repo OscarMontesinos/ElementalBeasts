@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class BeastSelectorManager : MonoBehaviour
 {
-    bool firstPick = true;
     public int maxBeasts;
     int selectionTurn;
     public float maxTime;

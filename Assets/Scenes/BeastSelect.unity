@@ -1428,8 +1428,8 @@ MonoBehaviour:
   player2: {fileID: 132718523}
   contentTeam1: {fileID: 506744873}
   contentTeam2: {fileID: 670280229}
-  baseBeastImage: {fileID: 6471407656738779349, guid: a7939f769499eed4ebf12084eb3082f6, type: 3}
-  baseBeastImageMirror: {fileID: 4281430683417908031, guid: f85b130a0f4c02f48bd3a4573e893032, type: 3}
+  baseBeastImage: {fileID: 4281430683417908031, guid: f85b130a0f4c02f48bd3a4573e893032, type: 3}
+  baseBeastImageMirror: {fileID: 6471407656738779349, guid: a7939f769499eed4ebf12084eb3082f6, type: 3}
   beastImages: []
   defaultUnit: {fileID: 3164781253018283080, guid: 6b709b475553293439d7884231be27cb, type: 3}
   defaultBeast: {fileID: 21300000, guid: a32cf3f8185003c41bf64c3ff4c1ba1a, type: 3}

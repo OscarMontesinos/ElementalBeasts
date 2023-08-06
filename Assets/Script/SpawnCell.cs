@@ -55,6 +55,7 @@ public class SpawnCell : MonoBehaviour
             unit.GetComponent<Unit>().owner = player;
             unit.GetComponent<Unit>().spawnCell = this;
             unit.GetComponent<Unit>().team = player.team;
+            unit.GetComponent<Unit>().teamColor.color = CombatManager.Instance.teamColorList[team];
             player.beastsToPlace.Remove(unitToSpawn);
             player.beasts.Add(unitPlaced.GetComponent<Unit>());
 
