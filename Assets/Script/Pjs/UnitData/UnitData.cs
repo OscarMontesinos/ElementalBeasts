@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class UnitData
 {
+    public int unitID;
     public GameObject unitGO;
     public Unit unit;
     public string name;

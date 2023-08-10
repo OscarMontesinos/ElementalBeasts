@@ -77,9 +77,9 @@ public class BeastSelectorManager : MonoBehaviour
         beastImages.Add(instance.GetComponent<BeastImage>());
     }
 
-    public void SelectBeast(Sprite beastImage, Sprite beastIcon, string beastName, GameObject unit)
+    public void SelectBeast(int id)
     {
-        beastImages[selectionTurn].ChangeImage(beastImage, beastIcon, beastName, unit);
+        beastImages[selectionTurn].ChangeImage(id);
     }
 
     public void Lock()
@@ -135,8 +135,7 @@ public class BeastSelectorManager : MonoBehaviour
         }
         else
         {
-            SelectBeast(defaultBeast, defaultIcon, defaultBeastName, defaultUnit);
-            Lock();
+            SelectBeast( Random.Range(0, 2));
         }
     }
 }

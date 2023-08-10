@@ -63,19 +63,19 @@ public class CombatBeastSheet : MonoBehaviour
         nameText.text = unit.name;
 
         float hp = unit.mHp;
-        float sinergiaElemental = unit.sinergiaElemental;
-        float fuerza = unit.fuerza;
-        float control = unit.control;
-        float resistenciaFisica = unit.resistenciaFisica;
-        float resistenciaMagica = unit.resistenciaMagica;
-        float movementPoints = unit.maxMovementPoints;
+        float sinergiaElemental = unit.sinergiaElemental + unit.pot;
+        float fuerza = unit.fuerza + unit.pot;
+        float control = unit.control + (unit.pot/2);
+        float resistenciaFisica = unit.resistenciaFisica + unit.prot;
+        float resistenciaMagica = unit.resistenciaMagica + unit.prot;
+        float movementPoints = unit.maxMovementPoints + unit.speedBuff;
 
-        statsText.text = hp + "\n" +
-                            sinergiaElemental + "\n" +
-                            fuerza + "\n" +
-                            control + "\n" +
-                            resistenciaFisica + "\n" +
-                            resistenciaMagica + "\n" +
+        statsText.text = hp.ToString("N0") + "\n" +
+                            sinergiaElemental.ToString("N0") + "\n" +
+                            fuerza.ToString("N0") + "\n" +
+                            control.ToString("N0") + "\n" +
+                            resistenciaFisica.ToString("N0") + "\n" +
+                            resistenciaMagica.ToString("N0") + "\n" +
                             movementPoints;
 
 

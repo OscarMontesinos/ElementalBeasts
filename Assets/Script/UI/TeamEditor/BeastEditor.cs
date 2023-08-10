@@ -90,7 +90,7 @@ public class BeastEditor : MonoBehaviour
                             "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].control + itemList.items[player.team[beastSlot].item2Selected].control) + " " + "</color>" + control + "\n" +
                             "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].rFisica + itemList.items[player.team[beastSlot].item2Selected].rFisica) + " " + "</color>" + resistenciaFisica + "\n" +
                             "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].rMagica + itemList.items[player.team[beastSlot].item2Selected].rMagica) + " " + "</color>" + resistenciaMagica + "\n" +
-                            "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].movimiento + itemList.items[player.team[beastSlot].item2Selected].movimiento) + " " + "</color>" + movementPoints;
+                            "<color=green>" + (itemList.items[player.team[beastSlot].item1Selected].movimiento + itemList.items[player.team[beastSlot].item2Selected].movimiento) + " " + "</color>0" + movementPoints;
 
         ChangeImage(item1Image, player.team[beastSlot].item1Selected);
         ChangeImage(item2Image, player.team[beastSlot].item2Selected);

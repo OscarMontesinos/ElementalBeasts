@@ -39,7 +39,7 @@ public class Unit : MonoBehaviour
     public LayerMask unitLayer;
     public bool imparable;
     public int desorientarValue;
-    public int slow;
+    public int speedBuff;
     public bool moving;
     public bool habilityCasted;
     public int revealed;
@@ -253,10 +253,10 @@ public class Unit : MonoBehaviour
         }
 
 
-        if (slow != 0)
+        if (speedBuff != 0)
         {
             slowText.gameObject.SetActive(true);
-            slowText.text = "Sp: " + slow;
+            slowText.text = "Sp: " + speedBuff;
         }
         else
         {
@@ -446,7 +446,7 @@ public class Unit : MonoBehaviour
         {
             turnoRestante = 0;
         }
-        movementPoints = maxMovementPoints -slow;
+        movementPoints = maxMovementPoints -speedBuff;
         mapPathfinder.unitToMove = this;
 
         manager.ShowNodesInRange();
@@ -463,6 +463,10 @@ public class Unit : MonoBehaviour
         turnoUi.SetActive(false);
         pasar = true;
         root = false;
+        foreach(Buff buff in GetComponents<Buff>())
+        {
+            buff.BuffUpdate();
+        }
         manager.SiguienteTurno();
         MarcarHabilidad(4, 0, 0);
     }
@@ -782,11 +786,11 @@ public class Unit : MonoBehaviour
     {
         if (!habilityCasted)
         {
-            if (slow <= 2)
+            if (speedBuff <= 2)
             {
                 movementPoints -= 2;
             }
-            else if (slow <= 4)
+            else if (speedBuff <= 4)
             {
                 movementPoints -= 1;
             }

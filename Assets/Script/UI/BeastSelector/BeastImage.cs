@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class BeastImage : MonoBehaviour
 {
+    public int id;
     public GameObject beastGO;
     public Unit beast;
     public string beastName;
@@ -15,15 +16,16 @@ public class BeastImage : MonoBehaviour
     public bool beastSelected;
     public bool mirror;
 
-    public void ChangeImage(Sprite image, Sprite icon, string name, GameObject unit)
+    public void ChangeImage(int beast)
     {
-        beastGO = unit;
-        beast = unit.GetComponent<Unit>();
-        GetComponent<Image>().sprite = image;
-        beastImage = image;
-        beastIcon =  icon;
-        beastText.text = name;
-        beastName = name;
+        id = BeastList.beastList[beast].unitID;
+        beastGO = BeastList.beastList[beast].unitGO;
+        this.beast = BeastList.beastList[beast].unit;
+        GetComponent<Image>().sprite = BeastList.beastList[beast].image;
+        beastImage = BeastList.beastList[beast].image;
+        beastIcon = BeastList.beastList[beast].icon;
+        beastText.text = BeastList.beastList[beast].name;
+        beastName = BeastList.beastList[beast].name;
         beastSelected = true;
     }
 }

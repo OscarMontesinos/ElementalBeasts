@@ -5,10 +5,7 @@ using UnityEngine;
 public class BeastButton : MonoBehaviour
 {
     BeastSelectorManager beastSelectorManager;
-    public GameObject unit;
-    public Sprite beastImage;
-    public Sprite beastIcon;
-    public string beastName;
+    public int id;
 
     private void Awake()
     {
@@ -17,7 +14,7 @@ public class BeastButton : MonoBehaviour
 
     public void SelectBeast()
     {
-        beastSelectorManager.SelectBeast(beastImage, beastIcon, beastName, unit);
+        beastSelectorManager.SelectBeast(id);
     }
 
 

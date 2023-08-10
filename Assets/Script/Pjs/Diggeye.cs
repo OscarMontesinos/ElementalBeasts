@@ -286,28 +286,28 @@ public class Diggeye : Unit
 
         if (Input.GetKeyDown(KeyCode.Alpha1) && turno && !moving)
         {
-            if (!habilityCasted && (movementPoints >= 2 || slow >= 3 && movementPoints >= 1 || slow > 5) || habilityCasted)
+            if (!habilityCasted && (movementPoints >= 2 || speedBuff >= 3 && movementPoints >= 1 || speedBuff > 5) || habilityCasted)
             {
                 ShowHability(chosenHab1);
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && turno && !moving)
         {
-            if (!habilityCasted && (movementPoints >= 2 || slow >= 3 && movementPoints >= 1 || slow > 5) || habilityCasted)
+            if (!habilityCasted && (movementPoints >= 2 || speedBuff >= 3 && movementPoints >= 1 || speedBuff > 5) || habilityCasted)
             {
                 ShowHability(chosenHab2);
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && turno && !moving)
         {
-            if (!habilityCasted && (movementPoints >= 2 || slow >= 3 && movementPoints >= 1 || slow > 5) || habilityCasted)
+            if (!habilityCasted && (movementPoints >= 2 || speedBuff >= 3 && movementPoints >= 1 || speedBuff > 5) || habilityCasted)
             {
                 ShowHability(chosenHab3);
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha4) && turno && !moving)
         {
-            if (!habilityCasted &&( movementPoints >= 2 || slow >= 3 && movementPoints >= 1 || slow > 5) || habilityCasted)
+            if (!habilityCasted &&( movementPoints >= 2 || speedBuff >= 3 && movementPoints >= 1 || speedBuff > 5) || habilityCasted)
             {
                 ShowHability(chosenHab4);
             }
