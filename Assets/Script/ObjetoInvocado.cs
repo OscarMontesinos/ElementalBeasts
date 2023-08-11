@@ -143,7 +143,7 @@ public class ObjetoInvocado : MonoBehaviour
         unidad.GetManager().invocaciones.Add(this);
         foreach (Unit unit in objetivos)
         {
-            if (unit != null)
+            if (unit != null && starthit)
             {
                 Golpear(unit);
             }
@@ -164,16 +164,16 @@ public class ObjetoInvocado : MonoBehaviour
         }
         if (rondasDuracion <= 0)
         {
-            
-            Destroy(gameObject);
+            Die();
         }
     }
 
     public virtual void Golpear(Unit objetivo)
     {
+
     }
 
-    public virtual void Desgolepar(Unit objetivo)
+    public virtual void Desgolpear(Unit objetivo)
     {
 
     }
@@ -184,7 +184,7 @@ public class ObjetoInvocado : MonoBehaviour
             if (collision.gameObject.GetComponent<Unit>().team == team && aliado || collision.gameObject.GetComponent<Unit>().team != team && enemigo)
             {
                 objetivos.Add(collision.GetComponent<Unit>());
-                if (!unidad.planeoInvocacion)
+                if (!unidad.planeoInvocacion && enterHit)
                 {
                     Golpear(collision.gameObject.GetComponent<Unit>());
                 }
@@ -213,10 +213,6 @@ public class ObjetoInvocado : MonoBehaviour
             if (collision.gameObject.GetComponent<Unit>().team == team && aliado && !esta || collision.gameObject.GetComponent<Unit>().team != team && enemigo && !esta)
             {
                 objetivos.Add(collision.GetComponent<Unit>());
-                if (!unidad.planeoInvocacion)
-                {
-                    Golpear(collision.gameObject.GetComponent<Unit>());
-                }
             }
 
         }
@@ -235,7 +231,7 @@ public class ObjetoInvocado : MonoBehaviour
                 objetivos.Remove(collision.GetComponent<Unit>());
                 if (!unidad.planeoInvocacion)
                 {
-                    Desgolepar(collision.gameObject.GetComponent<Unit>());
+                    Desgolpear(collision.gameObject.GetComponent<Unit>());
                 }
             }
         }
@@ -250,10 +246,17 @@ public class ObjetoInvocado : MonoBehaviour
     }*/
     public void Rotar(int multiplier)
     {
-        transform.localEulerAngles = new Vector3(0, 0, transform.localEulerAngles.z + 45*multiplier);
+        transform.localEulerAngles = new Vector3(0, 0, transform.localEulerAngles.z + 90*multiplier);
     }
-    public void Die()
+    public virtual void Die()
     {
+        if (endHit)
+        {
+            foreach(Unit unit in objetivos)
+            {
+                Golpear(unit);
+            }
+        }
         Destroy(gameObject);
     }
 }

@@ -355,7 +355,6 @@ MonoBehaviour:
   - icon: {fileID: 7482667652216324306, guid: 3010a37501e3f5845b9d4caec1fbc3df, type: 3}
     nombre: Default
     equipado: 0
-    cantidad: 1
     sinergia: 0
     fuerza: 0
     control: 0
@@ -366,18 +365,16 @@ MonoBehaviour:
   - icon: {fileID: 21300000, guid: aba6c4db45345de49869513143316177, type: 3}
     nombre: Crisal de agua
     equipado: 0
-    cantidad: 1
     sinergia: 0
     fuerza: 0
     control: 0
-    hp: 10
+    hp: 15
     rFisica: 0
     rMagica: 0
     movimiento: 0
   - icon: {fileID: 21300000, guid: 881da737f088ccd4fb58d6ba9af5c88c, type: 3}
     nombre: Crisal de fuego
     equipado: 0
-    cantidad: 1
     sinergia: 0
     fuerza: 10
     control: 0
@@ -388,7 +385,6 @@ MonoBehaviour:
   - icon: {fileID: 21300000, guid: c8c10fc8c18cfcb4a9010fa2ba3b7b6a, type: 3}
     nombre: Crisal de vida
     equipado: 0
-    cantidad: 1
     sinergia: 0
     fuerza: 0
     control: 10
@@ -399,29 +395,26 @@ MonoBehaviour:
   - icon: {fileID: 21300000, guid: ba9d687c10c8abf4cb61bc5d30aa1c9a, type: 3}
     nombre: Crisal del desierto
     equipado: 0
-    cantidad: 1
     sinergia: 0
     fuerza: 0
     control: 0
     hp: 0
-    rFisica: 10
+    rFisica: 15
     rMagica: 0
     movimiento: 0
   - icon: {fileID: 21300000, guid: a184a04e647b2a24bad854b9e149cfae, type: 3}
     nombre: Crisal de hielo
     equipado: 0
-    cantidad: 1
     sinergia: 0
     fuerza: 0
     control: 0
     hp: 0
     rFisica: 0
-    rMagica: 10
+    rMagica: 15
     movimiento: 0
   - icon: {fileID: 21300000, guid: 10e68a4badcd32e4db17bd5c5d3d7615, type: 3}
     nombre: Crisal de viento
     equipado: 0
-    cantidad: 1
     sinergia: 0
     fuerza: 0
     control: 0
@@ -432,7 +425,6 @@ MonoBehaviour:
   - icon: {fileID: 21300000, guid: 0f7a22725cc27c048a93234b04ebebbc, type: 3}
     nombre: Crisal de rayo
     equipado: 0
-    cantidad: 1
     sinergia: 10
     fuerza: 0
     control: 0

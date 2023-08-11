@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MapPathfinder : MonoBehaviour
 {
+    public static MapPathfinder Instance;
     CombatManager cManager;
     public int gridWidth;
     public int gridHeight;
@@ -16,6 +17,14 @@ public class MapPathfinder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         cManager = FindObjectOfType<CombatManager>();
         unitToMove = FindObjectOfType<Unit>();
         pathfinding = new Pathfinding(gridWidth,gridHeight,cellsize);

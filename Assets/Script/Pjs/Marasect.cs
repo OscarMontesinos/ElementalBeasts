@@ -161,7 +161,7 @@ public class Marasect : Unit
                                 {
                                     hab2Stage2 = true;
                                 }
-                                unit.RecibirDanoFisico(CalcularDanoFisico(hab3Dmg));
+                                unit.RecibirDanoFisico(CalcularDanoFisico(hab4Dmg));
                                 MarasectRecon recon = unit.gameObject.AddComponent<MarasectRecon>();
                                 recon.BuffStart(this, hab4Rnd, CalcularDanoMagico(hab4Regen));
                                 impacto = true;

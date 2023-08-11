@@ -201,7 +201,7 @@ MonoBehaviour:
     sinergia: 0
     fuerza: 0
     control: 0
-    hp: 10
+    hp: 15
     rFisica: 0
     rMagica: 0
     movimiento: 0
@@ -232,7 +232,7 @@ MonoBehaviour:
     fuerza: 0
     control: 0
     hp: 0
-    rFisica: 10
+    rFisica: 15
     rMagica: 0
     movimiento: 0
   - icon: {fileID: 0}
@@ -243,7 +243,7 @@ MonoBehaviour:
     control: 0
     hp: 0
     rFisica: 0
-    rMagica: 10
+    rMagica: 15
     movimiento: 0
   - icon: {fileID: 0}
     nombre: Crisal de viento

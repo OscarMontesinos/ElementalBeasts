@@ -28,7 +28,7 @@ public class DiggeyeTrap : ObjetoInvocado
         if (objetivo.team != diggeye.team)
         {
             diggeye.CastHability(diggeye.hab8.habilityType, diggeye.hab8.habilityEffects[0],diggeye.hab8.habilityEffects[1],diggeye.hab8.habilityEffects[2], diggeye.hab8.habilityRange, diggeye.hab8.habilityTargetType, diggeye.hab8.habilityMovement);
-            objetivo.RecibirDanoMagico(dano);
+            objetivo.RecibirDanoFisico(dano);
             objetivo.root = true;
             diggeye.hab8Cd = diggeye.hab8CdTotal;
             objetivo.movementPoints = 0;

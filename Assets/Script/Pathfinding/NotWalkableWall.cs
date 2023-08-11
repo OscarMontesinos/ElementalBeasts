@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class NotWalkableWall : MonoBehaviour
 {
-    CombatManager cManager;
+    public CombatManager cManager;
     private void Awake()
     {
-        cManager = FindObjectOfType<CombatManager>();
     }
     private void Start()
     {
+        cManager = CombatManager.Instance;
         cManager.Position(gameObject);
     }
 }

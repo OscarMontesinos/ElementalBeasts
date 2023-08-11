@@ -2,29 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MarasectVenom : Buff
+public class ObeTrack : Buff
 {
-    Marasect owner;
-    float dmg;
+    Obe owner;
+    float mark;
     // Start is called before the first frame update
 
-    public void BuffStart(Marasect owner, int rnds, float dmg)
+    private void Update()
+    {
+        if (owner == null)
+        {
+            End();
+        }
+    }
+    public void BuffStart(Obe owner, float mark)
     {
         type = BuffType.debuff;
         this.owner = owner;
-        rounds = rnds;
-        this.dmg = dmg;
+        rounds = 1000;
+        this.mark = mark;
+        unit.dmgMultiplier += mark;
     }
 
     public override void BuffUpdate()
     {
-        unit.RecibirDanoMagico(dmg);
         base.BuffUpdate();
     }
 
     public override void End()
     {
-
+        unit.dmgMultiplier -= mark;
         base.End();
     }
 }

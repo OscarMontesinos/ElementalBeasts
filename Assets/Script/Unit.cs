@@ -39,7 +39,7 @@ public class Unit : MonoBehaviour
     public LayerMask unitLayer;
     public bool imparable;
     public int desorientarValue;
-    public int speedBuff;
+    public int speedBuff=10;
     public bool moving;
     public bool habilityCasted;
     public int revealed;
@@ -74,6 +74,7 @@ public class Unit : MonoBehaviour
     [Header("Bufos o debufos")]
     public float prot = 0;
     public float pot = 0;
+    public float dmgMultiplier = 0;
     public float[] contadorEsc;
     [Header("Owner")]
     public Player owner;
@@ -167,8 +168,7 @@ public class Unit : MonoBehaviour
     }
     public virtual void Update()
     {
-        
-            HandleMovement();
+        HandleMovement();
         if (pot<0.1f&& pot>0 || pot> -0.1f && pot < 0)
         {
             pot = 0;
@@ -589,7 +589,7 @@ public class Unit : MonoBehaviour
                 calculo = 0;
             }
             value -= ((value * ((calculo / (100 + calculo) * 100))) / 100);
-
+            value += ((value * dmgMultiplier) / 100);
             CalculoDeDaño(value);
         }
     }
@@ -604,7 +604,7 @@ public class Unit : MonoBehaviour
                 calculo = 0;
             }
             value -= ((value * ((calculo / (100 + calculo) * 100))) / 100);
-
+            value += ((value * dmgMultiplier)/100);
             CalculoDeDaño(value);
         }
     }
@@ -1297,6 +1297,7 @@ public class Unit : MonoBehaviour
     {
         UpdateCell(true);
         owner.beasts.Remove(this);
+        manager.unitList.Remove(this);
         Destroy(sheet.gameObject);
         Destroy(gameObject);
         

@@ -1,0 +1,359 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3167188085170117917
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8887353973305685, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Name
+      value: Obe
+      objectReference: {fileID: 0}
+    - target: {fileID: 385266273421948514, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 385266273421948514, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1192585756461418570, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.1338115
+      objectReference: {fileID: 0}
+    - target: {fileID: 1192585756461418570, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.1338115
+      objectReference: {fileID: 0}
+    - target: {fileID: 1192585756461418570, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.26854187
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314915021448607137, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 926
+      objectReference: {fileID: 0}
+    - target: {fileID: 2321608248665751684, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 6243156386774786106}
+    - target: {fileID: 2603059071052706785, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898340834658528949, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5955c57073d20a040bd771b564872ee5, type: 3}
+    - target: {fileID: 3912381334254527759, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005484267730723280, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828262059046599708, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 6243156386774786106}
+    - target: {fileID: 5620404827276006347, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5792911672655658645, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6087811872046515902, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: unit
+      value: 
+      objectReference: {fileID: 6243156386774786106}
+    - target: {fileID: 6170887024417363118, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7387f6523988ad04391f15eab7300040, type: 3}
+    - target: {fileID: 6170887024417363118, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170887024417363118, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170887024417363118, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7312741328933805014, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8835089
+      objectReference: {fileID: 0}
+    - target: {fileID: 7312741328933805014, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8835089
+      objectReference: {fileID: 0}
+    - target: {fileID: 7312741328933805014, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8835089
+      objectReference: {fileID: 0}
+    - target: {fileID: 8407449629489743481, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857036762000175363, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9070157787085813698, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2835488
+      objectReference: {fileID: 0}
+    - target: {fileID: 9070157787085813698, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2835488
+      objectReference: {fileID: 0}
+    - target: {fileID: 9070157787085813698, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: -0.13824402
+      objectReference: {fileID: 0}
+    - target: {fileID: 9202332536032468194, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7387f6523988ad04391f15eab7300040, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+--- !u!1 &3164781253018283080 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8887353973305685, guid: 8089732ab6e6a2a46838a7009e33cbfb, type: 3}
+  m_PrefabInstance: {fileID: 3167188085170117917}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6243156386774786106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3164781253018283080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01fdd2cfaa3a87e46a8941e9b625c889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnCell: {fileID: 0}
+  color:
+    serializedVersion: 2
+    rgba: 0
+  selected: 0
+  hSelected: 0
+  pSelected: 0
+  freelook: 0
+  team: 0
+  turno: 0
+  pasar: 0
+  planeoInvocacion: 0
+  marcadorHabilidad: {fileID: 0}
+  rotadorHabilidad: {fileID: 0}
+  conoHabilidad: {fileID: 0}
+  extensionMesher: {fileID: 0}
+  rangoMarcador: {fileID: 0}
+  manager: {fileID: 0}
+  escondido: 0
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  voidLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  unitLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  imparable: 0
+  desorientarValue: 0
+  speedBuff: 0
+  moving: 0
+  habilityCasted: 0
+  revealed: 0
+  chosenHab1: 0
+  chosenHab2: 0
+  chosenHab3: 0
+  chosenHab4: 0
+  castingHability: 0
+  sinergiaElemental: 30
+  fuerza: 10
+  control: 30
+  mHp: 70
+  resistenciaFisica: 40
+  resistenciaMagica: 30
+  iniciativa: 0
+  maxMovementPoints: 6
+  movementPoints: 0
+  hp: 0
+  escudo: 0
+  iniciativaTurno: 0
+  turnoRestante: 5
+  stun: 0
+  justStun: 0
+  root: 0
+  prot: 0
+  pot: 0
+  dmgMultiplier: 0
+  contadorEsc: []
+  owner: {fileID: 0}
+  teamColor: {fileID: 0}
+  sheet: {fileID: 0}
+  speed: 10
+  defaultHabSprite: {fileID: 0}
+  hab1:
+    icon: {fileID: 21300000, guid: 85c50ad3680436947aa3387d35c76798, type: 3}
+    name: Mina inteligente
+    habilityType: 1
+    habilityEffects: 08000000
+    habilityRange: 2
+    habilityTargetType: 0
+    habilityMovement: 0
+  hab1Turn: 2
+  hab1CdTotal: 1
+  hab1Cd: 0
+  hab1Range: 4
+  hab1Duration: 3
+  hab1Dmg: 50
+  hab1Trap: {fileID: 7856540793155916339, guid: 819a08af2baede647b5b993a1163173f, type: 3}
+  hab1CurrentTrap: {fileID: 0}
+  hab2:
+    icon: {fileID: 21300000, guid: c9707a4d6be870e489d4b1a3cbc285b9, type: 3}
+    name: Pantalla de seguridad
+    habilityType: 1
+    habilityEffects: 00000000
+    habilityRange: 0
+    habilityTargetType: 0
+    habilityMovement: 0
+  hab2Turn: 2
+  hab2CdTotal: 3
+  hab2Cd: 0
+  hab2Range: 4
+  hab2Duration: 2
+  hab2Screen: {fileID: 6448179635045047098, guid: 2de207ac69644e64286c9fd57575663b, type: 3}
+  hab2CurrentScreen: {fileID: 0}
+  hab3:
+    icon: {fileID: 21300000, guid: beaadfb3f809a4c47916bf9eb3a455dc, type: 3}
+    name: Vinculo interno
+    habilityType: 1
+    habilityEffects: 02000000
+    habilityRange: 2
+    habilityTargetType: 1
+    habilityMovement: 0
+  hab3Turn: 3
+  hab3Range: 4
+  hab3Area: 6
+  hab3Prot: 35
+  hab4:
+    icon: {fileID: 21300000, guid: 74b7ee7d4d846ac4ba41424212f31db7, type: 3}
+    name: "Inhibci\xF3n"
+    habilityType: 1
+    habilityEffects: 010000000300000006000000
+    habilityRange: 0
+    habilityTargetType: 2
+    habilityMovement: 0
+  hab4Turn: 2
+  hab4CdTotal: 2
+  hab4Cd: 0
+  hab4Range: 5
+  hab4Dmg: 25
+  hab4Rnd: 2
+  hab4Des: 2
+  hab5:
+    icon: {fileID: 21300000, guid: 467b29fe969ea3f4ebdff69313e0207b, type: 3}
+    name: Protocolo antidisturbios
+    habilityType: 1
+    habilityEffects: 0100000007000000
+    habilityRange: 2
+    habilityTargetType: 2
+    habilityMovement: 0
+  hab5Turn: 2
+  hab5CdTotal: 2
+  hab5Cd: 0
+  hab5Range: 4
+  hab5Duration: 1
+  hab5Dmg: 35
+  hab5Trap: {fileID: 7856540793155916339, guid: f86f187a227f21943a8b74c5575acd73, type: 3}
+  hab5CurrentTrap: {fileID: 0}
+  hab6:
+    icon: {fileID: 21300000, guid: 19510a70a7395984d819339131d39c43, type: 3}
+    name: "R\xE9plica"
+    habilityType: 1
+    habilityEffects: 00000000
+    habilityRange: 0
+    habilityTargetType: 0
+    habilityMovement: 0
+  hab6Turn: 1
+  hab6CdTotal: 2
+  hab6Cd: 0
+  hab6LastHab: 0
+  hab7:
+    icon: {fileID: 21300000, guid: a564c33ddf8191b4b8272b8cf55d0ba8, type: 3}
+    name: Seguimiento
+    habilityType: 2
+    habilityEffects: 03000000
+    habilityRange: 0
+    habilityTargetType: 0
+    habilityMovement: 0
+  hab7Mark: 50
+  hab7CurrentTrack: {fileID: 0}
+  hab8:
+    icon: {fileID: 21300000, guid: a676b1aba4cdf7c4a9a31828d2a1aeb3, type: 3}
+    name: Protocolo ofensivo
+    habilityType: 1
+    habilityEffects: 0100000003000000
+    habilityRange: 2
+    habilityTargetType: 1
+    habilityMovement: 0
+  hab8Turn: 3
+  hab8CdTotal: 1
+  hab8Cd: 0
+  hab8Range: 4
+  hab8Rnds: 1
+  hab8Dmg: 15
+  hab8Deb: 40

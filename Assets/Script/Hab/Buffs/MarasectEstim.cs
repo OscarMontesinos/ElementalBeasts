@@ -11,6 +11,7 @@ public class MarasectEstim : Buff
 
     public void BuffStart(Marasect owner, int rnds, float pot, int cel)
     {
+        type = BuffType.buff;
         this.owner = owner;
         rounds = rnds;
         this.pot = pot;

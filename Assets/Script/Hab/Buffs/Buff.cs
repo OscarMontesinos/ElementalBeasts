@@ -6,6 +6,11 @@ public class Buff : MonoBehaviour
 {
     public Unit unit;
     public int rounds;
+    public BuffType type;
+    public enum BuffType
+    {
+        buff, debuff
+    }
 
     private void Awake()
     {

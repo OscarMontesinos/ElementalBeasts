@@ -10,6 +10,7 @@ public class MarasectRecon : Buff
 
     public void BuffStart(Marasect owner, int rnds, float regen)
     {
+        type = BuffType.buff;
         this.owner = owner;
         rounds = rnds;
         this.regen = regen;
