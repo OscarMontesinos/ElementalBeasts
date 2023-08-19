@@ -39,7 +39,7 @@ public class Unit : MonoBehaviour
     public LayerMask unitLayer;
     public bool imparable;
     public int desorientarValue;
-    public int speedBuff=10;
+    public int speedBuff;
     public bool moving;
     public bool habilityCasted;
     public int revealed;
@@ -96,7 +96,7 @@ public class Unit : MonoBehaviour
     public CombatBeastSheet sheet;
 
     [Header("Pathfinding")]
-    public float speed;
+    float speed = 8;
     int currentPathIndex;
     List<Vector3> pathVectorList;
     MapPathfinder mapPathfinder;
@@ -692,7 +692,7 @@ public class Unit : MonoBehaviour
 
     public bool CheckAll(Unit unit, Vector3 position, int range)
     {
-        if( CheckWalls(position) && unit == GetTarget(position) && CheckRange(unit.transform.position, range))
+        if(CheckWalls(transform.position,position) && unit == GetTarget(position) && CheckRange(unit.transform.position, range))
         {
             return true;
         }
@@ -729,15 +729,18 @@ public class Unit : MonoBehaviour
         }
         else
         {
+            Debug.Log("Rango");
             return false;
         }
     }
 
-    public bool CheckWalls(Vector3 position)
+    public bool CheckWalls(Vector3 originPosition, Vector3 targetPosition)
     {
-        position -= transform.position;
-        if (Physics2D.Raycast(transform.position, position,position.magnitude, wallLayer))
+        Vector3 dir = targetPosition - originPosition;
+        if (Physics2D.Raycast(originPosition, dir, dir.magnitude, wallLayer))
         {
+            Debug.DrawLine(originPosition, targetPosition, Color.white, 100);
+            Debug.Log("Pared");
             return false;
         }
         else
@@ -764,6 +767,7 @@ public class Unit : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, position, unitLayer) ;
         if (Physics2D.Raycast(transform.position, position, unitLayer))
         {
+            Debug.Log("Target");
             return hit.collider.GetComponent<Unit>();
         }
         else
@@ -1070,6 +1074,29 @@ public class Unit : MonoBehaviour
         UpdateCell(false);
         manager.Position(gameObject);
 
+    }
+
+    public void PushTarget(Unit unit, int distance)
+    {
+        int x;
+        int y;
+        Pathfinding.Instance.GetGrid().GetXY(unit.transform.position, out x, out y);
+        unit.UpdateCell(true);
+        while (distance > 0)
+        {
+            unit.transform.Translate((unit.transform.position - transform.position).normalized * 1);
+            manager.Position(unit.gameObject);
+            Pathfinding.Instance.GetGrid().GetXY(unit.transform.position, out x, out y);
+            if (!Pathfinding.Instance.GetNode(x, y).isWalkable || Pathfinding.Instance.GetNode(x, y) == null)
+            {
+                unit.transform.Translate((unit.transform.position - transform.position).normalized * -1);
+                manager.Position(unit.gameObject);
+                break;
+            }
+            distance--;
+        }
+        manager.Position(unit.gameObject);
+        unit.UpdateCell(false);
     }
     #endregion
 

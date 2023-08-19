@@ -135,7 +135,7 @@ public class BeastSelectorManager : MonoBehaviour
         }
         else
         {
-            SelectBeast( Random.Range(0, 3));
+            SelectBeast( Random.Range(0, 4));
         }
     }
 }

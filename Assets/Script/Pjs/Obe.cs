@@ -89,7 +89,7 @@ public class Obe : Unit
             switch (castingHability)
             {
                 case 1:
-                    if (CheckRange(UtilsClass.GetMouseWorldPosition() , hab1Range) && CheckWalls(UtilsClass.GetMouseWorldPosition()))
+                    if (CheckRange(UtilsClass.GetMouseWorldPosition() , hab1Range) && CheckWalls(transform.position,UtilsClass.GetMouseWorldPosition()))
                     {
                         if (usingHab6)
                         {
@@ -108,7 +108,7 @@ public class Obe : Unit
                     }
                     break;
                 case 2:
-                    if (CheckRange(UtilsClass.GetMouseWorldPosition(), hab2Range) && CheckWalls(UtilsClass.GetMouseWorldPosition()))
+                    if (CheckRange(UtilsClass.GetMouseWorldPosition(), hab2Range) && CheckWalls(transform.position,UtilsClass.GetMouseWorldPosition()))
                     {
                         if (usingHab6)
                         {
@@ -166,7 +166,7 @@ public class Obe : Unit
                     {
                         if (unit != null)
                         {
-                            if (unit.hSelected && CheckAll(unit, unit.transform.position, hab4Range))
+                            if (unit.hSelected && CheckWalls(transform.position,unit.transform.position))
                             {
                                 bool inhibed = false;
                                 CastHability(hab4.habilityType, hab4.habilityEffects[0], hab4.habilityRange, hab4.habilityTargetType, hab4.habilityMovement);
@@ -213,7 +213,7 @@ public class Obe : Unit
                     break;
                 case 5:
 
-                    if (CheckRange(UtilsClass.GetMouseWorldPosition(), hab5Range) && CheckWalls(UtilsClass.GetMouseWorldPosition()))
+                    if (CheckRange(UtilsClass.GetMouseWorldPosition(), hab5Range) && CheckWalls(transform.position, UtilsClass.GetMouseWorldPosition()))
                     {
                         if (usingHab6)
                         {

@@ -259,7 +259,7 @@ public class Diggeye : Unit
                         int x;
                         int y;
                         Pathfinding.Instance.GetGrid().GetXY(UtilsClass.GetMouseWorldPosition(), out x, out y);
-                        if (CheckWalls(UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab6Range) && Pathfinding.Instance.GetNode(x, y).isWalkable)
+                        if (CheckWalls(transform.position, UtilsClass.GetMouseWorldPosition()) && CheckRange(UtilsClass.GetMouseWorldPosition(), hab6Range) && Pathfinding.Instance.GetNode(x, y).isWalkable)
                         {
                             Dash(this, UtilsClass.GetMouseWorldPosition());
 

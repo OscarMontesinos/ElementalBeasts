@@ -15,7 +15,7 @@ public class Hability
     }
     public enum HabilityEffect
     {
-        None, Attack, Buff, Debuff, Heal, Shield, Purge, Stunn, Trap, Scan, Curse
+        None, Attack, Buff, Debuff, Heal, Shield, Purge, Stunn, Push, Trap, Scan, Curse
     }
     public enum HabilityRange
     {
